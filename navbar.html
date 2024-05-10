@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <title>Inicio</title>
+    <!-- <link rel="stylesheet" href="estilos.css"> -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="Container-info">
+        <aside class="Info-personal">
+            <div class="imagen4">
+                <figure>
+                    <img src="./Íconos - Logos/Telefono.svg";>
+                </figure>
+                <p>+51 987654321</p>
+            </div>
+            <div class="imagen5">
+                <figure>
+                    <img src="./Íconos - Logos/Email.svg";>
+                </figure>
+                <p>citycan@gmail.com</p>
+            </div>
+            <div class="imagen6">
+                <img src="./Íconos - Logos/Lupa.svg">
+            </div>
+        </aside>
+        <nav class="Social-media">
+            <div class="imagen7">
+                <a href="https://www.facebook.com/">
+                    <img src="./Íconos - Logos/facebook.svg";>
+                </a>
+            </div>
+            <div class="imagen8">
+                <a href="https://web.whatsapp.com/">
+                    <img src="./Íconos - Logos/whatsapp.svg">
+                </a>
+            </div>
+            <div class="imagen9">
+                <a href="https://www.instagram.com/">
+                    <img src="./Íconos - Logos/mdi_instagram.svg">
+                </a>
+            </div>
+
+        </nav>
+    </header>
+    <nav class="Barra-Navegacion">
+        <div class="Container-Logo">
+            <a href="#">
+                <figure>
+                    <img src="./Íconos - Logos/Mask group.svg">
+                </figure>
+                <p> CITY CAN</p>
+            </a>
+        </div>
+        <div class="Enlaces-Navegacion">
+            <ul class="Primary-container">
+                <li>
+                    <a href="#">
+                        <p>Reservar Cita</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p>Servicios</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <p>Productos</p>
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="#">
+                        <p>Nosotros</p>
+                    </a>
+                </li>
+                <span style="color:#FF5B22;">/</span>
+                <li>
+                    <a href="#datos-personales">
+                        <p>Contactanos</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+            <div class="Inicio-Sesion">
+                <a href ="#" id="signin-link">
+                    <p>Sign In</p>
+                </a>
+                <figure class="lupaa">
+                    <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
+                </figure>
+                <p>|</p>
+                <figure class="carrito">
+                    <a href="#"><img src="./Íconos - Logos/Carrito-Compras.svg"></a>
+                </figure>
+            </div>
+    </nav>
+<!-- SECCIÓN COOKIES -->
+        <div id="overlay">
+            <div class="aviso-cookies" id="aviso-cookies">
+                <div class="content">
+                    <img class="galleta" src="./Íconos - Logos/Cookies.svg" alt="Logo de la cookie de la pagina">
+                    <p class="parrafo">Utilizamos cookies para mejorar tu experiencia en nuestro sitio web. Al continuar navegando, aceptas nuestra política de cookies. Puedes cambiar tus preferencias en cualquier momento en la configuración de tu navegador. Para obtener más información, consulta nuestra política de privacidad.</p>
+                    <button class="boton" id="btn-aceptar-cookies" onclick="aceptarCookies()">Aceptar cookies</button>
+                    <button class="boton" id="btn-rechazar-cookies" onclick="rechazarCookies()">Rechazar</button>
+                    <button class="boton-cookies-x" id="btn-cookies-x" onclick="cerrarBannerCookies()"></button>
+                </div>
+            </div>
+        </div>
+    <div class="fondo-aviso-cookies" id="fondo-aviso-cookies"></div>
+
+<!-- CUERPO -->
+<div class="container-body">
+    <div class="text-container">
+        <h1>Bienvenido a nuestra familia</h1>
+        <br>
+        <h2>En cada huella,<br> encontramos una historia</h2>
+        <br><br>
+        <p>En City Can, nos dedicamos a escribir un capitulo de amor y 
+            cuidado en la vida de tus queridas mascotas</p>
+        <div class="button-container">
+            <a href="#datos-personales">
+                <button >
+                    Contáctanos
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="image-container">
+        <img src="./Íconos - Logos/Veterinario.svg" alt="Imagen de ejemplo">
+    </div>
+</div>
+
+    <!-- INICIO DE SESIÓN  -->
+<div class="Container-general" id="modal-container">
+    <form class="Inicio-Sesion" id="modal" action="conexion.php" method="post">
+        <div class="container1">
+            <div>
+                <h1>¡Bienvenido!</h1>
+                <p>Sabemos lo importante que son tus mascotas para ti. 
+                    <br><br><br>
+                    Inicia sesión para mantener a tus amigos peludos felices y saludables con nuestros servicios veterinarios.</p>
+            </div>
+            <img src="./Íconos - Logos/fondo-rectangulo.svg" alt="" class="perro2">
+        </div>
+        <div class="Formulario1">
+            <a href="#" class="cerrar-modal" id="cerrar-modal">
+                <img src="./Íconos - Logos/Equis.svg" alt="" class="corner-image">
+            </a>
+            <h2><strong>INICIAR SESION</strong></h2>
+   
+            <label for="email" class="email">Email:</label>
+            <input type="email" class="principal" name="email" required placeholder="johnanahua@gmail.com">
+
+            <label for="password" class="contraseña">Contraseña:</label>
+            <input type="password" class="principal" name="password" required placeholder="****************">
+                <a href="#" class="olvide-contrasena">
+                    Olvidé mi contraseña
+                </a>
+            <input type="submit" class="button-inicio-Sesion" id="boton-registrarse" value="Iniciar Sesion">
+
+            <p class="volver-iniciar">
+                ¿No estás registrado?  <span>
+                    <a href="#" id="abrir-modal2">Crea una cuenta</a>
+                </span>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- SECCIÓN REGISTRARSE -->
+    <div class="Container-general" id="modal-container2">
+        <form class="Inicio-Sesion" id="modal2" action="procesar-datos.php" method="post">
+            <div class="container1">
+                <div>
+                    <h1>¡Bienvenido a nuestra familia!</h1>
+                    <p>Nos encantaría conocerte a ti y a tu mascota. 
+                        <br><br>
+                        Regístrate ahora y descubre cómo podemos ayudarte a mantener a tu amigo peludo feliz y saludable.</p>
+                </div>
+                        <img src="./Íconos - Logos/rectangulo-general.svg" alt="">
+            </div>
+            <div class="Formulario1">
+                <a href="#" class="cerrar-modal">
+                    <img src="./Íconos - Logos/Equis.svg" alt="" class="corner-image">
+                </a>
+                <h2><strong>REGÍSTRATE</strong></h2>
+                <label for="name" class="nombre">Nombre:</label>
+                <input type="text" class="principal" id="name" name="name" required placeholder="John W. Anahua Layme ">
+
+                <label for="email" class="email">Email:</label>
+                <input type="email" class="principal" id="email" name="email" required placeholder="johnanahua@gmail.com">
+
+                <label for="password" class="contraseña">Contraseña:</label>
+                <input type="password" class="principal" id="password" name="password" required placeholder="******************">
+
+                <label for="confirm-password" class="confirmar-contraseña">Confirmar Contraseña:</label>
+                <input type="password" class="principal" id="confirm-password" name="confirm-password" required placeholder="******************">
+                <div class="Terminos-condiciones">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        
+                        <a href="/tyc.html" class="volver-iniciar">Acepto los Términos y Condiciones</a>
+                    </label>
+                </div>
+
+                <input type="submit" class="button-inicio-Sesion" id="boton-registrarse-modal2" value="Registrarse">
+
+                <p class="volver-iniciar">
+                    ¿Ya tienes una cuenta? <span>
+                        <a href="">Inicia Sesión</a>
+                    </span>
+                </p>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- RECUPERAR CONTRASEÑA -->
+
+    <div class="Container-general" id="modal-container3">
+        <form class="Inicio-Sesion" id="modal3" action="procesar-datos.php" method="post">
+            <div class="Formulario1">
+                <a href="#" class="cerrar-modal">
+                    <img src="./Íconos - Logos/Equis.svg" alt="" class="corner-image">
+                </a>
+                <h2><strong>RESTAURAR CONTRASEÑA</strong></h2>
+                <label for="email" class="email">Email:</label>
+                <input type="email" class="principal" id="email" name="email" required placeholder="johnanahua@gmail.com">
+                <label for="text" style="text-align: center; margin-top: 16px;" >¡Estás a punto de restablecer tu contraseña! Te enviaremos un correo Electrónico para confirmar tu identidad</label>
+                
+                <input type="submit" class="button-inicio-Sesion" id="boton-registrarse-modal2" value="Mandar Correo">
+
+            </div>
+        </form>
+    </div>
+
+    <!-- FOOTERR -->
+
+    <footer class="Datos-personales" id="datos-personales">
+        <div class="footer-principal">
+            <div class="Mapa_Global">
+                <h2>DONDE ESTAMOS</h2>
+                <figure>
+                    <img src="./Íconos - Logos/Mapa-ejemplo.svg" alt="">
+                </figure>
+                <p>Av Bolognesi 330 23001</p>
+            </div>
+            <div class="Nosotros">
+                <h2>NOSOTROS</h2>
+                <ul>
+                    <li>
+                        <a href="#">
+                            ¿Quienes somos?
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Preguntas frecuentes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Servicios
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                           Productos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="Terminos-legales">
+                <h2>TÉRMINOS LEGALES</h2>
+                <ul>
+                    <li>
+                        <a href="tyc.html">
+                            Terminos y Condiciones
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Política de privacidad
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Política de Cookies
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="Contáctanos">
+                <h2>CONTÁCTANOS</h2>
+                <ul>
+                    <li>
+                        Teléfono: +51 987654321
+                    </li>
+                    <li>
+                        Email: citycan@gmail.com
+                    </li>
+                </ul>
+            </div>
+            <div class="Social_Media">
+                <h2>REDES SOCIALES</h2>
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="./Íconos - Logos/facebook.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./Íconos - Logos/whatsapp.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./Íconos - Logos/mdi_instagram.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="pie-pagina">
+            <p>© 2023 City Can. Todos los derechos reservados. </p>
+        </div>
+    </footer>
+<script src="js/scripts.js"></script>
+<script src="js/modal.js"></script>
+<script src="./js/aviso-cookies.js"></script>
+</body>
+</html>

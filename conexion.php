@@ -2,7 +2,7 @@
 // Establecer la conexión con la base de datos
 $servername = "localhost";
 $username = "root";
-$password = "Predh2204";
+$password = "****";
 $database = "crm2";
 
 $conn = mysqli_connect($servername, $username, $password, $database);

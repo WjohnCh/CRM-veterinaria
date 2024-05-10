@@ -4,8 +4,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conectar a la base de datos
     $servername = "localhost";
     $username = "root";
-    $password = "Predh2204"; // Reemplaza "tucontraseña" con tu contraseña de MySQL
-    $dbname = "crm2"; // Reemplaza "nombre_base_de_datos" con el nombre de tu base de datos
+    $password = "******"; 
+    $dbname = "crm2"; 
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

@@ -355,11 +355,12 @@ body{
 }
 
 /* ESTILOS DEL FONDO PRINCIPAL */
-
+/* .contenedor-principal-general{
+} */
 .container-body {
    display: flex;
-   align-items: center;    
    background: radial-gradient(circle, #FFFFFF, #B5B5B5);
+   align-items: center;    
    width: auto;
    justify-content: space-between;
 }
@@ -448,13 +449,20 @@ body{
 /* DETALLE DEL PERSONAL DE LA VETERINARIA */
 
 section.Container-personal-medico{
-   margin: 20px 0px;
+   background: radial-gradient(circle, #FFFFFF, #B5B5B5);
+   padding: 20px 0px;
    display: grid;
    grid-template-columns: repeat(6, auto);
    grid-template-rows: 400px 400px;
    justify-content: center;
    gap: 20px;
 }
+.titulo-personal-veterinaria{
+   text-align: center;
+   width: 100%;
+   background-color: #F5F5F5;
+}
+
 section.Container-personal-medico .personal-medico1{
    grid-column: 1 / 3;
 } 
@@ -475,6 +483,7 @@ section#detalle-personal .detalle-personal-medico{
    height: 400px;
    padding: 20px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   background-color: var(--Negro-0);
 }
 section#detalle-personal .Foto-veterinario{
    display: flex;

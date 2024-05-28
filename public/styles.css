@@ -85,6 +85,9 @@ body{
    width: 80px;
    margin-right: 20px;
 }
+.Barra-Navegacion .Container-Logo p{
+   width: 100px;
+}
 .Barra-Navegacion .Enlaces-Navegacion{
    display: flex;
    width: 80%;
@@ -95,6 +98,7 @@ body{
    display: grid;
    grid-template-columns: auto auto auto;
    align-items: center;
+   height: 100%;
 }
 .Barra-Navegacion .Enlaces-Navegacion ul li{
    display: flex;

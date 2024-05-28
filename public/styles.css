@@ -8,6 +8,7 @@
     --Negro-50: #B5B5B5;
     --Negro-25: #EAEAEA;
     --Negro-0: #FFFFFF;
+    --yellow-50: #FFC100;
     /* Tamaño de letra */
     --ExtraGrande: 70px;
     --Tittle: 22px;
@@ -33,7 +34,7 @@ body{
 
 .Container-info{
    display: flex;
-   background-color:  var(--Negro-50);
+   background-color:  var(--yellow-50);
    width: 100%;
    height: 34px;
    align-items: center;
@@ -68,7 +69,8 @@ body{
    background-color: var(--Negro-0);
    padding: 0px 32px 0 32px;
    box-sizing: border-box;
-   box-shadow: 0px 4px 8px rgba(181, 181, 181, 0.8);
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+   border-bottom: 1px solid  var(--Negro-50);
 }
 .Barra-Navegacion.fixed {
    position: fixed;
@@ -363,7 +365,7 @@ body{
 } */
 .container-body {
    display: flex;
-   background: radial-gradient(circle, #FFFFFF, #B5B5B5);
+   background: #FEFAF6;
    align-items: center;    
    width: auto;
    justify-content: space-between;
@@ -405,31 +407,47 @@ body{
    width: 450px;
 }
 
+/* FOOTER */
 .Datos-personales{
    display: grid;
    grid-template-columns: auto;
-   padding: 10px 50px 10px 50px;
+   padding: 0px 50px 80px 50px;
    border-top: 2px solid gray;
-   
+   background-image: url('./Íconos - Logos/footer-rectangle.svg');
 }
 .Datos-personales .footer-principal {
    display: grid;
-   grid-template-columns: auto 1fr 1fr 1fr 1fr;
+   grid-template-columns: auto auto auto auto;
    gap: 50px;
 }
 .Datos-personales .footer-principal .Mapa_Global {
    text-align: center;
+   color: var(--Negro-0);
+}
+.Datos-personales .footer-principal .Mapa_Global p {
+   text-align: center;
+   color: var(--Negro-0);
+   font-weight: bold;
+   margin-top: 30px;
 }
 .Datos-personales .footer-principal div h2 {
    margin-top: 24px;
-   font-size: 18px;
-   margin-bottom: 24px;
+   font-size: 20px;
+   margin-bottom: 28px;
+   font-family: "Rammetto One", sans-serif;
+   color: var(--Negro-0);
+   letter-spacing: 3px;
 }
 .Datos-personales .footer-principal div ul li {
-   margin-bottom: 20px;
+   margin-bottom: 40px;
+   color: var(--Negro-0);
+   font-weight: bold;
+   font-size: 18px;
 }
 .Datos-personales .footer-principal div ul li a {
-   color: black;
+   color: var(--Negro-0);
+   font-weight: bold;
+   font-size: var(--Text-long);
 }
 .Datos-personales .footer-principal .Social_Media ul{
    display: flex;
@@ -437,12 +455,11 @@ body{
    justify-content: space-between;
    align-items: center;
 }
-.Datos-personales .pie-pagina{
-   margin-top: 40px;
-   padding: 20px 0 10px;
-   border-top: 1px solid gray;
+.pie-pagina{
+   padding: 10px 0 10px;
    text-align: center;
    font-size: 14px;
+   font-weight: bold;
 }
 
 #modal3{

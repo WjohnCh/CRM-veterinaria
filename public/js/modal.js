@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function() {
         ocultarModal(modalContainer);
     });
 
-    document.getElementById('boton-registrarse').addEventListener("click", function(event) {
-        ocultarModal(modalContainer);
-    });
+    // document.getElementById('boton-registrarse').addEventListener("click", function(event) {
+    //     ocultarModal(modalContainer);
+    // });
 
     modalContainer.addEventListener("click", function(event) {
         if (event.target === modalContainer) {

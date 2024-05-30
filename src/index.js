@@ -33,6 +33,27 @@ app.post('/procesar-datos', async (req, res) => {
       }
   });
 
+  app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const [results] = await sequelize.query(
+            'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
+            { replacements: [email, password] }
+        );
+
+        if (results.length > 0) {
+            res.json({ success: true, rol: results[0].rol });
+        } else {
+            res.json({ success: false, message: 'Invalid email or password.' });
+        }
+    } catch (error) {
+        console.error('Error al realizar la consulta:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log('Mi port ' +  port);

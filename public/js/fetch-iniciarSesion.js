@@ -1,22 +1,24 @@
-document.getElementById('boton-iniciar-sesion').addEventListener('click', async function(event) {
+document.getElementById('boton-registrarse').addEventListener('click', async function(event) {
     event.preventDefault();
-    const email = document.querySelector('input[name="email"]').value;
-    const password = document.querySelector('input[name="password"]').value;
+    const email = document.querySelector('#email-iniciar-sesion').value.trim();
+    const password = document.querySelector('#password-iniciar').value.trim();
 
     const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password})
     });
-
+    console.log("HOLAAAAAAAAAAAAAA")
     const result = await response.json();
     if (result.success) {
-        // Handle successful login
-        alert('Login successful!');
+        if (result.rol === 'admin') {
+            window.location.href = '/public/administrador.html';
+        } else{
+            window.location.href = '/public/cliente.html';
+        }
     } else {
-        // Handle login failure
         alert('Login failed: ' + result.message);
     }
 });

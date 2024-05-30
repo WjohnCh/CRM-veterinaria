@@ -257,7 +257,7 @@
 
     <!-- INICIO DE SESIÓN  -->
 <div class="Container-general" id="modal-container">
-    <form class="Inicio-Sesion" id="modal" action="conexion.php" method="post">
+    <form class="Inicio-Sesion" id="modal">
         <div class="container1">
             <div>
                 <h1>¡Bienvenido!</h1>
@@ -274,10 +274,10 @@
             <h2><strong>INICIAR SESION</strong></h2>
    
             <label for="email" class="email">Email:</label>
-            <input type="email" class="principal" name="email" required placeholder="johnanahua@gmail.com">
+            <input type="email" id="email-iniciar-sesion" class="principal" name="email" required placeholder="johnanahua@gmail.com">
 
             <label for="password" class="contraseña">Contraseña:</label>
-            <input type="password" class="principal" name="password" required placeholder="****************">
+            <input type="password" id="password-iniciar"class="principal" name="password" required placeholder="****************">
                 <a href="#" class="olvide-contrasena">
                     Olvidé mi contraseña
                 </a>
@@ -456,5 +456,6 @@
 <script src="js/modal.js"></script>
 <!-- <script src="./js/aviso-cookies.js"></script> -->
 <script src="./js/fetch-registrarse.js" ></script>
+<script src="./js/fetch-iniciarSesion.js" ></script>
 </body>
 </html>

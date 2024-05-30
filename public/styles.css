@@ -549,8 +549,15 @@ section#detalle-personal aside.contenedor-socialmedia{
 }
 
 /* RECICLABLE */
+
+/* Para el label */
+.label-red{
+   color: red;
+}
+
+/* Para el input */
 .sin-llenar{
-   border: 3px solid red !important;
+   border: 1px solid red !important;
    background-color: var(--Negro-0) !important;
 }
 /* EFECTO CUANDO UN CAMPO NO ESTÁ LLENADO */

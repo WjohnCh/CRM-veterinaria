@@ -309,16 +309,16 @@
                     <img src="./Íconos - Logos/Equis.svg" alt="" class="corner-image">
                 </a>
                 <h2><strong>REGÍSTRATE</strong></h2>
-                <label for="name" class="nombre">Nombre:</label>
-                <input type="text" class="principal" id="registrate-name"  required placeholder="John W. Anahua Layme ">
+                <label for="registrate-name" class="nombre">Nombre:</label>
+                <input type="text" class="principal" id="registrate-name"  required placeholder="John W. Anahua Layme" minlength="3" maxlength="40">
 
-                <label for="email" class="email">Email:</label>
+                <label for="registrate-email" class="email">Email:</label>
                 <input type="email" class="principal" id="registrate-email"  required placeholder="johnanahua@gmail.com">
 
-                <label for="password" class="contraseña">Contraseña:</label>
+                <label for="registrate-password" class="contraseña">Contraseña:</label>
                 <input type="password" class="principal" id="registrate-password"  required placeholder="******************">
 
-                <label for="confirm-password" class="confirmar-contraseña">Confirmar Contraseña:</label>
+                <label for="registrate-confirm-password" class="confirmar-contraseña">Confirmar Contraseña:</label>
                 <input type="password" class="principal" id="registrate-confirm-password"  required placeholder="******************">
                 <div class="Terminos-condiciones">
                     <input type="checkbox" id="registrate-terms" name="terms" required>
@@ -328,7 +328,7 @@
                     </label>
                 </div>
 
-                <input class="button-inicio-Sesion" id="boton-registrarse-modal2" value="Registrarse">
+                <input class="button-inicio-Sesion" id="boton-registrarse-modal2" type="submit" value="Registrarse">
 
                 <p class="volver-iniciar">
                     ¿Ya tienes una cuenta? <span>
@@ -455,6 +455,6 @@
     <script src="js/scripts.js"></script>
 <script src="js/modal.js"></script>
 <!-- <script src="./js/aviso-cookies.js"></script> -->
-<script src="./js/fetch.js" ></script>
+<script src="./js/fetch-registrarse.js" ></script>
 </body>
 </html>

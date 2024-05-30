@@ -1,57 +1,37 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-  event.preventDefault();
-  const form = document.getElementById('user-registrate');
+document.addEventListener('DOMContentLoaded', () => {
   const buttonRegistrate = document.getElementById('boton-registrarse-modal2')
-  
   buttonRegistrate.addEventListener('click', async (event) => {
-    const nameField = document.getElementById('registrate-name');
-    const emailField = document.getElementById('registrate-email');
-    const passwordField = document.getElementById('registrate-password');
-    const confirmPasswordField = document.getElementById('registrate-confirm-password');
+    const campos = [
+      document.getElementById('registrate-name'),
+      document.getElementById('registrate-email'),
+      document.getElementById('registrate-password'),
+      document.getElementById('registrate-confirm-password'),
+    ]
     const termsAccepted = document.getElementById('registrate-terms').checked;
-
-    const name = nameField.value;
-    const email = emailField.value;
-    const password = passwordField.value;
-    const confirmPassword = confirmPasswordField.value;
-
+    
     let valid = true;
-
-    // Verificar si algún campo está vacío y añadir la clase sin-llenar si es así
-    if (!name) {
-      nameField.classList.add('sin-llenar');
-      valid = false;
-    } else {
-      nameField.classList.remove('sin-llenar');
-    }
-
-    if (!email) {
-      emailField.classList.add('sin-llenar');
-      valid = false;
-    } else {
-      emailField.classList.remove('sin-llenar');
-    }
-
-    if (!password) {
-      passwordField.classList.add('sin-llenar');
-      valid = false;
-    } else {
-      passwordField.classList.remove('sin-llenar');
-    }
-
-    if (!confirmPassword) {
-      confirmPasswordField.classList.add('sin-llenar');
-      valid = false;
-    } else {
-      confirmPasswordField.classList.remove('sin-llenar');
-    }
+    
+    campos.forEach(campo =>{
+      console.log(campo);
+      const isempty = !campo.value.trim(); // true: if it is empty || false: if it is full 
+      const label = document.querySelector(`label[for="${campo.id}"]`);
+      campo.classList.toggle('sin-llenar', isempty);
+      label.classList.toggle('label-red', isempty);
+      if (isempty) {
+        valid = false;
+        console.log('Hola');
+      }
+    })
 
     if (!valid) {
       console.log('Todos los campos son obligatorios.');
       return; // Detiene la ejecución si algún campo está vacío
     }
-
-
+    const [nameField, emailField,passwordField, confirmPasswordField] = campos;
+    const name = nameField.value.trim();
+    const email = emailField.value.trim();
+    const password = passwordField.value.trim();
+    const confirmPassword = confirmPasswordField.value.trim();
 
     if (password !== confirmPassword) {
       confirmPasswordField.classList.add('sin-llenar');
@@ -64,6 +44,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
       console.log('Debes aceptar los Términos y Condiciones.');
       return;
     }
+
+    event.preventDefault();
 
       try {
         const response = await fetch('http://localhost:3000/procesar-datos', {

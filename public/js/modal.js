@@ -8,14 +8,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const modals = [modalContainer, modal2, modal3];
 
     function mostrarModal(modal) {
+        document.body.style.overflow = "hidden";
         modal.style.display = 'grid';
     }
-
+    
     function ocultarModal(modal) {
+        document.body.style.overflow = "auto";
         modal.style.display = 'none';
     }
-
+    
     function ocultarTodosModales() {
+        document.body.style.overflow = "auto";
         modals.forEach(modal => modal.style.display = 'none');
     }
 

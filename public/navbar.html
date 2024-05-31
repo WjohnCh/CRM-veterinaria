@@ -96,10 +96,6 @@
                 <a href ="#" id="signin-link">
                     <p>Inicia Sesión</p>
                 </a>
-                <figure class="lupaa">
-                    <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
-                </figure>
-                <p>|</p>
                 <figure class="carrito">
                     <a href="#"><img src="./Íconos - Logos/Carrito-Compras.svg"></a>
                 </figure>
@@ -272,17 +268,19 @@
                 <img src="./Íconos - Logos/Equis.svg" alt="" class="corner-image">
             </a>
             <h2><strong>INICIAR SESION</strong></h2>
-   
-            <label for="email" class="email">Email:</label>
+            <label for="email-iniciar-sesion" class="email">Email:</label>
             <input type="email" id="email-iniciar-sesion" class="principal" name="email" required placeholder="johnanahua@gmail.com">
-
-            <label for="password" class="contraseña">Contraseña:</label>
+            <p for="email-iniciar-sesion" class="validacion-rojo">Ingresa una correo válida</p>
+            
+            <label for="password-iniciar" class="contraseña">Contraseña:</label>
             <input type="password" id="password-iniciar"class="principal" name="password" required placeholder="****************">
-                <a href="#" class="olvide-contrasena">
-                    Olvidé mi contraseña
-                </a>
+            <p for="password-iniciar" class="validacion-rojo">Ingresa una contraseña válida</p>
+            <p for="validacion-rojo-registro" class="validacion-rojo">La contraseña o el correo que has introducido no son correctas</p>
+            <a href="#" class="olvide-contrasena">
+                Olvidé mi contraseña
+            </a>
             <input type="submit" class="button-inicio-Sesion" id="boton-registrarse" value="Iniciar Sesion">
-
+            
             <p class="volver-iniciar">
                 ¿No estás registrado?  <span>
                     <a href="#" id="abrir-modal2">Crea una cuenta</a>
@@ -302,7 +300,7 @@
                         <br><br>
                         Regístrate ahora y descubre cómo podemos ayudarte a mantener a tu amigo peludo feliz y saludable.</p>
                 </div>
-                        <img src="./Íconos - Logos/rectangulo-general.svg" alt="">
+                    <img class="perro-logo-registrate" src="./Íconos - Logos/rectangulo-general.svg" alt="">
             </div>
             <div class="Formulario1">
                 <a href="#" class="cerrar-modal">
@@ -310,18 +308,23 @@
                 </a>
                 <h2><strong>REGÍSTRATE</strong></h2>
                 <label for="registrate-name" class="nombre">Nombre:</label>
-                <input type="text" class="principal" id="registrate-name"  required placeholder="John W. Anahua Layme" minlength="3" maxlength="40">
-
+                <input type="text" class="principal" id="registrate-name"  required placeholder="John W. Anahua Layme" minlength="2" maxlength="40">
+                <p for="registrate-name-err" class="validacion-rojo">Ingresa un nombre válido</p>
+                
                 <label for="registrate-email" class="email">Email:</label>
-                <input type="email" class="principal" id="registrate-email"  required placeholder="johnanahua@gmail.com">
-
+                <input type="email" class="principal" id="registrate-email"  required placeholder="johnanahua@gmail.com" minlength="6">
+                <p for="registrate-email-err" class="validacion-rojo">Ingresa un email válido</p>
+                
                 <label for="registrate-password" class="contraseña">Contraseña:</label>
                 <input type="password" class="principal" id="registrate-password"  required placeholder="******************">
-
+                <p for="registrate-password-err" class="validacion-rojo">Ingresa una contraseña válida</p>
+                
                 <label for="registrate-confirm-password" class="confirmar-contraseña">Confirmar Contraseña:</label>
                 <input type="password" class="principal" id="registrate-confirm-password"  required placeholder="******************">
+                <p for="registrate-confirm-password-err" class="validacion-rojo">La contraseña no coincide</p>
+
                 <div class="Terminos-condiciones">
-                    <input type="checkbox" id="registrate-terms" name="terms" required>
+                    <input type="checkbox" id="registrate-terms" name="terms"  required>
                     <label for="terms">
                         
                         <a href="/tyc.html" class="volver-iniciar">Acepto los Términos y Condiciones</a>
@@ -330,11 +333,6 @@
 
                 <input class="button-inicio-Sesion" id="boton-registrarse-modal2" type="submit" value="Registrarse">
 
-                <p class="volver-iniciar">
-                    ¿Ya tienes una cuenta? <span>
-                        <a href="">Inicia Sesión</a>
-                    </span>
-                </p>
             </div>
         </form>
     </div>
@@ -457,5 +455,5 @@
 <!-- <script src="./js/aviso-cookies.js"></script> -->
 <script src="./js/fetch-registrarse.js" ></script>
 <script src="./js/fetch-iniciarSesion.js" ></script>
-</body>
+x </body>
 </html>

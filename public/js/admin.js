@@ -4,13 +4,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const opcionesCita = document.querySelectorAll('.opciones-cita')
         const opcionesAdmin = document.querySelectorAll('.option-admin');
         const flechaGira = document.querySelectorAll('.flecha-admin-opcion')
+
+        const asideNabvarClose= document.querySelector('.bar-right-img');
+        const contenedorNavbarAdmin= document.querySelector('.administrador-navbar');
         // contenedorCita.addEventListener('click',()=>{
         //         opcionesCita.classList.toggle("motrar-elemento");
         //         flechaGira.classList.toggle('flecha-admin-opcion');
         // })
 
 
-// LOGICA PARA CAMBIAR DE COLOR UN BOTON
+    // LOGICA PARA CAMBIAR DE COLOR UN BOTON
         opcionesAdmin.forEach(function(element) {
             element.addEventListener('click', function() {
                 let i =0;
@@ -31,4 +34,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 this.classList.add('active'); // this hace referencia al elemento que activó el evento
             });
         });
+
+        asideNabvarClose.addEventListener('click', ()=>{
+            document.body.appendChild(asideNabvarClose);
+            document.body.classList.toggle('solo-un-elemento');
+            contenedorNavbarAdmin.classList.toggle('hidden-admin-navbar');
+            asideNabvarClose.classList.toggle('mover-bar');
+
+
+        })
+
 })

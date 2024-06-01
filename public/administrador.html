@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
-<body>
+<body class="contenedor-body-divison">
     <nav class="administrador-navbar">
         <header class="user-information">
             <figure>
@@ -181,6 +181,167 @@
             </figure>
         </div>
     </nav>
+
+    <div>
+        <div class="reserva_cita_barra-superior">
+            <a href="">
+            </a>
+            <a href="">
+              <img
+                src="./Íconos - Logos/notificacion_reserva.svg"
+                alt="Notificacion Logo"
+                class="reserva_cita_barra-superior__icono reserva_cita_barra-superior__icono--derecha"
+              />
+            </a>
+        </div class="contenedor-citas-general">
+          <div class="reserva-cita__formulario">
+            <h1 class="reserva-cita__titulo">CREAR NUEVA CITA</h1>
+            <div class="reserva-cita__contenido">
+              <div>
+                <h2 class="reserva-cita__subtitulo">Información del cliente:</h2>
+                <div class="reserva-cita__cliente">
+                  <label for="reserva_cita_cliente-nombre" class="reserva-cita__label"
+                    >Nombre Completo:</label
+                  >
+                  <input
+                    type="text"
+                    id="reserva_cita_cliente-nombre"
+                    name="reserva_cita_cliente-nombre"
+                    class="reserva-cita__input"
+                  />
+                  <label for="reserva_cita_cliente-dni" class="reserva-cita__label"
+                    >DNI:</label
+                  >
+                  <input
+                    type="text"
+                    id="reserva_cita_cliente-dni"
+                    name="reserva_cita_cliente-dni"
+                    class="reserva-cita__input"
+                  />
+                  <label for="reserva_cita_cliente-correo" class="reserva-cita__label"
+                    >Correo Electrónico:</label
+                  >
+                  <input
+                    type="email"
+                    id="reserva_cita_cliente-correo"
+                    name="reserva_cita_cliente-correo"
+                    class="reserva-cita__input"
+                  />
+                  <label
+                    for="reserva_cita_cliente-direccion"
+                    class="reserva-cita__label"
+                    >Dirección:</label
+                  >
+                  <input
+                    type="text"
+                    id="reserva_cita_cliente-direccion"
+                    name="reserva_cita_cliente-direccion"
+                    class="reserva-cita__input"
+                  />
+                </div>
+              </div>
+              <div class="reserva-cita__detalles">
+                <h2 class="reserva-cita__subtitulo">Información de la mascota:</h2>
+                <div class="reserva-cita__mascota">
+                  <div class="contenedor-datos-cita">
+                    <div>
+                      <label for="reserva_cita_mascota-nombre" class="reserva-cita__label"
+                        >Nombre</label
+                      >
+                      <input
+                        type="text"
+                        id="reserva_cita_mascota-nombre"
+                        name="reserva_cita_mascota-nombre"
+                        class="reserva-cita__input"
+                      />
+                    </div>
+                    <div class="reserva-contenedor">
+                      <label
+                        for="reserva_cita_mascota-especie"
+                        class="reserva-cita__label"
+                        >Especie</label
+                      >
+                      <select
+                        id="reserva_cita_mascota-especie"
+                        name="reserva_cita_mascota-especie"
+                        class="reserva-cita__select"
+                        placeholder="Seleccionar"
+                      >
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option value="perro">Perro</option>
+                        <option value="gato">Gato</option>
+                        <option value="gato">Otro</option>
+                      </select>
+                    </div>
+        
+                    <div class="reserva-contenedor">
+                      <label for="reserva_cita_mascota-sexo" class="reserva-cita__label"
+                      >Sexo</label>
+                      <select
+                      id="reserva_cita_mascota-sexo"
+                      name="reserva_cita_mascota-sexo"
+                      class="reserva-cita__select"
+                      >
+                      <option value="" disabled selected>Seleccionar</option>
+                      <option value="perro">Macho</option>
+                      <option value="gato">Hembra</option>
+                      <option value="gato">No especificado</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+        
+        
+                <h2 class="reserva-cita__subtitulo">Detalles de la cita:</h2>
+                <div class="reserva-cita__cita">
+                  <div class="reserva-cita__cita-grid">
+                    <div class="reserva-cita__reserva_cita_cita-motivo">
+                      <label
+                      for="reserva_cita_cita-motivo"
+                      class="reserva-cita__label"
+                      >Motivo de la cita</label
+                      >
+                      <select
+                      id="reserva_cita_cita-motivo"
+                      name="reserva_cita_cita-motivo"
+                      class="reserva-cita__select"
+                      >
+                      <option value="" disabled selected>Seleccionar</option>
+                      <option value="consulta">Consulta</option>
+                      <option value="vacunacion">Vacunación</option>
+                      <option value="control">Control</option>
+                      <option value="otro">Otro</option>
+                      </select>
+                      <label for="reserva_cita_cita-fecha" class="reserva-cita__label"
+                        >Fecha</label
+                      >
+                      <input
+                        type="date"
+                        id="reserva_cita_cita-fecha"
+                        name="reserva_cita_cita-fecha"
+                        class="reserva-cita__input"
+                      />
+                    </div>
+                    <div class="reserva-cita__cita-info">
+                      <label for="reserva_cita_cita-info" class="reserva-cita__label"
+                        >Más información</label
+                      >
+                      <textarea
+                        id="reserva_cita_cita-info"
+                        name="reserva_cita_cita-info"
+                        rows="4"
+                        class="reserva-cita__textarea"
+                        placeholder="0/100 palabras"
+                        maxlength="100"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="reserva-cita__boton">Reservar cita</button>
+          </div>
+    </div>
 
     <script src="./js/admin.js"></script>
 

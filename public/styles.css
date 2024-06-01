@@ -27,6 +27,7 @@
 }
 body{
     font-family: 'Quicksand', sans-serif;
+    padding: 10px;
 }
 
 /* NAVBAR */
@@ -583,7 +584,10 @@ section#detalle-personal aside.contenedor-socialmedia{
 }
 .motrar-elemento{
    display: block !important;
+
 }
+
+
 
 /* EFECTO CUANDO UN CAMPO NO ESTÁ LLENADO */
 
@@ -671,34 +675,52 @@ main.contenedor-productos .detalle-producto .precio-producto{
 
 /* ADMINISTRADOR NAVBAR */
 
+.white-letter{
+   color: white;
+}
+
 nav.administrador-navbar{
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
    display: grid;
-   width: 400px;
-   padding: 20px 15px;
-   height: 100vh;
-   grid-template-rows: 40px 1fr;
+   width: 320px;
+   padding: 5px 15px;
+   height: calc(100vh - 20px);
+   grid-template-rows: auto 1fr;
+   background-color: #191919;
+   border-radius: 30px;
 }
-
+.contenedor-opcion-admin{
+   border:1px solid var(--Negro-75); 
+   border-radius: 10px;
+   margin-bottom: 10px;
+}
 nav.administrador-navbar .user-information{
    display: flex;
    justify-content: space-between;
+   align-items: center;
+   border-bottom: 1px solid var(--Negro-75);
 }
+.texto-administrador{
+   font-size: 26px;
+   font-weight: bold;
+}
+/* 
 nav.administrador-navbar .user-information2{
    display: flex;
    justify-content: space-between;
    width: 200px;
    align-items: center;
    font-weight: bold;
-}
+} */
 .bar-right-img{
    width: 30px;
 }
-
+.container-options-admin{
+   margin-top: 36px;
+   overflow: auto;
+}
 .option-admin{
-   background-color: var(--Negro-25);
-   margin-bottom: 20px;
-   height: 40px;
+   height: 50px;
    border-radius: 10px;
    font-weight: bold;
    line-height:40px;
@@ -706,23 +728,34 @@ nav.administrador-navbar .user-information2{
    display: flex;
    justify-content: space-between;
    cursor: pointer;
+   align-items: center;
 }
-.option-admin:active{
-   background-color:var(--Negro-50);
+.option-admin:hover{
+   background-color: #2B2B2F;
 }
 .option-admin.panel-control:active{
    background-color:var(--Negro-50);
 }
+/* RECICLAJE, CAMBIA EL COLOR CUANDO SE HACE CLICK */
+.option-admin.active {
+   background-color: #2B2B2F; /* Cambia el color aquí */
+}
 
 .option-admin.panel-control{
    margin: 40px 0px 60px;
-   background-color: var(--Negro-50);
+   background-color: #2B2B2F;
 }
 
 .option-admin .contenedor-admin{
    display: flex;
-   width: 200px;
+   width: 100%;
+   font-size: 20px;
 }
+
+.flecha-admin-opcion{
+   transform: rotate(-90deg);
+}
+
 .option-admin .contenedor-admin figure{
    display: flex;
    align-items: center;
@@ -732,20 +765,45 @@ nav.administrador-navbar .user-information2{
 }
 
 .opciones-cita{
-   padding-left: 44px;
+   display: none;
+   padding-left: 30px;
    font-weight: bold;
+   
 }
 .opciones-cita ul li{
    height: 36px;
    border-radius: 4px;
    padding-left: 10px;
    line-height: 36px;
+   font-size: 18px;
 }
+
 .opciones-cita ul li:hover{
-   background-color:var(--Negro-25);
+   background-color: #2B2B2F;
+   cursor: pointer;
+   border-radius: 10px;
+}
+
+.user-information2{
+   border-top: 0.01px solid var(--Negro-75);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0px 10px;
+}
+
+.user-information2 div{
+   margin-top: 18px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   font-size: 20px;
+   font-weight: bold;
+}
+
+.exit-admin{
+   margin-top: 20px;
    cursor: pointer;
 }
-
-
 
 

@@ -5,16 +5,76 @@ const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
+const fs = require('node:fs');
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
+
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 
+app.post('/images/single', upload.single('avatar'), async (req, res)=>{
+    const file = req.file;
+    const { nombre, precio } = req.body;
+    const newPath = path.join(__dirname, 'uploads', file.originalname);
+
+    try {
+        fs.renameSync(file.path, newPath);
+
+        const [result] = await sequelize.query(
+            'INSERT INTO productos (nombre, precio, url) VALUES (?, ?, ?)',
+            { replacements: [nombre, parseFloat(precio), newPath] }
+        );
+        res.send('Archivo subido y movido exitosamente');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al mover el archivo');
+    }
+
+})
+
+
+
+app.get('/productos/:id/image', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [results] = await sequelize.query(
+            'SELECT url FROM productos WHERE idproductos = ?',
+            { replacements: [id] }
+        );
+
+        if (results.length > 0) {
+            const imagePath = results[0].url;
+            res.sendFile(imagePath);
+        } else {
+            res.status(404).send('Producto no encontrado.');
+        }
+    } catch (error) {
+        console.error('Error al realizar la consulta:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+
 app.get('/', async (req, res)=>{
-    const [results] = await sequelize.query('SELECT * FROM productos WHERE idproductos = 1');
-    // console.log('Query executed. Results:', results);
+    const [results] = await sequelize.query('SELECT * FROM productos');
     res.send(results);
 })
+
+app.get('/productos', async (req, res) => {
+    try {
+        const [results] = await sequelize.query('SELECT * FROM productos');
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
 
 app.post('/procesar-datos', async (req, res) => {
     const { name, email, password } = req.body;

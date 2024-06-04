@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 500px;
+            border: 1px solid black;
+            width: 500px;
+            margin: 10px auto;
+            justify-content: center;
+            background-color: aliceblue;
+        }
+
+        form label{
+            margin-bottom: 10px;
+        }
+
+        form input{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data">
+        <label for="nombre">Nombre del Producto:</label>
+        <input type="text" name="nombre" placeholder="Nombre del producto">
+        <label for="precio">Precio del Producto:</label>
+        <input type="number" name="precio" placeholder="Precio del Producto" step="0.01">
+        <label for="categoria">Categoría: </label>
+        <select name="categoria" id="">
+            <option value="" disabled selected>Categoría </option>
+            <option value="ropa">Ropa</option>
+            <option value="Accesorios">Accesorios</option>
+            <option value="Juguetes">Juguetes</option>
+            <option value="Comida">Comida</option>
+            <option value="Otros">Otros</option>
+        </select>
+        <label for="avatar">Subir Foto:</label>
+        <input type="file" name="avatar" id="">
+        <input type="submit" name="" id="" value="enviar">
+    </form>
+    
+</body>
+</html>

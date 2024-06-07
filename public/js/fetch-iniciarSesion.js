@@ -1,6 +1,8 @@
 document.getElementById('boton-registrarse').addEventListener('click', async function(event) {
     event.preventDefault();
     
+    
+
     const campos =[ 
         document.getElementById('email-iniciar-sesion'),
         document.getElementById('password-iniciar')

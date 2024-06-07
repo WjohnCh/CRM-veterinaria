@@ -18,15 +18,18 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     const file = req.file;
-    const { nombre, precio } = req.body;
+    const { nombre, precio, categoria } = req.body;
     const newPath = path.join(__dirname, 'uploads', file.originalname);
-
     try {
         fs.renameSync(file.path, newPath);
-
+        const [idCategoria] = await sequelize.query(
+            'SELECT idCategoria FROM categoria WHERE nombre = ?',
+            { replacements: [categoria] }  
+        );
+        console.log(idCategoria);
         const [result] = await sequelize.query(
-            'INSERT INTO productos (nombre, precio, url) VALUES (?, ?, ?)',
-            { replacements: [nombre, parseFloat(precio), newPath] }
+            'INSERT INTO productos (nombre, precio, url, idCategoria) VALUES (?, ?, ?, ?)',
+            { replacements: [nombre, parseFloat(precio), newPath, idCategoria[0].idCategoria] }
         );
         res.send('Archivo subido y movido exitosamente');
     } catch (error) {

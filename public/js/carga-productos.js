@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", async ()=>{
+    const cantidadProducto = document.getElementById('valor-productos');
+    let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
     try {
         const productList = document.getElementById("productList");
         const plantilla = document.querySelector(".detalle-producto");
@@ -8,6 +10,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         const { categoria } = await fetch('http://localhost:3000/productos')
         const response = await fetch('http://localhost:3000/productos');
         const products = await response.json();
+        // if(products){
+        //     productosPulsados = [];
+        // }
         products.forEach(product => {
             CrearEstructuraObjeto(product, plantilla, productList);
         });
@@ -15,8 +20,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         console.error('Error al cargar los productos:', error);
     }
 
-    const cantidadProducto = document.getElementById('valor-productos');
-    let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
     // productosPulsados  = []
     if(productosPulsados){
         cantidadProducto.innerText = parseInt(productosPulsados.length);
@@ -36,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         const botonProducto = nuevoProducto.querySelector('.Boton_añadir_carro');
         // Aniadimos el ID al elemento contenedor para identificarlo
         nuevoProducto.setAttribute('id-producto', producto.idproductos);
-        imagenProducto.src = `http://localhost:3000/productos/${producto.idproductos}/image`;
+        imagenProducto.src = `.${producto.url}`;
         imagenProducto.alt = producto.nombre;
         precioProducto.textContent = `S/ ${producto.precio.toFixed(2)}`;
         descripcionProducto.textContent = producto.nombre;
@@ -47,12 +50,12 @@ document.addEventListener("DOMContentLoaded", async ()=>{
                 productosPulsados.push(producto);
                 botonProducto.innerText = "Producto añadido";
                 cantidadProducto.innerText = parseInt(cantidadProducto.innerText) + 1;
-                // actualizarProductosCarrito(producto.idproductos);
+                CrearEstructuraObjetoCarrito(producto)
                 }else{
                     productosPulsados.splice(productosPulsados.indexOf(producto), 1);
                     cantidadProducto.innerText = parseInt(cantidadProducto.innerText) - 1;
                     botonProducto.innerText = "Añadir al carrito";
-                // actualizarProductosCarrito(producto.idproductos);
+                actualizarProductosCarrito(producto.idproductos);
             }
             localStorage.setItem('productosAniadidos', JSON.stringify(productosPulsados));
 
@@ -103,11 +106,18 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
     function CrearEstructuraObjetoCarrito(producto){
         const nuevoProductoAniadido = plantillaProductoCarrito.cloneNode(true);
-        nuevoProductoAniadido.setAttribute("idProductoCarrito", producto.id)
+        nuevoProductoAniadido.setAttribute("idProductoCarrito", producto.idproductos)
         nuevoProductoAniadido.style.display='flex';
-    
+
+        const imgProducto = nuevoProductoAniadido.querySelector(".Img__Foto-Producto img")
+        imgProducto.src = `.${producto.url}`;
+        console.log(producto.url);
+
+        const nombreProducto = nuevoProductoAniadido.querySelector(".carrito__nombre-producto")
+        nombreProducto.innerText = producto.nombre;
+        
         const precioProducto = nuevoProductoAniadido.querySelector(".carrito__precio-producto")
-        precioProducto.innerText = ``;
+        precioProducto.innerText = `S/ ${producto.precio}`;
 
         contenedorProductosCarrito.appendChild(nuevoProductoAniadido);
     }

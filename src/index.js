@@ -7,9 +7,7 @@ const port = process.env.PORT || 3000;
 
 const fs = require('node:fs');
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
-
-
+const upload = multer({dest: './src/uploads/'});
 
 app.use(cors());
 app.use(express.json());
@@ -19,7 +17,8 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     const file = req.file;
     const { nombre, precio, categoria } = req.body;
-    const newPath = path.join(__dirname, 'uploads', file.originalname);
+
+    const newPath = `./src/uploads/${file.originalname}`
     try {
         fs.renameSync(file.path, newPath);
         const [idCategoria] = await sequelize.query(
@@ -36,10 +35,7 @@ app.post('/images/single', upload.single('avatar'), async (req, res)=>{
         console.error(error);
         res.status(500).send('Error al mover el archivo');
     }
-
 })
-
-
 
 app.get('/productos/:id/image', async (req, res) => {
     const { id } = req.params;

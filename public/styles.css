@@ -749,10 +749,10 @@ main.contenedor-productos .contenedor-productos-centro{
    border-radius: 20px;
    width: 100px;
    height: 100px;
-   }
+   overflow: hidden;
+}
    
 .Img__Foto-Producto img{
-   display:block;
    width: 80px;
 }
 .Img__Eliminar-Producto{

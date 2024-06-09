@@ -61,8 +61,8 @@
                 <div class="carrito__contenedor_valor-numerico">
                     <span id="valor-productos" class="white-letter">0</span>
                 </div>
-                <figure class="carrito">
-                    <a href="#"><img src="./Íconos - Logos/Carrito-Compras.svg"></a>
+                <figure class="carrito" style="cursor: pointer;">
+                    <img src="./Íconos - Logos/Carrito-Compras.svg">
                 </figure>
                 <aside id="Contenedor__Sombreado-Modal">
                     <div class="Contenedor-CarritoCompras">
@@ -74,26 +74,33 @@
                             </figure>
                         </div>
                         <div class="Contenedor__productos-Seleccionados">
+                            <div class="Contenedor__productos-vacios" style="display: none;">
+                                <img src="./Íconos - Logos/carrito vacio.svg" alt="">
+                                <p class="mensaje__productos-vacios">No hay productos en el carrito</p>
+                                <button class="btn__productos-vacios boton-generico-primario">Regresar a la tienda</button>
+                            </div>
                             <div class="Contenedor__producto-aniadido" style="display: none;">
                                 <figure class="Img__Foto-Producto">
                                     <img src="" alt="">
                                 </figure>
                                 <div class="Contenedor__detalle-Producto">
                                     <p class="carrito__nombre-producto"></p>
-                                    <p class="carrito__precio-producto"></p>
+                                    <p class="contenedor__carrito__precio-producto">S/ 
+                                        <span class="carrito__precio-producto"></span>
+                                    </p>
                                 </div>
                                 <div class="Btn_Aumentar-Cantidad-Producto">
                                     <button class="btn btn-disminuir">-</button>
-                                    <input type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
-                                    <button class="btn btn-disminuir">+</button>
+                                    <input class="input__cantidad-producto" type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
+                                    <button class="btn btn-aumentar">+</button>
                                 </div>
                                 <figure class="Img__Eliminar-Producto">
                                     <img src="./Íconos - Logos/trash-bold.svg" alt="">
                                 </figure>
                             </div>
-                            <div class="Contenedor__producto-aniadido">
+                            <!-- <div class="Contenedor__producto-aniadido">
                                 <figure class="Img__Foto-Producto">
-                                    <img src="../src/uploads/producto5.svg" alt="">
+                                    <img src="" alt="">
                                 </figure>
                                 <div class="Contenedor__detalle-Producto">
                                     <p class="carrito__nombre-producto">Cepillo</p>
@@ -107,12 +114,14 @@
                                 <figure class="Img__Eliminar-Producto">
                                     <img src="./Íconos - Logos/trash-bold.svg" alt="">
                                 </figure>
-                            </div>
+                            </div> -->
                         </div>
-                        <div>
+                        <div id="contenedor-general__Subtotal-Productos">
                             <div class="contenedor__Subtotal_Productos-Carrito">
                                 <p class="Subtotal_Productos-Carrito">Subtotal:</p>
-                                <span>S/ 20.00</span>
+                                <p>
+                                    S/<span class="precio-total-subtotal">0.00</span>
+                                </p>
                             </div>
                             <button class="boton-generico-primario">Finalizar Compra</button>
                         </div>
@@ -120,22 +129,23 @@
                 </aside>
             </div>
     </nav>
-    <div class="Sección_Filtrado_busqueda">
-        <div class="hover-naranja">
-            <button class="botton_filtrado  Filtro_Categoría_Producto">Categoria de productos</button>
-            <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
-        </div>
-        <button class="botton_filtrado  Filtro_Promociones hover-naranja">Promociones</button>
-        <div class="hover-naranja">
-            <button class="botton_filtrado  Filtro_Mascotas">Mascotas</button>
-            <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
-        </div>
-        <div style="position: relative;">
-            <input id="barra-busqueda">
-                    <figure class="cliente-img lupa">
-                        <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
-                    </figure>
-            </input>
+    <div class="Contenedor__Sección_Filtrado_busqueda">
+        <div class="Sección_Filtrado_busqueda">
+            <div class="hover-naranja">
+                <button class="botton_filtrado  Filtro_Categoría_Producto">Categoria de productos</button>
+                <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+            </div>
+            <div class="hover-naranja">
+                <button class="botton_filtrado  Filtro_Mascotas">Mascotas</button>
+                <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+            </div>
+            <div style="position: relative;">
+                <input id="barra-busqueda">
+                        <figure class="cliente-img lupa">
+                            <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
+                        </figure>
+                </input>
+            </div>
         </div>
     </div>
 
@@ -234,6 +244,6 @@
         </div>
     </main>    
     
-    <script src="./js/carga-productos.js"></script>
+    <script type="module" src="./js/carga-productos.mjs"></script>
 </body>
 </html>

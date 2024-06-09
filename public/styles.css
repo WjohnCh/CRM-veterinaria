@@ -719,15 +719,31 @@ main.contenedor-productos .contenedor-productos-centro{
 }
 
 #Cerrar_Carrito-Compras img{
-   width: 24px;
+   width: 20px;
 }
-
 
 .Contenedor__productos-Seleccionados{
    display: grid;
    height: 100%;
    grid-template-rows: repeat(auto-fill, 120px);
    overflow:auto;
+}
+
+.Contenedor__productos-vacios{
+   border-top: 2px solid var(--Negro-25);
+   padding-top: 20px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   font-size: 24px;
+}
+
+.Contenedor__productos-vacios .mensaje__productos-vacios{
+   color: var(--Negro-50);
+   margin: 20px 0px;
+}
+.Contenedor__productos-vacios .btn__productos-vacios{
+   background-color: var(--Orange-85);
 }
 
 .Contenedor__producto-aniadido{
@@ -780,14 +796,13 @@ main.contenedor-productos .contenedor-productos-centro{
    font-weight: 500;
 }
 
-.Contenedor__detalle-Producto .carrito__precio-producto{
+.Contenedor__detalle-Producto .contenedor__carrito__precio-producto, .carrito__precio-producto{
    margin-top: 8px;
    font-size: var(--Text-long);
    font-weight: 600;
    color: #DC5F00;
-   
 }
-.Contenedor__detalle-Producto .carrito__precio-producto::before{
+.Contenedor__detalle-Producto .contenedor__carrito__precio-producto::before{
    content: "Precio unidad:\A";
    font-weight: 100;
    color: var(--Negro-100);
@@ -1167,28 +1182,35 @@ nav.administrador-navbar .user-information{
    top: 0px;
    z-index: 1;
 }
-.Sección_Filtrado_busqueda{
-   margin-top: 83px;
-   display: flex;
+
+.Contenedor__Sección_Filtrado_busqueda{
    width: 100%;
-   justify-content: space-around ;
+   margin-top: 83px;
    height: 70px;
-   align-items: center;
    border-bottom: 1px solid var(--Negro-50);
+}
+
+.Sección_Filtrado_busqueda{
+   display: flex;
+   justify-content: space-between ;
+   align-items: center;
+   width: 1040px;
+   margin: auto;
+   height: 100%;
 }
 
 .botton_filtrado{
    background-color: var(--Negro-0);
    font-size: var(--Text-medium);
    font-weight: 600;
-   border-bottom: 3px solid var(--Negro-0);
-}
-.Filtro_Promociones{
    cursor: pointer;
 }
 .hover-naranja{
+   cursor: pointer;
+   display: flex;
+   align-items: center;
    height: 100%;
-   padding: 25px 0px;
+   border-bottom: 3px solid var(--Negro-0);
 }
 
 .hover-naranja:hover {

@@ -1,3 +1,5 @@
+import  { actualizaSubtotalCarrito } from "./funciones-productos.mjs"
+
 document.addEventListener("DOMContentLoaded", async ()=>{
     const cantidadProducto = document.getElementById('valor-productos');
     let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
@@ -20,15 +22,28 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         console.error('Error al cargar los productos:', error);
     }
 
-    // productosPulsados  = []
-    if(productosPulsados){
+    const contenedorProductosCarritoVacio = document.querySelector(".Contenedor__productos-vacios");
+    const contenedorSubtotal = document.getElementById("contenedor-general__Subtotal-Productos");
+    const botonProductosCarritoVacio = document.querySelector(".btn__productos-vacios")
+    botonProductosCarritoVacio.addEventListener("click", ()=>{
+        window.scrollTo(0, 0);
+        location.reload();
+    })    
+
+    if(productosPulsados.length !== 0){
         cantidadProducto.innerText = parseInt(productosPulsados.length);
+        contenedorSubtotal.style.display = "block"
+        contenedorProductosCarritoVacio.style.display = "none"
         productosPulsados.forEach(producto =>{
+
             const contenedorObjeto = document.querySelector(`[id-producto="${producto.idproductos}"]`);
             contenedorObjeto.querySelector('.Boton_añadir_carro').classList.add("producto-aniadido");
+            contenedorObjeto.querySelector('.Boton_añadir_carro').innerText = "Producto añadido";
             })
+        }else{
+            contenedorSubtotal.style.display = "none"
+            contenedorProductosCarritoVacio.style.display = "flex"
         }
-    
         function CrearEstructuraObjeto(producto, plantilla, contenedor) {
         const nuevoProducto = plantilla.cloneNode(true);
         nuevoProducto.style.display = 'flex';
@@ -45,7 +60,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         descripcionProducto.textContent = producto.nombre;
 
         botonProducto.addEventListener("click", ()=>{
-            botonProducto.classList.toggle("producto-aniadido");
+                editarEstadoProducto(botonProducto, producto)
+            })
+            contenedor.appendChild(nuevoProducto);
+            }
+
+    // FUNCION BOTON ACTUALIZAR VALOR CARRITO
+    function editarEstadoProducto(botonProducto,producto){
+        botonProducto.classList.toggle("producto-aniadido");
             if(botonProducto.classList.contains("producto-aniadido")){
                 productosPulsados.push(producto);
                 botonProducto.innerText = "Producto añadido";
@@ -57,14 +79,16 @@ document.addEventListener("DOMContentLoaded", async ()=>{
                     botonProducto.innerText = "Añadir al carrito";
                 actualizarProductosCarrito(producto.idproductos);
             }
-            localStorage.setItem('productosAniadidos', JSON.stringify(productosPulsados));
-
-            })
-            contenedor.appendChild(nuevoProducto);
+            if(cantidadProducto.innerText == 0 ){
+                contenedorSubtotal.style.display = "none"
+                contenedorProductosCarritoVacio.style.display = "flex"
+            }else{
+                contenedorSubtotal.style.display = "block"
+                contenedorProductosCarritoVacio.style.display = "none"
             }
-
-
-
+            localStorage.setItem('productosAniadidos', JSON.stringify(productosPulsados));
+            actualizaSubtotalCarrito()
+    }
     // MODAL PARA EL CARRITO DE COMPRAS:
     const imgCerrarCarritoX = document.getElementById("Cerrar_Carrito-Compras");
     const imgCarrito = document.querySelector(".carrito");
@@ -88,8 +112,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         }
     })
 
-
-    // Aniadir productos al carrito
+    // Aniadir productos al carrito y el
     function actualizarProductosCarrito(idproductos){
 
         if(idproductos){
@@ -111,14 +134,52 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
         const imgProducto = nuevoProductoAniadido.querySelector(".Img__Foto-Producto img")
         imgProducto.src = `.${producto.url}`;
-        console.log(producto.url);
 
         const nombreProducto = nuevoProductoAniadido.querySelector(".carrito__nombre-producto")
         nombreProducto.innerText = producto.nombre;
         
         const precioProducto = nuevoProductoAniadido.querySelector(".carrito__precio-producto")
-        precioProducto.innerText = `S/ ${producto.precio}`;
+        precioProducto.innerText = producto.precio.toFixed(2);
 
+        const imgTrashProductoCarrito = nuevoProductoAniadido.querySelector(".Img__Eliminar-Producto");
+
+        imgTrashProductoCarrito.addEventListener("click", ()=>{
+            const productoEliminado = document.querySelector(`[id-producto="${producto.idproductos}"]`)
+            const botonProducto = productoEliminado.querySelector('.Boton_añadir_carro');
+            editarEstadoProducto(botonProducto, producto);
+        })
+
+        const imgAumentarProducto = nuevoProductoAniadido.querySelector(".btn-aumentar") 
+        const imgDisminuirProducto = nuevoProductoAniadido.querySelector(".btn-disminuir")
+        const inputCantidadProducto = nuevoProductoAniadido.querySelector(".input__cantidad-producto")
+        imgAumentarProducto.addEventListener("click", ()=>{
+            if(parseInt(inputCantidadProducto.value) < 999){
+                inputCantidadProducto.value = parseInt(inputCantidadProducto.value) + 1 ;
+                // Actualiza el valor del Subtotal
+                actualizaSubtotalCarrito()
+            }
+        })
+        imgDisminuirProducto.addEventListener("click", ()=>{
+            if(parseInt(inputCantidadProducto.value) > 1){
+                inputCantidadProducto.value = parseInt(inputCantidadProducto.value) - 1 ;
+                // let valorUnitarioProducto= parseFloat(producto.precio) * parseInt(inputCantidadProducto.value);
+                actualizaSubtotalCarrito()
+            }
+        }) 
+        inputCantidadProducto.addEventListener('input', (event) => {
+            const newValue = inputCantidadProducto.value;
+            if (newValue >= 1) {
+                inputCantidadProducto.value = newValue;
+            } else {
+                inputCantidadProducto.value = 1;
+            }
+            actualizaSubtotalCarrito()
+        });
+
+        // Obtener el precio incial
+        actualizaSubtotalCarrito();
+        
         contenedorProductosCarrito.appendChild(nuevoProductoAniadido);
-    }
+        }
+    actualizaSubtotalCarrito();
 })

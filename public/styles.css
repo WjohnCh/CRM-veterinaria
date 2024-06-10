@@ -1206,6 +1206,7 @@ nav.administrador-navbar .user-information{
    cursor: pointer;
 }
 .hover-naranja{
+   position: relative;
    cursor: pointer;
    display: flex;
    align-items: center;
@@ -1215,6 +1216,33 @@ nav.administrador-navbar .user-information{
 
 .hover-naranja:hover {
    border-bottom: 3px solid var(--Orange-75);
+}
+
+.Filtrado__Opciones{
+   position: absolute;
+   top: 70px;
+   padding-top: 16px;
+   border-color: var(--Negro-25);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+   border-radius: 16px;
+   background-color: var(--Negro-0);
+   font-size: var(--Text-medium);
+   font-weight: 500;
+   overflow: hidden;
+}
+
+.Filtrado__Opciones ul li{
+   padding: 20px 20px;
+}
+.Filtrado__Opciones ul li:hover{
+   background-color: var(--Orange-25);
+}
+.Filtrado_para-mascotas{
+   width: 200px;
+}
+
+.Filtrado_Categorias-productos{
+   width: 300px;
 }
 
 

@@ -66,7 +66,77 @@ app.get('/', async (req, res)=>{
 
 app.get('/productos', async (req, res) => {
     try {
-        const [results] = await sequelize.query('SELECT * FROM productos');
+        const [results] = await sequelize.query(`SELECT * FROM productos`);
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
+app.get('/productos/categoria/alimentos', async (req, res) => {
+    try {
+        const [results] = await sequelize.query('SELECT * FROM productos WHERE idCategoria = 1');
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
+app.get('/productos/categoria/Accesorios&Equipamiento', async (req, res) => {
+    try {
+        const [results] = await sequelize.query('SELECT * FROM productos WHERE idCategoria = 2');
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
+app.get('/productos/categoria/Transportes&dormitorios', async (req, res) => {
+    try {
+        const [results] = await sequelize.query('SELECT * FROM productos WHERE idCategoria = 3');
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
+app.get('/productos/categoria/Higiene&Limpienza', async (req, res) => {
+    try {
+        const [results] = await sequelize.query('SELECT * FROM productos WHERE idCategoria = 4');
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+
+// FILTRADO DE MASCOTAS
+
+app.get('/productos/mascota/todos', async (req, res) => {
+    try {
+        const [results] = await sequelize.query(`SELECT * FROM productos WHERE razaMascota = "todos"`);
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+app.get('/productos/mascota/perro', async (req, res) => {
+    try {
+        const [results] = await sequelize.query(`SELECT * FROM productos WHERE razaMascota = "perro"`);
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+});
+app.get('/productos/mascota/gato', async (req, res) => {
+    try {
+        const [results] = await sequelize.query(`SELECT * FROM productos WHERE razaMascota = "gato"`);
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);

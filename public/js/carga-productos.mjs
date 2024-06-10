@@ -1,4 +1,4 @@
-import  { actualizaSubtotalCarrito } from "./funciones-productos.mjs"
+import  { actualizaSubtotalCarrito, HoverFiltradoOpciones, filtradoCategorias } from "./funciones-productos.mjs"
 
 document.addEventListener("DOMContentLoaded", async ()=>{
     const cantidadProducto = document.getElementById('valor-productos');
@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     } catch (error) {
         console.error('Error al cargar los productos:', error);
     }
+
+    HoverFiltradoOpciones();
+
+
 
     const contenedorProductosCarritoVacio = document.querySelector(".Contenedor__productos-vacios");
     const contenedorSubtotal = document.getElementById("contenedor-general__Subtotal-Productos");
@@ -182,4 +186,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         contenedorProductosCarrito.appendChild(nuevoProductoAniadido);
         }
     actualizaSubtotalCarrito();
+
+    // Funcion Filtradora
+    filtradoCategorias(CrearEstructuraObjeto);
+
+
 })

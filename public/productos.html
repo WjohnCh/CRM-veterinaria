@@ -98,23 +98,6 @@
                                     <img src="./Íconos - Logos/trash-bold.svg" alt="">
                                 </figure>
                             </div>
-                            <!-- <div class="Contenedor__producto-aniadido">
-                                <figure class="Img__Foto-Producto">
-                                    <img src="" alt="">
-                                </figure>
-                                <div class="Contenedor__detalle-Producto">
-                                    <p class="carrito__nombre-producto">Cepillo</p>
-                                    <p class="carrito__precio-producto">S/ 13.00</p>
-                                </div>
-                                <div class="Btn_Aumentar-Cantidad-Producto">
-                                    <button class="btn btn-disminuir">-</button>
-                                    <input type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
-                                    <button class="btn btn-disminuir">+</button>
-                                </div>
-                                <figure class="Img__Eliminar-Producto">
-                                    <img src="./Íconos - Logos/trash-bold.svg" alt="">
-                                </figure>
-                            </div> -->
                         </div>
                         <div id="contenedor-general__Subtotal-Productos">
                             <div class="contenedor__Subtotal_Productos-Carrito">
@@ -129,15 +112,34 @@
                 </aside>
             </div>
     </nav>
+
+
+    <!-- SECCION FILTRADO -->
     <div class="Contenedor__Sección_Filtrado_busqueda">
         <div class="Sección_Filtrado_busqueda">
-            <div class="hover-naranja">
+            <div class="hover-naranja" id="contenedor__filtrado-categoria-producto">
                 <button class="botton_filtrado  Filtro_Categoría_Producto">Categoria de productos</button>
                 <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+                <div class="Filtrado__Opciones Filtrado_Categorias-productos" style="display: none;">
+                    <ul>
+                        <li id="Filtrado__Todas-las-Categorias" >Todas las Categorias</li>
+                        <li id="Filtrado__Alimentos" >Alimentos</li>
+                        <li id="Filtrado__Accesorios&equipamento" >Accesorios y equipamento</li>
+                        <li id="Filtrado__Transportes&dormitorios" >Transportes y dormitorios</li>
+                        <li id="Filtrado__Higiene&limpieza" >Higiene y limpieza</li>
+                    </ul>
+                </div>
             </div>
-            <div class="hover-naranja">
+            <div class="hover-naranja" id="contenedor__filtrado-mascotas">
                 <button class="botton_filtrado  Filtro_Mascotas">Mascotas</button>
                 <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+                <div class="Filtrado__Opciones Filtrado_para-mascotas" style="display: none;">
+                    <ul>
+                        <li id="Filtrado_Para-todos" >Para todos</li>
+                        <li id="Filtrado_Para-perros" >Para Perros</li>
+                        <li id="Filtrado_Para-gatos" >Para Gatos</li>
+                    </ul>
+                </div>
             </div>
             <div style="position: relative;">
                 <input id="barra-busqueda">
@@ -148,102 +150,26 @@
             </div>
         </div>
     </div>
-
-    <main class="contenedor-productos">
-        <div class="contenedor-productos-centro" id="productList" >
-            <div class="detalle-producto" style="display: none">
-                <div class="image-producto">
-                    <img src="" alt="">
-                </div>
-                <div>
-                    <p class="Nombre-producto"></p>
-                    <p class="precio-producto"></p>
-                    <button class="Boton_añadir_carro">Añadir al carrito</button>
-                </div>
+        <!-- PLANTILLA -->
+        <div class="detalle-producto" style="display: none">
+            <div class="image-producto">
+                <img src="" alt="">
             </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto2.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/ 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto3.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto4.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto5.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto5.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo </p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto4.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto2.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto3.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto1.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
-                <button class="Boton_añadir_carro">Añadir al carrito</button>
-            </div>
-            <div class="detalle-producto">
-                <div class="image-producto">
-                    <img src="./Íconos - Logos/producto1.svg" alt="">
-                </div>
-                <p class="Nombre-producto">Cepillo para mascotas autolimpiable Chico</p>
-                <p class="precio-producto">S/. 13.00</p>
+            <div>
+                <p class="Nombre-producto"></p>
+                <p class="precio-producto"></p>
                 <button class="Boton_añadir_carro">Añadir al carrito</button>
             </div>
         </div>
+
+    <main class="contenedor-productos">
+        <div class="contenedor-productos-centro" id="productList" >
+            <!-- SE INSERTAN LOS DATOS DINAMICAMENTE -->
+        </div>
     </main>    
     
+
+
     <script type="module" src="./js/carga-productos.mjs"></script>
 </body>
 </html>

@@ -64,7 +64,7 @@
                 <figure class="carrito" style="cursor: pointer;">
                     <img src="./Íconos - Logos/Carrito-Compras.svg">
                 </figure>
-                <aside id="Contenedor__Sombreado-Modal">
+                <aside id="Contenedor__Sombreado-Modal" class="Contenedor__Sombreado-Modal">
                     <div class="Contenedor-CarritoCompras">
                         <div class="Cabecera_Carrito-Compras">
                             <p>Carrito de compras</p>
@@ -123,9 +123,9 @@
                 <div class="Filtrado__Opciones Filtrado_Categorias-productos" style="display: none;">
                     <ul>
                         <li id="Filtrado__Todas-las-Categorias" >Todas las Categorias</li>
-                        <li id="Filtrado__Alimentos" >Alimentos</li>
                         <li id="Filtrado__Accesorios&equipamento" >Accesorios y equipamento</li>
                         <li id="Filtrado__Transportes&dormitorios" >Transportes y dormitorios</li>
+                        <li id="Filtrado__Alimentos" >Alimentos</li>
                         <li id="Filtrado__Higiene&limpieza" >Higiene y limpieza</li>
                     </ul>
                 </div>
@@ -150,6 +150,9 @@
             </div>
         </div>
     </div>
+    
+
+
         <!-- PLANTILLA -->
         <div class="detalle-producto" style="display: none">
             <div class="image-producto">
@@ -163,11 +166,60 @@
         </div>
 
     <main class="contenedor-productos">
+        <div class="Contenedor_Informacion-Productos-General">
+            <div>
+                <span id="Info-producto_Nombre-Section">Todos</span>
+                <p>
+                    Mostrando <span id="Cantidad_Producto-Visible-Minimo">0</span> de <span id="Cantidad_Producto-Maximo">0</span>
+                </p>
+            </div>
+            <div class="Contenedor_Ordenar-Productos-Seleccionados">
+                <select name="Ordenar_Productos-Seleccionados" id="">
+                    <option value="" disabled selected>Ordenar Por: </option>
+                    <option value="Precio_Menor-Mayor" id="Precio_Menor-Mayor" >Precio: Menor a Mayor</option>
+                    <option value="Precio_Mayor-Menor" id="Precio_Mayor-Menor" >Precio: Mayor a Menor</option>
+                    <option value="Nombre_A-Z" id="Nombre_A-Z" >Nombre: A a Z</option>
+                    <option value="Nombre_Z-A" id="Nombre_Z-A" >Nombre: Z a A</option>
+                </select>
+            </div>
+        </div>
         <div class="contenedor-productos-centro" id="productList" >
             <!-- SE INSERTAN LOS DATOS DINAMICAMENTE -->
         </div>
     </main>    
     
+    <!-- PLANTILLA DESCRIPCION DEL PRODUCTO -->
+    <div class="modal__DetalleProducto Contenedor__Sombreado-Modal" id="modal__DetalleProducto" style="display: none;">
+        <div class="Contenedor_Detalle-producto Contenedor-CarritoCompras">
+            <div class="Contenedor__Detalle-producto_imagen">
+                <figure class="Detalle-producto_equis">
+                    <img class="TamanioEquis" src="./Íconos - Logos/Equis.svg" alt="">
+                </figure>
+                <figure class="Detalle-producto_imagen">
+                    <img src="../src/uploads/whiskas-1kg-bolsa-gatos.jpg" alt="">
+                </figure>
+            </div>
+            <div class="Contenedor_Especificacion-Producto">
+                <div class="Btn_Aumentar-Cantidad-Producto Aumentar-Cantidad-Producto-modifiqued">
+                    <p class="Detalle-producto_precio">S/
+                        <span id="span-producto_precio"></span>
+                    </p>
+                    <div>
+                        <button class="btn btn-disminuir">-</button>
+                        <input class="input__cantidad-producto" type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
+                        <button class="btn btn-aumentar">+</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="Detalle-producto_Nombre"></p>
+                    <p class="Detalle-producto_descripcion"></p>
+                </div>
+
+                <button class="Detalle-producto_btn-aniadir boton-generico-primario">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+
 
 
     <script type="module" src="./js/carga-productos.mjs"></script>

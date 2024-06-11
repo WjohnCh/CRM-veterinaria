@@ -37,26 +37,7 @@ app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     }
 })
 
-app.get('/productos/:id/image', async (req, res) => {
-    const { id } = req.params;
 
-    try {
-        const [results] = await sequelize.query(
-            'SELECT url FROM productos WHERE idproductos = ?',
-            { replacements: [id] }
-        );
-
-        if (results.length > 0) {
-            const imagePath = results[0].url;
-            res.sendFile(imagePath);
-        } else {
-            res.status(404).send('Producto no encontrado.');
-        }
-    } catch (error) {
-        console.error('Error al realizar la consulta:', error);
-        res.status(500).send('Error al procesar la solicitud');
-    }
-});
 
 
 app.get('/', async (req, res)=>{
@@ -71,6 +52,27 @@ app.get('/productos', async (req, res) => {
     } catch (error) {
         console.error('Error al obtener los productos:', error);
         res.status(500).send('Error al obtener los productos');
+    }
+});
+
+app.get('/productos/:id/producto', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [[results]] = await sequelize.query(
+            'SELECT * FROM productos WHERE idproductos = ?',
+            { replacements: [id] }
+        );
+
+        if (results) {
+            const imagePath = results.url;
+            res.send(results);
+        } else {
+            res.status(404).send('Producto no encontrado.');
+        }
+    } catch (error) {
+        console.error('Error al realizar la consulta:', error.message);
+        res.status(500).send('Error al procesar la solicitud');
     }
 });
 

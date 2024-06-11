@@ -1,7 +1,8 @@
-import  { actualizaSubtotalCarrito, HoverFiltradoOpciones, filtradoCategorias } from "./funciones-productos.mjs"
+import  { actualizaSubtotalCarrito, HoverFiltradoOpciones, filtradoCategorias, VerDetalleProducto,abrirCerrarModalDetalle } from "./funciones-productos.mjs"
 
 document.addEventListener("DOMContentLoaded", async ()=>{
     const cantidadProducto = document.getElementById('valor-productos');
+
     let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
     try {
         const productList = document.getElementById("productList");
@@ -63,8 +64,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         precioProducto.textContent = `S/ ${producto.precio.toFixed(2)}`;
         descripcionProducto.textContent = producto.nombre;
 
-        botonProducto.addEventListener("click", ()=>{
+        nuevoProducto.addEventListener("click", (event)=>{
+            event.preventDefault();
+            VerDetalleProducto(producto);
+        })
+
+        botonProducto.addEventListener("click", (event)=>{
                 editarEstadoProducto(botonProducto, producto)
+                event.stopPropagation();
             })
             contenedor.appendChild(nuevoProducto);
             }
@@ -189,6 +196,5 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
     // Funcion Filtradora
     filtradoCategorias(CrearEstructuraObjeto);
-
 
 })

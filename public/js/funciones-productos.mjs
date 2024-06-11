@@ -71,8 +71,14 @@ export function filtradoCategorias(CrearEstructuraObjeto, ){
     const productList = document.getElementById("productList");
     const plantilla = document.querySelector(".detalle-producto");
 
+    //Variable que cambia el nombre de la seccion
+    const NombreSection = document.getElementById("Info-producto_Nombre-Section");
+    const NumCantidadMinVis = document.getElementById("Cantidad_Producto-Visible-Minimo");
+    const NumCantidadMax = document.getElementById("Cantidad_Producto-Maximo");
+
+
     //FUNCION QUE REALIZA LAS PETICIONES
-    async function PeticionBackend(endpoint){
+    async function PeticionBackend(endpoint, NombreSeccion){
         productList.innerText = ''; // Eliminamos los productos
         try {
             const response = await fetch(endpoint);
@@ -80,35 +86,80 @@ export function filtradoCategorias(CrearEstructuraObjeto, ){
             products.forEach(product => {
                 CrearEstructuraObjeto(product, plantilla, productList);
             });
+            //Actualizamos el nombre de seccion
+            NombreSection.innerText = NombreSeccion;
+            NumCantidadMax.innerText = products.length;
+
+            if(products.length <= 12){
+                NumCantidadMinVis.innerText = NumCantidadMax.innerText;
+            }else{
+                NumCantidadMinVis.innerText = 12;
+            }
         } catch (error) {
             console.error('Error al cargar los productos:', error);
         }
     }
 
     btnFiltradoTodasCategorias.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos')
+        PeticionBackend('http://localhost:3000/productos', "Todos")
     });
     btnFiltradoAlimentos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/alimentos')
+        PeticionBackend('http://localhost:3000/productos/categoria/alimentos', "Aliementos")
     });
     btnFiltradoAccesorios.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Accesorios&Equipamiento')
+        PeticionBackend('http://localhost:3000/productos/categoria/Accesorios&Equipamiento', "Accesorios y Equipamiento")
     });
     btnFiltradoTransporte.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Transportes&dormitorios')
+        PeticionBackend('http://localhost:3000/productos/categoria/Transportes&dormitorios', "Transportes y Dormitorios")
     });
     btnFiltradoHigiene.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Higiene&Limpienza')
+        PeticionBackend('http://localhost:3000/productos/categoria/Higiene&Limpienza', "Higiene y Limpieza")
     });  
 
     btnFiltradoTodos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/todos')
+        PeticionBackend('http://localhost:3000/productos/mascota/todos', "Todos")
     });
     btnFiltradoPerros.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/perro')
+        PeticionBackend('http://localhost:3000/productos/mascota/perro', "Perros")
     });
     btnFiltradoGatos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/gato')
+        PeticionBackend('http://localhost:3000/productos/mascota/gato', "Gatos")
     });
+}
 
+
+
+// Funcion de visualizar los detalles del producto
+
+export async function VerDetalleProducto(producto){
+    const {idproductos, descripcion, url, nombre, precio} = producto;
+    const modalDetalleProducto = document.getElementById("modal__DetalleProducto");
+    let products;
+    try {
+        const response = await fetch(`http://localhost:3000/productos/${idproductos}/producto`);
+        products = await response.json();
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
+    }
+    modalDetalleProducto.style.display = "block";
+    abrirCerrarModalDetalle(modalDetalleProducto);
+    
+    const imagenProducto = modalDetalleProducto.querySelector(".Detalle-producto_imagen img");
+    const PrecioProducto = modalDetalleProducto.querySelector("#span-producto_precio");
+    const nombreProducto  = modalDetalleProducto.querySelector(".Detalle-producto_Nombre")
+    const descripcionProducto  = modalDetalleProducto.querySelector(".Detalle-producto_descripcion")
+    imagenProducto.src = `.${url}`;
+    PrecioProducto.innerText = precio.toFixed(2);
+    nombreProducto.innerText = nombre;
+    descripcionProducto.innerText = descripcion;
+}
+
+export function abrirCerrarModalDetalle(modalDetalleProducto){
+    const EquisCerrarModal = modalDetalleProducto.querySelector('.Detalle-producto_equis img');
+
+    modalDetalleProducto.addEventListener("click", (event)=>{
+        if((event.target == modalDetalleProducto) || (event.target == EquisCerrarModal)){
+            modalDetalleProducto.style.display = "none";
+        }
+    })
 }

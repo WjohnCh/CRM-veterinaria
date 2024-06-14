@@ -1,54 +1,45 @@
+import { clickearBotonDetalleProducto, NumeroProductosElegidos} from "./addEventListener.mjs";
 import  { actualizaSubtotalCarrito, HoverFiltradoOpciones, filtradoCategorias, VerDetalleProducto,abrirCerrarModalDetalle } from "./funciones-productos.mjs"
 
 document.addEventListener("DOMContentLoaded", async ()=>{
+
+
     const cantidadProducto = document.getElementById('valor-productos');
-
-    let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
-    try {
-        const productList = document.getElementById("productList");
-        const plantilla = document.querySelector(".detalle-producto");
-
-
-
-        const { categoria } = await fetch('http://localhost:3000/productos')
-        const response = await fetch('http://localhost:3000/productos');
-        const products = await response.json();
-        // if(products){
-        //     productosPulsados = [];
-        // }
-        products.forEach(product => {
-            CrearEstructuraObjeto(product, plantilla, productList);
-        });
-    } catch (error) {
-        console.error('Error al cargar los productos:', error);
-    }
-
-    HoverFiltradoOpciones();
-
-
-
     const contenedorProductosCarritoVacio = document.querySelector(".Contenedor__productos-vacios");
     const contenedorSubtotal = document.getElementById("contenedor-general__Subtotal-Productos");
     const botonProductosCarritoVacio = document.querySelector(".btn__productos-vacios")
+
+    let productosPulsados = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
+    
+    await filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProducto)
+
+    HoverFiltradoOpciones();
+    
     botonProductosCarritoVacio.addEventListener("click", ()=>{
         window.scrollTo(0, 0);
         location.reload();
     })    
-
-    if(productosPulsados.length !== 0){
-        cantidadProducto.innerText = parseInt(productosPulsados.length);
-        contenedorSubtotal.style.display = "block"
-        contenedorProductosCarritoVacio.style.display = "none"
-        productosPulsados.forEach(producto =>{
-
-            const contenedorObjeto = document.querySelector(`[id-producto="${producto.idproductos}"]`);
-            contenedorObjeto.querySelector('.Boton_añadir_carro').classList.add("producto-aniadido");
-            contenedorObjeto.querySelector('.Boton_añadir_carro').innerText = "Producto añadido";
-            })
+    
+    function cargarEstadoProducto(){
+        if(productosPulsados.length !== 0){
+            cantidadProducto.innerText = productosPulsados.length;
+            contenedorSubtotal.style.display = "block"
+            contenedorProductosCarritoVacio.style.display = "none"
+            productosPulsados.forEach(producto =>{
+                const contenedorObjeto = document.querySelector(`[id-producto="${producto.idproductos}"]`);
+                if (contenedorObjeto) {
+                    contenedorObjeto.querySelector('.Boton_añadir_carro').classList.add("producto-aniadido");
+                    contenedorObjeto.querySelector('.Boton_añadir_carro').innerText = "Producto añadido";
+                }
+                })
         }else{
-            contenedorSubtotal.style.display = "none"
-            contenedorProductosCarritoVacio.style.display = "flex"
+                contenedorSubtotal.style.display = "none"
+                contenedorProductosCarritoVacio.style.display = "flex"
         }
+    }
+
+    cargarEstadoProducto();
+
         function CrearEstructuraObjeto(producto, plantilla, contenedor) {
         const nuevoProducto = plantilla.cloneNode(true);
         nuevoProducto.style.display = 'flex';
@@ -66,7 +57,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
         nuevoProducto.addEventListener("click", (event)=>{
             event.preventDefault();
-            VerDetalleProducto(producto);
+            VerDetalleProducto(producto, botonProducto, productosPulsados);
+
+            // AGREGAR ESTADO DE LA LOGICA
         })
 
         botonProducto.addEventListener("click", (event)=>{
@@ -74,20 +67,22 @@ document.addEventListener("DOMContentLoaded", async ()=>{
                 event.stopPropagation();
             })
             contenedor.appendChild(nuevoProducto);
-            }
+    }
 
     // FUNCION BOTON ACTUALIZAR VALOR CARRITO
     function editarEstadoProducto(botonProducto,producto){
         botonProducto.classList.toggle("producto-aniadido");
             if(botonProducto.classList.contains("producto-aniadido")){
-                productosPulsados.push(producto);
+                productosPulsados.push({ ...producto, cantidad: 1 });
                 botonProducto.innerText = "Producto añadido";
                 cantidadProducto.innerText = parseInt(cantidadProducto.innerText) + 1;
                 CrearEstructuraObjetoCarrito(producto)
+                console.log(productosPulsados);
                 }else{
                     productosPulsados.splice(productosPulsados.indexOf(producto), 1);
                     cantidadProducto.innerText = parseInt(cantidadProducto.innerText) - 1;
                     botonProducto.innerText = "Añadir al carrito";
+                    console.log(productosPulsados);
                 actualizarProductosCarrito(producto.idproductos);
             }
             if(cantidadProducto.innerText == 0 ){
@@ -126,14 +121,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     // Aniadir productos al carrito y el
     function actualizarProductosCarrito(idproductos){
 
-        if(idproductos){
-            const productoEliminado = document.querySelector(`[idProductoCarrito="${idproductos}"]`)
-            productoEliminado.remove();
-        }else{
-            productosPulsados.forEach((producto)=>{
-                CrearEstructuraObjetoCarrito(producto);
-            })
-        }
+        // if(idproductos){
+        //     const productoEliminado = document.querySelector(`[idProductoCarrito="${idproductos}"]`)
+        //     productoEliminado.remove();
+        // }else{
+        //     productosPulsados.forEach((producto)=>{
+        //         CrearEstructuraObjetoCarrito(producto);
+        //     })
+        // }
     }
 
     actualizarProductosCarrito();
@@ -191,10 +186,11 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         actualizaSubtotalCarrito();
         
         contenedorProductosCarrito.appendChild(nuevoProductoAniadido);
-        }
+    }
     actualizaSubtotalCarrito();
 
-    // Funcion Filtradora
-    filtradoCategorias(CrearEstructuraObjeto);
 
+    //Funciones addEventListener
+    clickearBotonDetalleProducto(productosPulsados);
+    NumeroProductosElegidos();
 })

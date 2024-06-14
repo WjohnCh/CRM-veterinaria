@@ -54,7 +54,8 @@ export function actualizaSubtotalCarrito(){
 }
 
 
-export function filtradoCategorias(CrearEstructuraObjeto, ){
+export async function filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProducto){
+
     // Obtenemos todos los botones de filtrado (CATEGORIAS)
     const btnFiltradoTodasCategorias = document.getElementById("Filtrado__Todas-las-Categorias");
     const btnFiltradoAlimentos = document.getElementById("Filtrado__Alimentos");
@@ -79,10 +80,13 @@ export function filtradoCategorias(CrearEstructuraObjeto, ){
 
     //FUNCION QUE REALIZA LAS PETICIONES
     async function PeticionBackend(endpoint, NombreSeccion){
+        
         productList.innerText = ''; // Eliminamos los productos
         try {
             const response = await fetch(endpoint);
             const products = await response.json();
+        
+
             products.forEach(product => {
                 CrearEstructuraObjeto(product, plantilla, productList);
             });
@@ -95,49 +99,65 @@ export function filtradoCategorias(CrearEstructuraObjeto, ){
             }else{
                 NumCantidadMinVis.innerText = 12;
             }
+            localStorage.setItem('estadoFiltrado', JSON.stringify({ endpoint, NombreSeccion }));
+
+            //Cargamos si existian productos pulsados
+            cargarEstadoProducto();
+
         } catch (error) {
             console.error('Error al cargar los productos:', error);
         }
     }
 
-    btnFiltradoTodasCategorias.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos', "Todos")
+    btnFiltradoTodasCategorias.addEventListener("click", async ()=>{
+        await PeticionBackend('http://localhost:3000/productos', "Todos")
     });
-    btnFiltradoAlimentos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/alimentos', "Aliementos")
+    btnFiltradoAlimentos.addEventListener("click", async ()=>{
+        await PeticionBackend('http://localhost:3000/productos/categoria/alimentos', "Alimentos")
     });
-    btnFiltradoAccesorios.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Accesorios&Equipamiento', "Accesorios y Equipamiento")
+    btnFiltradoAccesorios.addEventListener("click", async()=>{
+        await PeticionBackend('http://localhost:3000/productos/categoria/Accesorios&Equipamiento', "Accesorios y Equipamiento")
+
     });
-    btnFiltradoTransporte.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Transportes&dormitorios', "Transportes y Dormitorios")
+    btnFiltradoTransporte.addEventListener("click", async()=>{
+
+        await PeticionBackend('http://localhost:3000/productos/categoria/Transportes&dormitorios', "Transportes y Dormitorios")
     });
-    btnFiltradoHigiene.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/categoria/Higiene&Limpienza', "Higiene y Limpieza")
+    btnFiltradoHigiene.addEventListener("click", async()=>{
+        await PeticionBackend('http://localhost:3000/productos/categoria/Higiene&Limpienza', "Higiene y Limpieza")
+
     });  
 
-    btnFiltradoTodos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/todos', "Todos")
+    btnFiltradoTodos.addEventListener("click", async()=>{
+        await PeticionBackend('http://localhost:3000/productos/', "Todos")
+
     });
-    btnFiltradoPerros.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/perro', "Perros")
+    btnFiltradoPerros.addEventListener("click", async()=>{
+        await PeticionBackend('http://localhost:3000/productos/mascota/perro', "Perros")
+
     });
-    btnFiltradoGatos.addEventListener("click", ()=>{
-        PeticionBackend('http://localhost:3000/productos/mascota/gato', "Gatos")
+    btnFiltradoGatos.addEventListener("click", async()=>{
+        await PeticionBackend('http://localhost:3000/productos/mascota/gato', "Gatos")
     });
+
+    const estadoGuardado = JSON.parse(localStorage.getItem('estadoFiltrado'));
+    if (estadoGuardado) {
+        await PeticionBackend(estadoGuardado.endpoint, estadoGuardado.NombreSeccion);
+    } else {
+        // Si no hay estado guardado, cargar todos los productos por defecto
+        await PeticionBackend('http://localhost:3000/productos', "Todos");
+    }
 }
-
-
-
 // Funcion de visualizar los detalles del producto
 
-export async function VerDetalleProducto(producto){
+export async function VerDetalleProducto(producto, botonProducto, productosPulsados){
     const {idproductos, descripcion, url, nombre, precio} = producto;
     const modalDetalleProducto = document.getElementById("modal__DetalleProducto");
     let products;
     try {
         const response = await fetch(`http://localhost:3000/productos/${idproductos}/producto`);
         products = await response.json();
+        
     } catch (error) {
         console.error('Error al cargar los productos:', error);
     }
@@ -148,18 +168,66 @@ export async function VerDetalleProducto(producto){
     const PrecioProducto = modalDetalleProducto.querySelector("#span-producto_precio");
     const nombreProducto  = modalDetalleProducto.querySelector(".Detalle-producto_Nombre")
     const descripcionProducto  = modalDetalleProducto.querySelector(".Detalle-producto_descripcion")
+    const btnDetalleProducto = modalDetalleProducto.querySelector(".Detalle-producto_btn-aniadir")
+    const idDetalleProducto = modalDetalleProducto.querySelector(".Detalle-producto-id")
+    const inputCantidadProducto = document.getElementById("Descripcion-input_cantidad-producto")
+    idDetalleProducto.innerText = idproductos;
     imagenProducto.src = `.${url}`;
     PrecioProducto.innerText = precio.toFixed(2);
     nombreProducto.innerText = nombre;
     descripcionProducto.innerText = descripcion;
+    
+    btnDetalleProducto.classList.remove("Actualizar-Producto");
+
+    const idDetalleProductoEntero = parseInt(idDetalleProducto.innerText)
+
+    btnDetalleProducto.innerText = botonProducto.innerText;
+    if(botonProducto.classList.contains("producto-aniadido")){
+        
+        // ACTUALIZAMOS EL INPUT SI EL PRODUCTO YA ESTA ANIADIDO
+        const producto = productosPulsados.find((product)=> product.idproductos == idDetalleProductoEntero )
+        inputCantidadProducto.value = producto.cantidad
+
+        btnDetalleProducto.classList.add("producto-aniadido")
+    }else{
+        inputCantidadProducto.value = 1;
+        btnDetalleProducto.classList.remove("producto-aniadido")    
+            
+    }
 }
 
 export function abrirCerrarModalDetalle(modalDetalleProducto){
+    // const inputCantidadProducto = document.getElementById("Descripcion-input_cantidad-producto")
     const EquisCerrarModal = modalDetalleProducto.querySelector('.Detalle-producto_equis img');
-
     modalDetalleProducto.addEventListener("click", (event)=>{
         if((event.target == modalDetalleProducto) || (event.target == EquisCerrarModal)){
+            // inputCantidadProducto.value = 1;
+            // ANIADIR LOGICA DE GUARDADO INPUT
             modalDetalleProducto.style.display = "none";
         }
+    })
+}
+
+// MAS ADELANTE
+export function ordenarProductos(){
+    const PrecioMenorMayor = document.getElementById("Precio_Menor-Mayor");
+    const PrecioMayorMenor = document.getElementById("Precio_Mayor-Menor");
+    const NombreA_Z = document.getElementById("Nombre_A-Z");
+    const NombreZ_A = document.getElementById("Nombre_Z-A");
+
+    PrecioMenorMayor.addEventListener("click", ()=>{
+        
+    })
+
+    PrecioMayorMenor.addEventListener("click", ()=>{
+
+    })
+
+    NombreA_Z.addEventListener("click", ()=>{
+
+    })
+
+    NombreZ_A.addEventListener("click", ()=>{
+
     })
 }

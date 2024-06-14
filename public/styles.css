@@ -894,7 +894,7 @@ main.contenedor-productos .detalle-producto .image-producto{
    object-fit: contain;
 }
 
-main.contenedor-productos .detalle-producto button{
+.Boton_añadir_carro{
    width: 80%;
    margin: 8px auto 0px auto;
    height: 30px;
@@ -905,10 +905,16 @@ main.contenedor-productos .detalle-producto button{
    cursor: pointer;
 }
 
-main.contenedor-productos .detalle-producto .producto-aniadido{
+.producto-aniadido{
    background-color: var(--Negro-0);
    color: var(--Orange-75);
    border: 1px solid var(--Orange-75);
+}
+
+.Actualizar-Producto{
+   background-color: var(--Orange-75);
+   color: var(--Negro-0);
+   border: none;
 }
 
 main.contenedor-productos .detalle-producto .precio-producto{
@@ -1262,6 +1268,25 @@ nav.administrador-navbar .user-information{
    display: block;
    margin-bottom: 20px;
 }
+/* -- Filtrado de Ordenamiento */
+.Ordenar_Productos-Seleccionados{
+   width: 180px;
+   height: 44px;
+   padding-left: 8px;
+   border: 1px solid var(--Negro-75);
+   border-radius: 4px;
+   font-size: var(--Text-small);
+   color: var(--Negro-75);
+}
+.Ordenar_Productos-Seleccionados option{
+   font-size: var(--Text-medium);
+   color: var(--Negro-75);
+}
+
+.Ordenar_Productos-Seleccionados:focus{
+   box-shadow: 0px -1px 4px 2px rgba(0, 0, 0, 0.4);
+}
+
 
 /* DETALLE DEL PRODUCTO  se recicla estilos*/
 .modal__DetalleProducto{

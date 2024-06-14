@@ -147,6 +147,10 @@ app.get('/productos/mascota/gato', async (req, res) => {
 });
 
 
+// ORDENAMIENTO DE OBJETOS
+
+
+
 app.post('/procesar-datos', async (req, res) => {
     const { name, email, password } = req.body;
   

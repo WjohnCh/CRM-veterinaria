@@ -37,21 +37,7 @@ export function HoverFiltradoOpciones(){
 }
 
 // FUNCION QUE ACTUALIZA EL SUBTOTAL DEL CARRITO
-export function actualizaSubtotalCarrito(){
-    // const preciosProductos = Array.from(document.getElementsByClassName("carrito__precio-producto"));
-    const contenedorCarrito = document.querySelectorAll('[idproductocarrito]');
-    const Subtotal = document.querySelector(".precio-total-subtotal");
-    let valores = [];
-    let valorTotal = 0;
-    
-    for(let i = 0; i < contenedorCarrito.length; i++){
-        const cantidadProducto = parseInt(contenedorCarrito[i].querySelector(".input__cantidad-producto").value);
-        valores[i] = parseFloat(contenedorCarrito[i].querySelector(".carrito__precio-producto").innerText);
 
-        valorTotal += (valores[i] * cantidadProducto);
-    }
-    Subtotal.innerText = valorTotal.toFixed(2);
-}
 
 
 export async function filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProducto){
@@ -148,8 +134,8 @@ export async function filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProdu
         await PeticionBackend('http://localhost:3000/productos', "Todos");
     }
 }
-// Funcion de visualizar los detalles del producto
 
+// Funcion de visualizar los detalles del producto
 export async function VerDetalleProducto(producto, botonProducto, productosPulsados){
     const {idproductos, descripcion, url, nombre, precio} = producto;
     const modalDetalleProducto = document.getElementById("modal__DetalleProducto");
@@ -183,7 +169,6 @@ export async function VerDetalleProducto(producto, botonProducto, productosPulsa
 
     btnDetalleProducto.innerText = botonProducto.innerText;
     if(botonProducto.classList.contains("producto-aniadido")){
-        
         // ACTUALIZAMOS EL INPUT SI EL PRODUCTO YA ESTA ANIADIDO
         const producto = productosPulsados.find((product)=> product.idproductos == idDetalleProductoEntero )
         inputCantidadProducto.value = producto.cantidad
@@ -191,8 +176,7 @@ export async function VerDetalleProducto(producto, botonProducto, productosPulsa
         btnDetalleProducto.classList.add("producto-aniadido")
     }else{
         inputCantidadProducto.value = 1;
-        btnDetalleProducto.classList.remove("producto-aniadido")    
-            
+        btnDetalleProducto.classList.remove("producto-aniadido")
     }
 }
 

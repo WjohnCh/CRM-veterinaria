@@ -73,30 +73,36 @@
                                 <span>Cerrar</span>
                             </figure>
                         </div>
+
+                        <!-- PLANTILLA ELEMENTO DE CARRITO -->
+                        <div class="Contenedor__producto-aniadido" style="display: none;">
+                            <figure class="Img__Foto-Producto">
+                                <img src="" alt="">
+                            </figure>
+                            <div class="Contenedor__detalle-Producto">
+                                <p class="carrito__nombre-producto"></p>
+                                <p class="contenedor__carrito__precio-producto">S/ 
+                                    <span class="carrito__precio-producto"></span>
+                                </p>
+                            </div>
+                            <div class="Btn_Aumentar-Cantidad-Producto">
+                                <button class="btn btn-disminuir">-</button>
+                                <input class="input__cantidad-producto" type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
+                                <button class="btn btn-aumentar">+</button>
+                            </div>
+                            <figure class="Img__Eliminar-Producto">
+                                <img src="./Íconos - Logos/trash-bold.svg" alt="">
+                            </figure>
+                        </div>
+
                         <div class="Contenedor__productos-Seleccionados">
                             <div class="Contenedor__productos-vacios" style="display: none;">
                                 <img src="./Íconos - Logos/carrito vacio.svg" alt="">
                                 <p class="mensaje__productos-vacios">No hay productos en el carrito</p>
                                 <button class="btn__productos-vacios boton-generico-primario">Regresar a la tienda</button>
                             </div>
-                            <div class="Contenedor__producto-aniadido" style="display: none;">
-                                <figure class="Img__Foto-Producto">
-                                    <img src="" alt="">
-                                </figure>
-                                <div class="Contenedor__detalle-Producto">
-                                    <p class="carrito__nombre-producto"></p>
-                                    <p class="contenedor__carrito__precio-producto">S/ 
-                                        <span class="carrito__precio-producto"></span>
-                                    </p>
-                                </div>
-                                <div class="Btn_Aumentar-Cantidad-Producto">
-                                    <button class="btn btn-disminuir">-</button>
-                                    <input class="input__cantidad-producto" type="number" name="" id="" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
-                                    <button class="btn btn-aumentar">+</button>
-                                </div>
-                                <figure class="Img__Eliminar-Producto">
-                                    <img src="./Íconos - Logos/trash-bold.svg" alt="">
-                                </figure>
+                            <div class="Contenedor__productos-aniadidos">
+                                <!-- ACÁ SE AÑADIRÁN LOS PRODUCTOS DEL CARRITO -->
                             </div>
                         </div>
                         <div id="contenedor-general__Subtotal-Productos">
@@ -106,7 +112,7 @@
                                     S/<span class="precio-total-subtotal">0.00</span>
                                 </p>
                             </div>
-                            <button class="boton-generico-primario">Finalizar Compra</button>
+                            <button class="boton-generico-primario" onclick="location.href='pagar-productos.html'">Finalizar Compra</button>
                         </div>
                     </div>
                 </aside>

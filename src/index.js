@@ -86,6 +86,17 @@ app.get('/productos/categoria/alimentos', async (req, res) => {
     }
 });
 
+app.get('/citas', async(req, res) =>{
+    try{
+        const [results] = await sequelize.query(`SELECT * FROM cita`);
+        res.json(results);
+    }
+    catch (error) {
+        console.error('Error al obtener las citas:', error);
+        res.status(500).send('Error al obtener las citas');
+    }
+});
+
 app.get('/productos/categoria/Accesorios&Equipamiento', async (req, res) => {
     try {
         const [results] = await sequelize.query('SELECT * FROM productos WHERE idCategoria = 2');

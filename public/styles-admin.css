@@ -1,0 +1,373 @@
+:root {
+    /* PALETA DE COLORES */
+    --Orange-85: #DC5F00;
+    --Orange-75: #FF5B22;
+    --Orange-50: #FF9843;
+    --Orange-25: #FFDD95;
+    --Negro-100: #000000;
+    --Negro-75: #666666;
+    --Negro-50: #B5B5B5;
+    --Negro-25: #EAEAEA;
+    --Negro-15: #F8F6F4;
+    --Negro-0: #FFFFFF;
+    --yellow-50: #FFC100;
+    /* Tamaño de letra */
+    --ExtraGrande: 70px;
+    --Tittle: 22px;
+    --Text-long: 18px;
+    --Text-medium: 16px;
+    --Text-small: 14px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+    color: var(--Negro-100);
+    border: none;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    padding: 8px 0px 0px 8px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+button{
+    cursor: pointer;
+}
+
+.motrar-elemento {
+    display: block !important;
+
+}
+
+.contenedor-body-divison {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 20px;
+    background-color: var(--Negro-25);
+}
+
+.contenedor-body-divison.solo-un-elemento {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.white-letter {
+    color: white;
+}
+
+.administrador-navbar {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: grid;
+    width: 320px;
+    padding: 5px 15px;
+    height: calc(100vh - 20px);
+    grid-template-rows: auto 1fr;
+    background-color: #191919;
+    border-radius: 30px;
+}
+
+.hidden-admin-navbar {
+    display: none;
+}
+
+.contenedor-opcion-admin {
+    border: 1px solid var(--Negro-75);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+
+nav.administrador-navbar .user-information {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--Negro-75);
+}
+
+.texto-administrador {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.bar-right-img {
+    width: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 280px;
+    top: 16px;
+}
+
+.bar-right-img.mover-bar {
+    left: 20px;
+}
+
+.container-options-admin {
+    margin-top: 36px;
+    overflow: auto;
+}
+
+.option-admin {
+    height: 50px;
+    border-radius: 10px;
+    font-weight: bold;
+    line-height: 40px;
+    padding: 0px 20px 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+}
+
+.option-admin:hover {
+    background-color: #2B2B2F;
+}
+
+.option-admin.panel-control:active {
+    background-color: var(--Negro-50);
+}
+
+/* RECICLAJE, CAMBIA EL COLOR CUANDO SE HACE CLICK */
+.option-admin.active {
+    background-color: #666666;
+    /* Cambia el color aquí */
+}
+
+.option-admin.panel-control {
+    margin: 40px 0px 60px;
+    background-color: #2B2B2F;
+}
+
+.option-admin .contenedor-admin {
+    display: flex;
+    width: 100%;
+    font-size: 20px;
+}
+
+.flecha-admin-opcion {
+    transform: rotate(-90deg);
+}
+
+.option-admin .contenedor-admin figure {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    justify-content: center;
+    width: 34px;
+}
+
+
+.opciones-cita {
+    display: none;
+    padding-left: 30px;
+    font-weight: bold;
+
+}
+
+.opciones-cita ul li {
+    height: 36px;
+    border-radius: 4px;
+    padding-left: 10px;
+    line-height: 36px;
+    font-size: 18px;
+}
+
+.opciones-cita ul li:hover {
+    background-color: #2B2B2F;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.user-information2 {
+    border-top: 0.01px solid var(--Negro-75);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.user-information2 div {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.exit-admin {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* CREAR NUEVA CITA -- INTERFAZ CITAS */
+
+.reserva_cita_barra-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--Negro-0);
+    padding: 10px 20px;
+    box-shadow: 0px 4px 8px rgba(181, 181, 181, 0.8);
+    height: 60px;
+    width: 100%;
+}
+
+.reserva_cita_barra-superior__icono {
+    width: 24px;
+    height: auto;
+}
+
+.reserva-cita__formulario {
+    max-width: 1200px;
+    margin: 10px auto 0px;
+    padding: 20px;
+    background-color: var(--Negro-0);
+    box-shadow: 0px 4px 8px rgba(181, 181, 181, 0.8);
+    border-radius: 10px;
+}
+
+.reserva-cita__titulo {
+    text-align: center;
+    font-size: var(--Tittle);
+    margin-bottom: 20px;
+}
+
+.reserva-cita__contenido {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.reserva-cita__cliente,
+.reserva-cita__mascota,
+.reserva-cita__cita {
+    padding: 20px 20px 10px 20px;
+    border: 1px solid var(--Negro-50);
+    border-radius: 10px;
+    background-color: var(--Negro-0);
+}
+
+.reserva-cita__mascota {
+    margin-bottom: 14px;
+}
+
+.contenedor-datos-cita {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reserva-cita__subtitulo {
+    font-size: var(--Text-long);
+    margin-bottom: 4px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.reserva-cita__label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: var(--Text-small);
+    font-weight: bold;
+}
+
+.reserva-cita__input,
+.reserva-cita__select,
+.reserva-cita__textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: var(--Text-medium);
+    background-color: var(--Negro-25);
+}
+
+.reserva-cita__detalles {
+    margin-bottom: 20px;
+}
+
+.reserva-contenedor {
+    width: 200px;
+}
+
+.reserva-cita__cita-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.reserva-cita__boton {
+    display: block;
+    width: 350px;
+    margin: 20px auto 0px auto;
+    padding: 15px;
+    background-color: var(--Orange-50);
+    color: var(--Negro-0);
+    border: none;
+    border-radius: 20px;
+    font-size: var(--Text-long);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reserva-cita__boton:hover {
+    opacity: 0.8;
+}
+.pruebaaa{
+    height: min-content;
+    margin-top: 20px;
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+}
+/* TABLA DE GESTION PRODUCTOS */
+.Tabla_Gestion-Productos {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0px auto 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.Tabla_Gestion-Productos thead {
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+}
+.Valor-Tabla__precioTotal{
+    width: 100px;
+}
+.Encabezado-tabla__nombre, .Valor-Tabla__nombre{
+    width: 20%;
+}
+
+.Fila_Encabezado th {
+    width: min-content;
+    background-color: var(--Orange-85);
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 0px;
+    text-align: center;
+    border: 1px solid var(--Orange-50);
+}
+
+.Fila_producto:hover {
+    background-color: var(--Negro-25);
+}
+
+.Fila_producto td {
+    
+    border: 1px solid var(--Orange-50);
+    padding: 8px 8px;
+    word-wrap: break-word; /* Hace que el contenido se coloque abajo en vez de desbordar*/
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

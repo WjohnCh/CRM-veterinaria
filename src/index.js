@@ -158,7 +158,62 @@ app.get('/productos/mascota/gato', async (req, res) => {
 });
 
 
-// ORDENAMIENTO DE OBJETOS
+
+// CONSULTA PARA CREAR LA TABLA GESTIONAR PRODUCTOS
+app.get("/productos/categoria/gestion", async (req, res)=>{
+    try {
+        const [results] = await sequelize.query(
+            `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+            p.precio, p.razaMascota, p.descripcion FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria;`
+            );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+})
+
+app.get("/productos/categoria/gestion/:categoria", async (req, res)=>{
+    try {
+            const { categoria } = req.params;
+            const [results] = await sequelize.query(
+                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+                p.precio, p.razaMascota, p.descripcion 
+                FROM productos p 
+                INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+                WHERE c.idCategoria = ?;`,
+                {
+                    replacements: [categoria]
+                }
+            );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+})
+
+app.get("/productos/id/gestion/:id", async (req, res)=>{
+    try {
+            const { id } = req.params;
+            const [results] = await sequelize.query(
+                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+                p.precio, p.razaMascota, p.descripcion 
+                FROM productos p 
+                INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+                WHERE p.idproductos  = ?;`,
+                {
+                    replacements: [id]
+                }
+            );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+})
+
+
 
 
 

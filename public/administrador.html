@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-admin.css">
     <title>Document</title>
+    <style>
+        .truncated-text {
+            width: 200px; /* Ajusta el ancho según sea necesario */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid #000; /* Solo para visualización */
+        }
+    </style>
 </head>
+
 <body class="contenedor-body-divison">
     <nav class="administrador-navbar">
         <header class="user-information">
@@ -35,15 +46,15 @@
                 </div>
                 <div class="opciones-cita" id="opciones-cita">
                     <ul>
-                            <li class="white-letter">
-                                o Nueva Cita
-                            </li >
-                            <li class="white-letter">
-                                o Solicitudes   
-                            </li>
-                            <li class="white-letter">
-                                o Gestión de Citas
-                            </li>
+                        <li class="white-letter opcion-admin" id="opcion_Nueva-Cita">
+                            o Nueva Cita
+                        </li>
+                        <li class="white-letter opcion-admin" id="opcion_Solicitudes">
+                            o Solicitudes
+                        </li>
+                        <li class="white-letter opcion-admin" id="opcion_Gestion-Cita">
+                            o Gestión de Citas
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -56,23 +67,17 @@
                         <p class="white-letter">Productos</p>
                     </div>
                     <figure>
-                        <img  class="flecha-admin-opcion flecha-admin"src="./Íconos - Logos/felcha abajo.svg" alt="">
+                        <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
                     </figure>
                 </div>
                 <div class="opciones-cita" id="opciones-productos">
                     <ul>
-                            <li class="white-letter">
-                                o Crear producto
-                            </li >
-                            <li class="white-letter">
-                                o Opcion 2
-                            </li>
-                            <li class="white-letter">
-                                o Gestión de productos
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 4
-                            </li>
+                        <li class="white-letter opcion-admin" id="opcion_Gestion-Productos">
+                            o Gestión de productos
+                        </li>
+                        <li class="white-letter opcion-admin" id="opcion_Gestion-Pedidos">
+                            o Gestión de Pedidos
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -80,28 +85,31 @@
                 <div class="option-admin">
                     <div class="contenedor-admin">
                         <figure>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="white" d="M16 17v2H2v-2s0-4 7-4s7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.4 3.4 0 0 0-1.93.59a5 5 0 0 1 0 5.82A3.4 3.4 0 0 0 15 11a3.5 3.5 0 0 0 0-7"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
+                                <path fill="white"
+                                    d="M16 17v2H2v-2s0-4 7-4s7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.4 3.4 0 0 0-1.93.59a5 5 0 0 1 0 5.82A3.4 3.4 0 0 0 15 11a3.5 3.5 0 0 0 0-7" />
+                            </svg>
                         </figure>
                         <p class="white-letter">Clientes</p>
                     </div>
                     <figure>
-                        <img class="flecha-admin-opcion flecha-admin"src="./Íconos - Logos/felcha abajo.svg" alt="">
+                        <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
                     </figure>
                 </div>
                 <div class="opciones-cita" id="opciones-clientes">
                     <ul>
-                            <li class="white-letter">
-                                o Opcion 1
-                            </li >
-                            <li class="white-letter">
-                                o Opcion 2
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 3
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 4
-                            </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 1
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 2
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 3
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 4
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -111,26 +119,26 @@
                         <figure>
                             <img src="./Íconos - Logos/medical-history-cross-svgrepo-com.svg" alt="">
                         </figure>
-                        <p class="white-letter" >Historial médico</p>
+                        <p class="white-letter">Historial médico</p>
                     </div>
-                        <figure>
-                            <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
-                        </figure>
+                    <figure>
+                        <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
+                    </figure>
                 </div>
                 <div class="opciones-cita" id="opciones-historial médico">
                     <ul>
-                            <li class="white-letter">
-                                o Opcion 1
-                            </li >
-                            <li class="white-letter">
-                                o Opcion 2
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 3
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 4
-                            </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 1
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 2
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 3
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 4
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -142,24 +150,24 @@
                         </figure>
                         <p class="white-letter">Cuentas</p>
                     </div>
-                        <figure>
-                            <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
-                        </figure>
+                    <figure>
+                        <img class="flecha-admin-opcion flecha-admin" src="./Íconos - Logos/felcha abajo.svg" alt="">
+                    </figure>
                 </div>
                 <div class="opciones-cita" id="opciones-cuentas">
                     <ul>
-                            <li class="white-letter">
-                                o Opcion 1
-                            </li >
-                            <li class="white-letter">
-                                o Opcion 2
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 3
-                            </li>
-                            <li class="white-letter">
-                                o Opcion 4
-                            </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 1
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 2
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 3
+                        </li>
+                        <li class="white-letter opcion-admin">
+                            o Opcion 4
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -167,180 +175,180 @@
 
         <div class="user-information2">
             <div>
-                <figure >
+                <figure>
                     <img src="./Íconos - Logos/user.svg" alt="">
                 </figure>
                 <p class="white-letter">John Anahua</p>
             </div>
             <figure class="exit-admin">
-                    <img src="./Íconos - Logos/exit.svg" alt="">
+                <img src="./Íconos - Logos/exit.svg" alt="">
             </figure>
         </div>
     </nav>
-
-    <!-- SECTION APPOINTMENT -->
+    
     <div>
         <div class="reserva_cita_barra-superior">
             <a href="">
             </a>
             <a href="">
-              <img
-                src="./Íconos - Logos/notificacion_reserva.svg"
-                alt="Notificacion Logo"
-                class="reserva_cita_barra-superior__icono reserva_cita_barra-superior__icono--derecha"
-              />
+                <img src="./Íconos - Logos/notificacion_reserva.svg" alt="Notificacion Logo"
+                    class="reserva_cita_barra-superior__icono reserva_cita_barra-superior__icono--derecha" />
             </a>
         </div class="contenedor-citas-general">
-          <div class="reserva-cita__formulario">
-            <h1 class="reserva-cita__titulo">CREAR NUEVA CITA</h1>
-            <div class="reserva-cita__contenido">
-              <div>
-                <h2 class="reserva-cita__subtitulo">Información del cliente:</h2>
-                <div class="reserva-cita__cliente">
-                  <label for="reserva_cita_cliente-nombre" class="reserva-cita__label"
-                    >Nombre Completo:</label
-                  >
-                  <input
-                    type="text"
-                    id="reserva_cita_cliente-nombre"
-                    name="reserva_cita_cliente-nombre"
-                    class="reserva-cita__input"
-                  />
-                  <label for="reserva_cita_cliente-dni" class="reserva-cita__label"
-                    >Teléfono:</label
-                  >
-                  <input
-                    type="text"
-                    id="reserva_cita_cliente-dni"
-                    name="reserva_cita_cliente-dni"
-                    class="reserva-cita__input"
-                  />
-                  <label for="reserva_cita_cliente-correo" class="reserva-cita__label"
-                    >Correo Electrónico:</label
-                  >
-                  <input
-                    type="email"
-                    id="reserva_cita_cliente-correo"
-                    name="reserva_cita_cliente-correo"
-                    class="reserva-cita__input"
-                  />
-                  <label
-                    for="reserva_cita_cliente-direccion"
-                    class="reserva-cita__label"
-                    >Dirección:</label
-                  >
-                  <input
-                    type="text"
-                    id="reserva_cita_cliente-direccion"
-                    name="reserva_cita_cliente-direccion"
-                    class="reserva-cita__input"
-                  />
-                </div>
-              </div>
-              <div class="reserva-cita__detalles">
-                <h2 class="reserva-cita__subtitulo">Información de la mascota:</h2>
-                <div class="reserva-cita__mascota">
-                  <div class="contenedor-datos-cita">
+        <!-- SECTION APPOINTMENT -->
+        <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Crear-Citas" style="display: none;">
+            <div class="reserva-cita__formulario">
+                <h1 class="reserva-cita__titulo">CREAR NUEVA CITA</h1>
+                <div class="reserva-cita__contenido">
                     <div>
-                      <label for="reserva_cita_mascota-nombre" class="reserva-cita__label"
-                        >Nombre</label
-                      >
-                      <input
-                        type="text"
-                        id="reserva_cita_mascota-nombre"
-                        name="reserva_cita_mascota-nombre"
-                        class="reserva-cita__input"
-                      />
+                        <h2 class="reserva-cita__subtitulo">Información del cliente:</h2>
+                        <div class="reserva-cita__cliente">
+                            <label for="reserva_cita_cliente-nombre" class="reserva-cita__label">Nombre Completo:</label>
+                            <input type="text" id="reserva_cita_cliente-nombre" name="reserva_cita_cliente-nombre"
+                                class="reserva-cita__input" />
+                            <label for="reserva_cita_cliente-dni" class="reserva-cita__label">Teléfono:</label>
+                            <input type="text" id="reserva_cita_cliente-dni" name="reserva_cita_cliente-dni"
+                                class="reserva-cita__input" />
+                            <label for="reserva_cita_cliente-correo" class="reserva-cita__label">Correo Electrónico:</label>
+                            <input type="email" id="reserva_cita_cliente-correo" name="reserva_cita_cliente-correo"
+                                class="reserva-cita__input" />
+                            <label for="reserva_cita_cliente-direccion" class="reserva-cita__label">Dirección:</label>
+                            <input type="text" id="reserva_cita_cliente-direccion" name="reserva_cita_cliente-direccion"
+                                class="reserva-cita__input" />
+                        </div>
                     </div>
-                    <div class="reserva-contenedor">
-                      <label
-                        for="reserva_cita_mascota-especie"
-                        class="reserva-cita__label"
-                        >Especie</label
-                      >
-                      <select
-                        id="reserva_cita_mascota-especie"
-                        name="reserva_cita_mascota-especie"
-                        class="reserva-cita__select"
-                        placeholder="Seleccionar"
-                      >
-                        <option value="" disabled selected>Seleccionar</option>
-                        <option value="perro">Perro</option>
-                        <option value="gato">Gato</option>
-                        <option value="gato">Otro</option>
-                      </select>
+                    <div class="reserva-cita__detalles">
+                        <h2 class="reserva-cita__subtitulo">Información de la mascota:</h2>
+                        <div class="reserva-cita__mascota">
+                            <div class="contenedor-datos-cita">
+                                <div>
+                                    <label for="reserva_cita_mascota-nombre" class="reserva-cita__label">Nombre</label>
+                                    <input type="text" id="reserva_cita_mascota-nombre" name="reserva_cita_mascota-nombre"
+                                        class="reserva-cita__input" />
+                                </div>
+                                <div class="reserva-contenedor">
+                                    <label for="reserva_cita_mascota-especie" class="reserva-cita__label">Especie</label>
+                                    <select id="reserva_cita_mascota-especie" name="reserva_cita_mascota-especie"
+                                        class="reserva-cita__select" placeholder="Seleccionar">
+                                        <option value="" disabled selected>Seleccionar</option>
+                                        <option value="perro">Perro</option>
+                                        <option value="gato">Gato</option>
+                                        <option value="gato">Otro</option>
+                                    </select>
+                                </div>
+                                <div class="reserva-contenedor">
+                                    <label for="reserva_cita_mascota-sexo" class="reserva-cita__label">Sexo</label>
+                                    <select id="reserva_cita_mascota-sexo" name="reserva_cita_mascota-sexo"
+                                        class="reserva-cita__select">
+                                        <option value="" disabled selected>Seleccionar</option>
+                                        <option value="perro">Macho</option>
+                                        <option value="gato">Hembra</option>
+                                        <option value="gato">No especificado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="reserva-cita__subtitulo">Detalles de la cita:</h2>
+                        <div class="reserva-cita__cita">
+                            <div class="reserva-cita__cita-grid">
+                                <div class="reserva-cita__reserva_cita_cita-motivo">
+                                    <label for="reserva_cita_cita-motivo" class="reserva-cita__label">Motivo de la
+                                        cita</label>
+                                    <select id="reserva_cita_cita-motivo" name="reserva_cita_cita-motivo"
+                                        class="reserva-cita__select">
+                                        <option value="" disabled selected>Seleccionar</option>
+                                        <option value="consulta">Consulta</option>
+                                        <option value="vacunacion">Vacunación</option>
+                                        <option value="control">Control</option>
+                                        <option value="otro">Otro</option>
+                                    </select>
+                                    <label for="reserva_cita_cita-fecha" class="reserva-cita__label">Fecha</label>
+                                    <input type="date" id="reserva_cita_cita-fecha" name="reserva_cita_cita-fecha"
+                                        class="reserva-cita__input" />
+                                </div>
+                                <div class="reserva-cita__cita-info">
+                                    <label for="reserva_cita_cita-info" class="reserva-cita__label">Más información</label>
+                                    <textarea id="reserva_cita_cita-info" name="reserva_cita_cita-info" rows="4"
+                                        class="reserva-cita__textarea" placeholder="0/100 palabras"
+                                        maxlength="100"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-        
-                    <div class="reserva-contenedor">
-                      <label for="reserva_cita_mascota-sexo" class="reserva-cita__label"
-                      >Sexo</label>
-                      <select
-                      id="reserva_cita_mascota-sexo"
-                      name="reserva_cita_mascota-sexo"
-                      class="reserva-cita__select"
-                      >
-                      <option value="" disabled selected>Seleccionar</option>
-                      <option value="perro">Macho</option>
-                      <option value="gato">Hembra</option>
-                      <option value="gato">No especificado</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
-        
-        
-                <h2 class="reserva-cita__subtitulo">Detalles de la cita:</h2>
-                <div class="reserva-cita__cita">
-                  <div class="reserva-cita__cita-grid">
-                    <div class="reserva-cita__reserva_cita_cita-motivo">
-                      <label
-                      for="reserva_cita_cita-motivo"
-                      class="reserva-cita__label"
-                      >Motivo de la cita</label
-                      >
-                      <select
-                      id="reserva_cita_cita-motivo"
-                      name="reserva_cita_cita-motivo"
-                      class="reserva-cita__select"
-                      >
-                      <option value="" disabled selected>Seleccionar</option>
-                      <option value="consulta">Consulta</option>
-                      <option value="vacunacion">Vacunación</option>
-                      <option value="control">Control</option>
-                      <option value="otro">Otro</option>
-                      </select>
-                      <label for="reserva_cita_cita-fecha" class="reserva-cita__label"
-                        >Fecha</label
-                      >
-                      <input
-                        type="date"
-                        id="reserva_cita_cita-fecha"
-                        name="reserva_cita_cita-fecha"
-                        class="reserva-cita__input"
-                      />
-                    </div>
-                    <div class="reserva-cita__cita-info">
-                      <label for="reserva_cita_cita-info" class="reserva-cita__label"
-                        >Más información</label
-                      >
-                      <textarea
-                        id="reserva_cita_cita-info"
-                        name="reserva_cita_cita-info"
-                        rows="4"
-                        class="reserva-cita__textarea"
-                        placeholder="0/100 palabras"
-                        maxlength="100"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <button class="reserva-cita__boton">Reservar cita</button>
             </div>
-            <button class="reserva-cita__boton">Reservar cita</button>
-          </div>
+        </div>
+        <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Solicitudes-Citas" style="display: none;">
+            <div>
+                <p>SOLICITUDES DE CITA</p>
+            </div>
+        </div>
+        
+        <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Citas" style="display: none;">
+            <div>
+                <p>GESTIÓN DE CITAS</p>
+            </div>
+        </div>
+        <!-- SECTION PRODUCTS -->
+        <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Productos">
+            <h3>FILTROS</h3>
+            <div>
+               <div>
+                <input type="text" name="" id="Buscar-Tabla_ID-Producto-INPUT" placeholder="Buscar por ID">
+                <button id="Buscar-Tabla_ID-Producto">Buscar</button>
+            </div> 
+            <div>
+                <label for="">Filtrar por Categoría</label>
+                <select id="Filtro-tabla_categoria">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="Filtro-tabla_Alimentos" id="Filtro-tabla_Alimentos">Alimentos</option>
+                    <option value="Filtro-tabla_Accesorios" id="Filtro-tabla_Accesorios">Accesorios y equipamento</option>
+                    <option value="Filtro-tabla_Transportes" id="Filtro-tabla_Transportes">Transportes y dormitorios</option>
+                    <option value="Filtro-tabla_Higiene" id="Filtro-tabla_Higiene">Higiene y limpieza</option>
+                </select>
+            </div>
+            
+            <button id="Anidir-Producto-BD">AÑADIR PRODUCTO</button>
+
+            <div class="pruebaaa">
+                <table class="Tabla_Gestion-Productos">
+                    <!-- PLANTILLA FILA -->
+                    <tr class="Fila_producto" style="display: none;">
+                        <td class="Valor-Tabla__id"></td>
+                        <td class="Valor-Tabla__nombre"></td>
+                        <td class="Valor-Tabla__categoria"></td>
+                        <td class="Valor-Tabla__precioTotal">
+                            <p>S/. <span class="Valor-Tabla__precio"></span></p>
+                        </td>
+                        <td class="Valor-Tabla__descripcion"></td>
+                    </tr>
+                    <!-- FIN PLANTILLA FILA -->
+                    <thead class="Fila_Encabezado">
+                        <tr>
+                            <th class="Encabezado-tabla__id">ID</th>
+                            <th class="Encabezado-tabla__nombre">Nombre del Producto</th>
+                            <th class="Encabezado-tabla__categoria">Categoría</th>
+                            <th class="Encabezado-tabla__precio">Precio</th>
+                            <th class="Encabezado-tabla__descripcion">Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Cuerpo_tabla-Gestion-Producto">
+                        <!-- INSERTAR PRODUCTOS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Pedidos" style="display: none;">
+            <div>
+                <p>GESTION DE PEDIDOS</p>
+            </div>
+        </div>
     </div>
 
-    <script src="./js/admin.js"></script>
+    
+    <script type="module" src="./js/admin.mjs" ></script>
 
 </body>
+
 </html>

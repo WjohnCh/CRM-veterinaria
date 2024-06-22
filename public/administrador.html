@@ -347,6 +347,45 @@
             </div>
             <!-- FIN DEL MODAL DE FORMULARIO -->
 
+            <!-- FORMULARIO QUE ACTUALIZA UN PRODUCTO -->
+                <div id="Contenedor__Formulario-ActualizarProducto" style="display: none;"> 
+                    <form id="Formulario_ActualizarProductoBD" enctype="multipart/form-data" >
+                        <h2>ACTUALIZAR PRODUCTO</h2>
+                        <label for="nombre">Nombre del Producto:</label>
+                        <input type="text" name="nombre" value="" id="Actualizar-Producto_nombre" required>
+                        <label for="precio">Precio del Producto:</label>
+                        <input type="number" name="precio" id="Actualizar-Producto_precio" value="" step="0.01" required>
+                    
+                        <label for="descripcion">Descripción:</label>
+                        <textarea name="descripcion" id="Actualizar-Producto_descripcion" required></textarea>
+                        <div class="frm_select_opciones">
+                            <div>
+                                <label for="categoria">Categoría: </label>
+                                <select name="categoria" required id="Actualizar-Producto_Categoria">
+                                    <option value="" disabled>Categoría</option>
+                                    <option value="1" id="Actualizar_categoria-1" >Alimentos</option>
+                                    <option value="2" id="Actualizar_categoria-2" >Accesorios y equipamiento</option>
+                                    <option value="3" id="Actualizar_categoria-3" >Transportes y dormitorios</option>
+                                    <option value="4" id="Actualizar_categoria-4" >Higiene y Limpieza</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="mascota">Tipo mascota: </label>
+                                <select name="mascota" required id="Actualizar-Producto_masocta">
+                                    <option value="" disabled selected>Destinatario </option>
+                                    <option value="perro" id="destinatario_actualizar-perro">para perros</option>
+                                    <option value="gato"  id="destinatario_actualizar-gato">para gatos</option>
+                                    <option value="todos" id="destinatario_actualizar-todos" >Todos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label for="avatar">Actualizar Foto:</label>
+                        <input type="file" name="avatar" id="avatar">
+                        <input type="submit" value="Actualizar Producto" class="boton-generico-primario" onclick="ActualizarProducto()" id="btn_generalActualizar-Producto">
+                    </form>
+                </div>
+            <!-- FIN DEL MODAL DE FORMULARIO -->
+
             <div class="pruebaaa">
                 <div class="Contenedor_Filtros-Tabla-productos flex-centradoYX">
                     <h3>FILTROS</h3>
@@ -410,40 +449,47 @@
                         <hr class="modal-divider">
                         <div>
                             <p>Nombre:</p>
-                                <span id="detalle-producto_nombre">Cepillo para mascotas autolimpiable grande</span>
+                                <span id="detalle-producto_nombre"></span>
                         </div>
                         <div>
                             <p>Id:</p>
-                                <span id="detalle-producto_ID">12</span>
+                                <span id="detalle-producto_ID"></span>
                         </div>          
-                        <div>
-                            <p>Precio:</p>
-                                <span id="detalle-producto_precio">S/.50.00</span>
-                        </div>
+                            <p>Precio:
+                                <span id="detalle-producto_precio"></span>
+                            </p>
                         <div>
                             <p>Categoría:</p>
-                                <span id="detalle-producto_Categoria">Limpieza e Higiene</span>
+                                <span id="detalle-producto_Categoria"></span>
                         </div>
                         <div>
                             <p>Destinatario:</p>
-                                <span id="detalle-producto_Destinatario">Para perros</span>
+                                <span id="detalle-producto_Destinatario"></span>
                         </div>
                         <figure class="product-image">
-                            <img src="../src/uploads/ropa-sapo-perro.jpg" alt="Product Image">
+                            <img src="../src/uploads/ropa-sapo-perro.jpg" alt="Product Image" id="detalle__img">
                         </figure>
                         <div>
                             <p>Descripción:</p>
                             <div class="description-container">
-                                <span id="Detalle-producto_descripcion">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum...</span>
+                                <span id="Detalle-producto_descripcion"></span>
                             </div>
                         </div>
                         <div class="button-group">
-                            <button id="btn_EditarProducto" class="modal-button edit-button">Editar Producto</button>
-                            <button id="btn_OcultarProducto" class="modal-button hide-button">Ocultar Producto</button>
+                            <button id="btn_EditarProducto" class="modal-button edit-button" onclick="ActualizarDatosProducto()">Editar Producto</button>
+                            <button id="btn_OcultarProducto" class="modal-button hide-button" onclick="ocultarMostrarProducto()">Ocultar Producto</button>
                         </div>
                     </div>
                 </div>
+                <!-- FIN -->
+
+                <!-- EDITAR PRODUCTOS INTERFAZ -->
+
             </div>
+
+
+        </div>
+
         <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Pedidos" style="display: none;">
             <div>
                 <p>GESTION DE PEDIDOS</p>

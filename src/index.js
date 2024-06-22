@@ -34,6 +34,39 @@ app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     }
 })
 
+app.put('/update/products/:id', upload.single('avatar'), async (req, res)=>{
+    const { id } = req.params
+    const file = req.file;
+    const { nombre, precio, categoria, descripcion, mascota } = req.body;
+
+    let newPath;
+
+    try {
+        let query;
+        if(file){
+            newPath = `./src/uploads/${file.originalname}`
+            fs.renameSync(file.path, newPath);
+            [query] = await sequelize.query(
+                    ` UPDATE productos SET 
+                    nombre = ?, precio = ?, razaMascota = ?, url = ?, idCategoria = ?, descripcion = ?
+                    WHERE idproductos = ?`,
+                    { replacements: [nombre, parseFloat(precio), mascota , newPath, parseInt(categoria), descripcion, parseInt(id)] }
+                );
+        }else{
+            [query] = await sequelize.query(
+                    ` UPDATE productos SET 
+                    nombre = ?, precio = ?, razaMascota = ?, idCategoria = ?, descripcion = ?
+                    WHERE idproductos = ?`,
+                    { replacements: [nombre, parseFloat(precio), mascota, parseInt(categoria), descripcion, parseInt(id)] }
+                );
+        }
+        res.json(query);
+    } catch (error) {
+        console.error("console.error('Error al actualizar el producto:', error);",error);
+        res.status(500).send('Error al actualizar el producto');
+    }
+})
+
 
 
 
@@ -161,8 +194,23 @@ app.get("/productos/categoria/gestion", async (req, res)=>{
     try {
         const [results] = await sequelize.query(
             `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
-            p.precio, p.razaMascota, p.descripcion FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+            p.precio, p.razaMascota, p.descripcion, p.url, p.is_visible, c.idCategoria  
+            FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
             WHERE p.is_visible = TRUE;`
+            );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+})
+app.get("/productos/categoria/gestion/ocultos", async (req, res)=>{
+    try {
+        const [results] = await sequelize.query(
+            `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+            p.precio, p.razaMascota, p.descripcion, p.url, p.is_visible , c.idCategoria 
+            FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+            WHERE p.is_visible = FALSE;`
             );
         res.json(results);
     } catch (error) {
@@ -176,7 +224,7 @@ app.get("/productos/categoria/gestion/:categoria", async (req, res)=>{
             const { categoria } = req.params;
             const [results] = await sequelize.query(
                 `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
-                p.precio, p.razaMascota, p.descripcion 
+                p.precio, p.razaMascota, p.descripcion, p.is_visible, p.url, c.idCategoria
                 FROM productos p 
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
                 WHERE c.idCategoria = ?;`,
@@ -196,8 +244,8 @@ app.get("/productos/id/gestion/:id", async (req, res)=>{
             const { id } = req.params;
             const [results] = await sequelize.query(
                 `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
-                p.precio, p.razaMascota, p.descripcion 
-                FROM productos p 
+                p.precio, p.razaMascota, p.descripcion, p.is_visible, p.url, c.idCategoria  
+                FROM productos p
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
                 WHERE p.idproductos = ?;`,
                 {
@@ -210,6 +258,22 @@ app.get("/productos/id/gestion/:id", async (req, res)=>{
         res.status(500).send('Error al obtener los productos');
     }
 })
+
+app.put('/productos/:id/visibilidad/:estado', async (req, res) => {
+    try {
+        const { id, estado } = req.params;
+        const isVisible = (parseInt(estado) === 1);
+
+        const [results] = await sequelize.query(
+            `UPDATE productos SET is_visible = ? WHERE idproductos = ?`,
+            { replacements: [isVisible, id] }
+        );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al actualizar el producto:', error);
+        res.status(500).send('Error al actualizar el producto');
+    }
+});
 
 
 app.get("/images/single", async (req, res)=>{

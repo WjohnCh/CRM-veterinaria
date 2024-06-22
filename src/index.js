@@ -16,19 +16,16 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     const file = req.file;
-    const { nombre, precio, categoria } = req.body;
+    const { nombre, precio, categoria, descripcion, mascota } = req.body;
 
     const newPath = `./src/uploads/${file.originalname}`
     try {
         fs.renameSync(file.path, newPath);
-        const [idCategoria] = await sequelize.query(
-            'SELECT idCategoria FROM categoria WHERE nombre = ?',
-            { replacements: [categoria] }  
-        );
-        console.log(idCategoria);
-        const [result] = await sequelize.query(
-            'INSERT INTO productos (nombre, precio, url, idCategoria) VALUES (?, ?, ?, ?)',
-            { replacements: [nombre, parseFloat(precio), newPath, idCategoria[0].idCategoria] }
+
+        await sequelize.query(
+            `INSERT INTO productos (nombre, precio, razaMascota,  url, idCategoria, descripcion) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            { replacements: [nombre, parseFloat(precio),mascota, newPath, parseInt(categoria), descripcion] }
         );
         res.send('Archivo subido y movido exitosamente');
     } catch (error) {
@@ -164,7 +161,8 @@ app.get("/productos/categoria/gestion", async (req, res)=>{
     try {
         const [results] = await sequelize.query(
             `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
-            p.precio, p.razaMascota, p.descripcion FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria;`
+            p.precio, p.razaMascota, p.descripcion FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+            WHERE p.is_visible = TRUE;`
             );
         res.json(results);
     } catch (error) {
@@ -201,7 +199,7 @@ app.get("/productos/id/gestion/:id", async (req, res)=>{
                 p.precio, p.razaMascota, p.descripcion 
                 FROM productos p 
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
-                WHERE p.idproductos  = ?;`,
+                WHERE p.idproductos = ?;`,
                 {
                     replacements: [id]
                 }
@@ -214,7 +212,25 @@ app.get("/productos/id/gestion/:id", async (req, res)=>{
 })
 
 
-
+app.get("/images/single", async (req, res)=>{
+    try {
+            const { id } = req.params;
+            const [results] = await sequelize.query(
+                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+                p.precio, p.razaMascota, p.descripcion 
+                FROM productos p 
+                INNER JOIN categoria c ON p.idCategoria = c.idCategoria
+                WHERE p.idproductos  = ?;`,
+                {
+                    replacements: [id]
+                }
+            );
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('Error al obtener los productos');
+    }
+})
 
 
 app.post('/procesar-datos', async (req, res) => {

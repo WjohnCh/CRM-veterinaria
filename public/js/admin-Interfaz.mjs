@@ -59,13 +59,14 @@ export async function AbrirCerrarInterfaz(){
         UltimoContenedorClick = interfazGestionPedidos
     })    
     
-
+    // FUNCION QUE LE DA ACCION DE CLICK A CADA ELEMENTO DEL FILTRO
     MostrarFiltradoTabla()
 }
 
 const ContenedorTabla = document.getElementById("Cuerpo_tabla-Gestion-Producto");
 const plantilla = document.querySelector(".Fila_producto")
-
+const ModalDetalleProducto = document.getElementById("modal-Detalle-Producto-tabla")
+const equisCierremodalDetalleProducto = document.querySelector(".close-button"); // Equis que cierra el modal de detalle producto
 // FUNCION QUE CREA LAS TABLAS SEGUN EL FILTRADO DE PRODUCTOS
 async function MostrarTablaObjeto(endopoint){
     try {
@@ -87,22 +88,47 @@ async function MostrarTablaObjeto(endopoint){
         const categoriaProducto = nuevaFila.querySelector(".Valor-Tabla__categoria");
         const precioProducto = nuevaFila.querySelector(".Valor-Tabla__precio");
         const descripcionProducto = nuevaFila.querySelector(".Valor-Tabla__descripcion");
-    
+        const imgMostrarDetalleProducto = nuevaFila.querySelector(".img_Mostrar-Detalle-Producto");
+
+        // LOGICA PARA ABRIR Y CERRAR DETALLE DE PRODUCTOS
+        imgMostrarDetalleProducto.addEventListener("click", ()=>{
+            ModalDetalleProducto.classList.add("motrar-elemento-grid");
+
+        })
+
+
         idProducto.innerText = producto.idproductos;
         nombreProducto.innerText = producto.nombre;
         categoriaProducto.innerText = producto["Nombre Categoria"];
         precioProducto.innerText = producto.precio.toFixed(2);
         descripcionProducto.innerText = producto.descripcion;
-    
+        
+
         nuevaFila.style.display = "table-row";
         ContenedorTabla.appendChild(nuevaFila);
     }
+
+
+    // CERRA MODAL DETALLE PRODUCTO
+    equisCierremodalDetalleProducto.addEventListener("click",()=>{
+        ModalDetalleProducto.classList.remove("motrar-elemento-grid");
+    })
+    ModalDetalleProducto.addEventListener("click", (event)=>{
+        console.log("hello");
+        if(event.target == ModalDetalleProducto){
+            ModalDetalleProducto.classList.remove("motrar-elemento-grid");
+        }
+    })
 }
+
+
 
 const FiltroCategoriaTabla = document.getElementById("Filtro-tabla_categoria")
 
 const botonBuscarID = document.getElementById("Buscar-Tabla_ID-Producto");
 const INPUTbotonBuscarID = document.getElementById("Buscar-Tabla_ID-Producto-INPUT");
+const btnAniadirProducto = document.getElementById("Anidir-Producto-BD");
+const frmAniadirProducto = document.getElementById("modal_MostrarFormulario-AñadirProducto")
 
 async function MostrarFiltradoTabla(){
 
@@ -124,7 +150,17 @@ async function MostrarFiltradoTabla(){
         const valorID = parseInt(INPUTbotonBuscarID.value.trim());
         MostrarTablaObjeto(`http://localhost:3000/productos/id/gestion/${valorID}`)
     })
-}
 
+    btnAniadirProducto.addEventListener("click", ()=>{
+        frmAniadirProducto.classList.toggle("motrar-elemento-grid")
+    })
+
+    frmAniadirProducto.addEventListener("click", (event)=>{
+        if(event.target == frmAniadirProducto){
+            frmAniadirProducto.classList.remove("motrar-elemento-grid")
+        }
+    })
+
+}
 
 

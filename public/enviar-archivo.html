@@ -28,39 +28,38 @@
 </head>
 <body>
 
-    <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data">
-        <label for="nombre">Nombre del Producto:</label>
-        <input type="text" name="nombre" placeholder="Nombre del producto">
+        <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" name="nombre" placeholder="Nombre del producto">
 
-        <label for="precio">Precio del Producto:</label>
-        <input type="number" name="precio" placeholder="Precio del Producto" step="0.01">
-        
-        <label for="descripcion">Descripción:</label>
-        <textarea name="descripcion" id="" placeholder="Descripcion detallada del producto"></textarea>
+            <label for="precio">Precio del Producto:</label>
+            <input type="number" name="precio" placeholder="Precio del Producto" step="0.01">
+            
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="" placeholder="Descripcion detallada del producto"></textarea>
 
-        <label for="categoria">Categoría: </label>
-        <select name="categoria" id="">
-            <option value="" disabled selected>Categoría </option>
-            <option value="ropa">Ropa</option>
-            <option value="Accesorios">Accesorios</option>
-            <option value="Juguetes">Juguetes</option>
-            <option value="Comida">Comida</option>
-            <option value="Otros">Otros</option>
-        </select>
+            <label for="categoria">Categoría: </label>
+            <select name="categoria" id="">
+                <option value="" disabled selected>Categoría</option>
+                <option value="1">Alimentos</option>
+                <option value="2">Accesorios y equipamiento</option>
+                <option value="3">Transportes y dormitorios</option>
+                <option value="4">Higiene y Limpieza</option>
+            </select>
 
-        <label for="tipoMascota">Tipo mascota: </label>
-        <select name="mascota" id="">
-            <option value="" disabled selected>Categoría </option>
-            <option value="para perros">para perros</option>
-            <option value="para gatos">para gatos</option>
-            <option value="para todos">Todos</option>
-        </select>
+            <label for="tipoMascota">Tipo mascota: </label>
+            <select name="mascota" id="">
+                <option value="" disabled selected>Destinatario </option>
+                <option value="perro">para perros</option>
+                <option value="gato">para gatos</option>
+                <option value="todos">Todos</option>
+            </select>
 
-        <label for="avatar">Subir Foto:</label>
-        <input type="file" name="avatar" id="">
+            <label for="avatar">Subir Foto:</label>
+            <input type="file" name="avatar" id="">
 
-        <input type="submit" name="" id="" value="enviar">
-    </form>
+            <input type="submit" name="" id="" value="enviar">
+        </form>
     
 </body>
 </html>

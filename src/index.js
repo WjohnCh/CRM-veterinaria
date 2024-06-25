@@ -12,6 +12,7 @@ const upload = multer({dest: './src/uploads/'});
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.urlencoded({ extended: true }));
 
 
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
@@ -334,6 +335,25 @@ app.post('/procesar-datos', async (req, res) => {
     }
 });
 
+app.post('/productos/envios', async (req,res)=>{
+    const {Distrito, CalleDireccion,comentarioAdicional,
+    correo,nombre,apellido,telefono,dni,
+    MetodoPago} = req.body;
+
+    // if(Distrito){
+    //     const [results] = await sequelize.query(
+    //         'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
+    //         { replacements: [email, password] }
+    //     );
+    // }else{
+    //     const [results] = await sequelize.query(
+    //         'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
+    //         { replacements: [email, password] }
+    //     );
+    // }
+
+    res.json(resultados)
+})
 
 
 app.listen(port, () => {

@@ -1,11 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet"> 
     <title>Document</title>
+
+    <style>
+        :root {
+            /* PALETA DE COLORES */
+            --Orange-85: #DC5F00;
+            --Orange-75: #FF5B22;
+            --Orange-50: #FF9843;
+            --Orange-25: #FFDD95;
+            --Negro-100: #000000;
+            --Negro-75: #666666;
+            --Negro-50: #B5B5B5;
+            --Negro-25: #EAEAEA;
+            --Negro-15: #F8F6F4;
+            --Negro-0: #FFFFFF;
+            --yellow-50: #FFC100;
+            /* Tamaño de letra */
+            --ExtraGrande: 70px;
+            --Tittle: 22px;
+            --Text-long: 18px;
+            --Text-medium: 16px;
+            --Text-small: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style-type: none;
+            text-decoration: none;
+            color: var(--Negro-100);
+            border: none;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            padding: 8px 8px 0px 8px;
+        }
+
+        .flex-centradoXY{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .Contenido-principan_Envio-Producto {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            place-items: center left;
+            max-width: 1200px;
+            padding: 10px 20px;
+            margin: auto;
+        }
+
+        .Container_Informacion_Envio-Producto{
+            display: grid;
+            width: 100%;
+        }
+        .btn-generico-opcion_envio{
+            width: 40%;
+            border: 1px solid var(--Negro-75);
+            background-color: var(--Negro-0);
+            height: 30px;
+            font-size: var(--Text-medium);
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--Negro-75);
+            margin: 10px 0px 20px;
+        }
+        .texto-label-generico{
+            font-size: var(--Text-long);
+            color: var(--Negro-75);
+            margin: 20px 0px 10px;
+        }
+        .grid-generico{
+            display: grid;
+        }
+        .contenedor_direccion_envio{
+            gap: 16px;
+            height: max-content;
+            margin-bottom: 20px;
+        }
+        .input-generico{
+            padding-left: 10px;
+            border: 1px solid var(--Negro-50);
+            border-radius: 4px;
+            color: var(--Negro-75);
+            font-size: var(--Text-medium);
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        textarea.input-generico{
+            height: 70px;
+        }
+        .img-generica{
+            height: 40px;
+            width: auto;
+        }
+        .opcion_metodo-pago{
+            display: flex;
+            justify-content: flex-start;
+            height: 60px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+        .opcion_metodo-pago input[type="radio"]{
+            margin-right: 14px;
+        }
+        .finalizar_compra_btn{
+            background-color: var(--Orange-75);
+            color: var(--Negro-0);
+            border: none;
+            font-weight: 500;
+        }
+        hr {
+            height: 2px;
+            background-color: var(--Negro-50);
+            margin: 20px 0 0;
+            width: 100%;
+            opacity: 0.7;
+        }
+        .contenedor_productos-envio-compra{
+            position: fixed;
+            top: 150px;
+            border: 1px solid var(--Negro-50);
+            padding: 20px 12px;
+            border-radius: 4px;
+            width: 520px;
+        }
+        .Contenedor__producto-aniadido_envio{
+            display: flex;
+        }
+        .Contenedor__detalle-Producto_envio{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+        .Img__Foto-Producto_envio{
+            height: 100px;
+            width: 120px;
+            margin-right: 10px;
+            padding: 2px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .Img__Foto-Producto_envio img{
+            width: 90%;
+            height: 90%;
+            background-size: cover;     
+        }
+        .contenedor-productos-totales-finales{
+            display: grid;
+            gap: 10px;
+            overflow: auto;
+            max-height: 350px;
+            margin: 20px 0px;
+            border-bottom: 1px solid var(--Negro-50);
+            border-top: 1px solid var(--Negro-50);
+            padding: 10px 4px;
+        }
+        .Cantidad_Productos_envio{
+            height: 100%;
+            line-height: 6;
+            margin: 0px 30px 0px 10px;
+        }
+    </style>
+
 </head>
+
 <body>
-    <h1>FORMULARIO PARA GUARDAR LOS DATOS DE LA COMPRA</h1>
+    <main class="Contenido-principan_Envio-Producto">
+        <div class="Container_Informacion_Envio-Producto">
+            <!-- <img src="./Íconos - Logos/Logo-CityCan.svg" alt=""> -->
+            <h1>Información del Envío</h1>
+            <hr>
+            <div>
+                <p class="texto-label-generico">¿Cómo quieres recibir tu pedido?</p>
+                    <button class="btn-generico-opcion_envio" id="btn_envio_domicilio">Envío a Domicilio</button>
+                    <button class="btn-generico-opcion_envio" id="btn_envio_tienda">Retiro en Tienda</button>
+            </div>
+            <form id="form_contenedor-Principal-envio" method="POST" action="http://localhost:3000/productos/envios">
+                <div id="contenedor_datos_direccion">
+                    <p class="texto-label-generico">DIRECCIÓN</p>
+                    <div class="grid-generico contenedor_direccion_envio">
+                        <select class="input-generico" name="Distrito" id="" required>
+                            <option value="" disabled selected>Distrito</option>
+                            <option value="Alto de la Alianza">Alto de la Alianza</option>
+                            <option value="Calana">Calana</option>
+                            <option value="Ciudad Nueva">Ciudad Nueva</option>
+                            <option value="Pocollay">Pocollay</option>
+                            <option value="Gregorio Albarracín Lanchipa">Gregorio Albarracín Lanchipa</option>
+                        </select>
+                        <input class="input-generico" type="text" name="CalleDireccion" id="" placeholder="Calle y dirección" required>
+                        <textarea name="comentarioAdicional" id="" placeholder="Cualquier comentario que sea de utilidad para el envío" class="input-generico"></textarea>
+                    </div>
+                </div>
+                <p class="texto-label-generico">INFORMACIÓN DEL CONTACTO</p>
+                <div class="grid-generico contenedor_direccion_envio"> 
+                    <input type="email"  name="correo" class="input-generico" placeholder="Correo Electrónico" required>
+                    <input type="text"   name="nombre" class="input-generico" placeholder="Nombre" required>
+                    <input type="text"   name="apellido" class="input-generico" placeholder="Apellidos" required>
+                    <input type="number" name="telefono" class="input-generico" placeholder="Teléfono" required>
+                    <input type="number" name="dni" class="input-generico" placeholder="Documento de Identidad" required>
+                </div>
+                <p class="texto-label-generico">SELECCIONAR MÉTODO DE PAGO</p>
+                    <div>
+                        <div class="input-generico opcion_metodo-pago">
+                            <input type="radio" id="option1" name="MetodoPago" value="ContraEntrega" required>
+                            <label for="">ContraEntrega</label>
+                        </div>
+                        <div class="input-generico opcion_metodo-pago">
+                            <input type="radio" id="option1" name="MetodoPago" value="YapePlin" required>
+                            <img class="img-generica" src="./Íconos - Logos/yape.png" alt="">
+                            <img class="img-generica" src="./Íconos - Logos/plin.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="Terminos-condiciones" style="margin: 20px 0px;">
+                        <input type="checkbox" id="registrate-terms" name="terms" required>
+                        <label for="terms">
+                            <a href="./Reglamento/tyc.html" class="volver-iniciar">Acepto los Términos y Condiciones</a>
+                        </label>
+                    </div>
+                <div class="flex-centradoXY">
+                    <button class="btn-generico-opcion_envio" onclick="window.history.back();">Seguir Comprando</button>
+                    <button type="submit" class="btn-generico-opcion_envio finalizar_compra_btn"> Finalizar compra </button>
+                </div>
+            </form>
+        </div>
+        <div class="contenedor_productos-envio-compra-principal">
+            <div class="contenedor_productos-envio-compra">
+                <p>Resumen de la compra</p>
+                <!-- PLANTILLA PRODUCTOS ENVIO -->
+                <div class="Contenedor__producto-aniadido_envio" style="display: none;">
+                    <p class="Cantidad_Productos_envio"></p>
+                    <figure class="Img__Foto-Producto_envio">
+                        <img src="" alt="">
+                    </figure>
+                    <div class="Contenedor__detalle-Producto_envio">
+                        <p class="carrito__nombre-producto_envio"></p>
+                        <p class="contenedor__carrito__precio-producto_envio">S/ 
+                            <span class="carrito__precio-producto_envio"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="contenedor-productos-totales-finales">
+                    <!-- PLANTILLA PRODUCTOS FINALIZADOS -->
+                    
+                </div>
+                <div class="flex-centradoXY">
+                    <p>TOTAL:</p>
+                    <p>S/. <span id="Total_productos-envio"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="./js/finalizar-venta.mjs"></script>
 </body>
 </html>

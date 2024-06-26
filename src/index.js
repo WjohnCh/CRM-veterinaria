@@ -3,17 +3,38 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
 const fs = require('node:fs');
+
 const multer = require('multer');
 const upload = multer({dest: './src/uploads/'});
+
+const SECRET_KEY = 'crm_vet_2024'; // CLAVE SECRETA SE CAMBIARÁ CUANDO SE LANZE A PRODUCCIÓN
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.urlencoded({ extended: true }));
 
+const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'] || req.query.accesstoken;
+    
+    if (!token) {
+        return res.status(403).json({ message: 'No token provided' });
+    }
+
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) {
+            console.error('Token error:', err);
+            return res.status(500).json({ message: 'Failed to authenticate token' });
+        }
+        
+        req.user = decoded;
+        next();
+    });
+};
 
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
     const file = req.file;
@@ -321,19 +342,40 @@ app.post('/procesar-datos', async (req, res) => {
     try {
         const [results] = await sequelize.query(
             'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
-            { replacements: [email, password] }
+            { replacements: [email, password]}
         );
-
         if (results.length > 0) {
-            res.json({ success: true, rol: results[0].rol });
+            const token = jwt.sign({ email: results[0].email }, SECRET_KEY);
+            res.json({token, results, success: true});
         } else {
-            res.json({ success: false, message: 'Invalid email or password.' });
+            res.json({ success: false, message: 'Invalid email or password.'});
+        }
+    } catch (error){
+        console.error('Error al realizar la consulta:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }
+});
+
+
+app.get('/user-info', verifyToken, async (req, res) => {
+    try {
+        const [results] = await sequelize.query(
+            'SELECT idusuario FROM usuario WHERE email = ?',
+            {
+                replacements: [req.user.email]
+            }
+        );
+        if (results.length > 0) {
+            res.json({ idUsuario: results[0].idusuario});
+        } else {
+            res.status(404).json({ message: 'User not found'});
         }
     } catch (error) {
         console.error('Error al realizar la consulta:', error);
         res.status(500).json({ message: 'Error al procesar los datos' });
     }
 });
+
 
 app.post('/productos/envios', async (req,res)=>{
     const {Distrito, CalleDireccion,comentarioAdicional,

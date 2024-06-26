@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS usuario (
     email VARCHAR(100),
     direccion VARCHAR(100),
     dni VARCHAR(100) ,
-    Fecha_Nacimiento DATE ,
+    Fecha_Nacimiento DATE,
+    telefono varchar(20),
     genero VARCHAR(15),
     contrasena VARCHAR(255),
     rol VARCHAR(45) 
@@ -85,6 +86,7 @@ CREATE TABLE IF NOT EXISTS productos (
     razaMascota varchar (50),
     url varchar(200),
     idCategoria int,
+    is_visible BOOLEAN DEFAULT TRUE,
     descripcion varchar(500),
     PRIMARY KEY (idproductos),
     FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria)

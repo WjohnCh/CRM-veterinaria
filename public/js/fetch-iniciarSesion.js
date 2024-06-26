@@ -1,8 +1,5 @@
 document.getElementById('boton-registrarse').addEventListener('click', async function(event) {
     event.preventDefault();
-    
-    
-
     const campos =[ 
         document.getElementById('email-iniciar-sesion'),
         document.getElementById('password-iniciar')
@@ -39,15 +36,14 @@ document.getElementById('boton-registrarse').addEventListener('click', async fun
         body: JSON.stringify({ email, password})
     });
     const result = await response.json();
-    if (result.success) {
-        if (result.rol === 'admin') {
-            window.location.href = '/public/administrador.html';
-        } else{
-            
+
+    console.log(result.token);
+    if (response.ok && result.success){
+            localStorage.setItem('token', result.token);
+
             window.location.href = '/public/cliente.html';
-        }
     } else {
+        console.log("hola");
         mensajeRegistroLogin.classList.add("motrar-elemento");
-        console.log(element);
     }
 });

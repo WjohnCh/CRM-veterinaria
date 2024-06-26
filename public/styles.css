@@ -614,9 +614,11 @@ section#detalle-personal aside.contenedor-socialmedia{
    color: var(--Negro-100);
    font-weight: bold;
 }
-
+.white-letter{
+   color: var(--Negro-0);
+}
 aside.banner-cliente{
-   margin-top: 10px;
+   margin-top: 80px;
    width: 100%;
    display: flex;
    justify-content: center;
@@ -935,6 +937,7 @@ main.contenedor-productos .detalle-producto .precio-producto{
    z-index: 1;
 }
 
+
 .Contenedor__Sección_Filtrado_busqueda{
    width: 100%;
    margin-top: 83px;
@@ -949,6 +952,13 @@ main.contenedor-productos .detalle-producto .precio-producto{
    width: 1040px;
    margin: auto;
    height: 100%;
+}
+.Contenedor__Sección_Filtrado_busqueda.clienteOPT{
+   margin-top: 0px;
+}
+.Contenedor__Sección_Filtrado_busqueda.clienteOPT .Sección_Filtrado_busqueda{
+   justify-content: flex-start;
+   gap: 100px;
 }
 
 .botton_filtrado{
@@ -1109,4 +1119,11 @@ main.contenedor-productos .detalle-producto .precio-producto{
    margin: 0px;
    height: 56px;
    width: 100%;
+}
+.cliente-img.user{
+   background-color: var(--Negro-50); 
+   border-radius: 50%;
+   height: 40px;
+   width: 40px;
+   padding-left: 2px;
 }

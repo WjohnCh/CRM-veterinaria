@@ -37,13 +37,11 @@ document.getElementById('boton-registrarse').addEventListener('click', async fun
     });
     const result = await response.json();
 
-    console.log(result.token);
     if (response.ok && result.success){
             localStorage.setItem('token', result.token);
 
-            window.location.href = '/public/cliente.html';
+            window.location.href = '/public/cliente/cliente-index.html';
     } else {
-        console.log("hola");
         mensajeRegistroLogin.classList.add("motrar-elemento");
     }
 });

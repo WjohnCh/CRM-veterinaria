@@ -70,9 +70,9 @@
             width: 40%;
             border: 1px solid var(--Negro-75);
             background-color: var(--Negro-0);
-            height: 30px;
+            height: 40px;
             font-size: var(--Text-medium);
-            font-weight: 500;
+            font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
             color: var(--Negro-75);
@@ -81,7 +81,8 @@
         .texto-label-generico{
             font-size: var(--Text-long);
             color: var(--Negro-75);
-            margin: 20px 0px 10px;
+            margin: 30px 0px 10px;
+            font-weight: bold;
         }
         .grid-generico{
             display: grid;
@@ -121,7 +122,6 @@
             background-color: var(--Orange-75);
             color: var(--Negro-0);
             border: none;
-            font-weight: 500;
         }
         hr {
             height: 2px;
@@ -140,6 +140,7 @@
         }
         .Contenedor__producto-aniadido_envio{
             display: flex;
+            border-bottom: 1px solid var(--Orange-25);
         }
         .Contenedor__detalle-Producto_envio{
             display: flex;
@@ -153,10 +154,12 @@
             padding: 2px;
             border-radius: 10px;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
         }
         .Img__Foto-Producto_envio img{
-            width: 90%;
-            height: 90%;
+            width: auto;
+            height: 100%;
             background-size: cover;     
         }
         .contenedor-productos-totales-finales{
@@ -174,6 +177,23 @@
             line-height: 6;
             margin: 0px 30px 0px 10px;
         }
+
+        .bold{
+            font-weight: bold;
+        }
+        .bold500{
+            font-weight: 500;
+        }
+        .bold-long{
+            font-size: var(--Text-long);
+            font-weight: bold;
+        }
+        .volver-iniciar:hover{
+            color: var(--Orange-75);
+        }
+        .opacidad-80:hover{
+        opacity: 80%;
+        }
     </style>
 
 </head>
@@ -186,8 +206,8 @@
             <hr>
             <div>
                 <p class="texto-label-generico">¿Cómo quieres recibir tu pedido?</p>
-                    <button class="btn-generico-opcion_envio" id="btn_envio_domicilio">Envío a Domicilio</button>
-                    <button class="btn-generico-opcion_envio" id="btn_envio_tienda">Retiro en Tienda</button>
+                    <button class="btn-generico-opcion_envio opacidad-80" id="btn_envio_domicilio">Envío a Domicilio</button>
+                    <button class="btn-generico-opcion_envio opacidad-80" id="btn_envio_tienda">Retiro en Tienda</button>
             </div>
             <form id="form_contenedor-Principal-envio" method="POST" action="http://localhost:3000/productos/envios">
                 <div id="contenedor_datos_direccion">
@@ -209,8 +229,8 @@
                 <div class="grid-generico contenedor_direccion_envio"> 
                     <input type="email"  name="correo" class="input-generico" placeholder="Correo Electrónico" required>
                     <input type="text"   name="nombre" class="input-generico" placeholder="Nombre" required>
-                    <input type="text"   name="apellido" class="input-generico" placeholder="Apellidos" required>
-                    <input type="number" name="telefono" class="input-generico" placeholder="Teléfono" required>
+                    <input type="text"   name="apellido" class="input-generico" placeholder="Apellido" required>
+                    <input type="number" name="telefono" class="input-generico" placeholder="Teléfono" required value="">
                     <input type="number" name="dni" class="input-generico" placeholder="Documento de Identidad" required>
                 </div>
                 <p class="texto-label-generico">SELECCIONAR MÉTODO DE PAGO</p>
@@ -221,50 +241,53 @@
                         </div>
                         <div class="input-generico opcion_metodo-pago">
                             <input type="radio" id="option1" name="MetodoPago" value="YapePlin" required>
-                            <img class="img-generica" src="./Íconos - Logos/yape.png" alt="">
-                            <img class="img-generica" src="./Íconos - Logos/plin.jpg" alt="">
+                            <img class="img-generica" src="../.././Íconos - Logos/yape.png" alt="">
+                            <img class="img-generica" src="../.././Íconos - Logos/plin.jpg" alt="">
                         </div>
                     </div>
                     <div class="Terminos-condiciones" style="margin: 20px 0px;">
                         <input type="checkbox" id="registrate-terms" name="terms" required>
                         <label for="terms">
-                            <a href="./Reglamento/tyc.html" class="volver-iniciar">Acepto los Términos y Condiciones</a>
+                            <a href="../../Reglamento/tyc.html" class="volver-iniciar">Acepto los Términos y Condiciones</a>
                         </label>
                     </div>
                 <div class="flex-centradoXY">
-                    <button class="btn-generico-opcion_envio" onclick="window.history.back();">Seguir Comprando</button>
-                    <button type="submit" class="btn-generico-opcion_envio finalizar_compra_btn"> Finalizar compra </button>
+                    <button class="btn-generico-opcion_envio opacidad-80" onclick="window.history.back();">Seguir Comprando</button>
+                    <button type="submit" class="btn-generico-opcion_envio finalizar_compra_btn opacidad-80"> Finalizar compra </button>
                 </div>
             </form>
         </div>
         <div class="contenedor_productos-envio-compra-principal">
             <div class="contenedor_productos-envio-compra">
-                <p>Resumen de la compra</p>
+                <p class="bold-long">Resumen de la compra</p>
                 <!-- PLANTILLA PRODUCTOS ENVIO -->
                 <div class="Contenedor__producto-aniadido_envio" style="display: none;">
-                    <p class="Cantidad_Productos_envio"></p>
+                    <p class="Cantidad_Productos_envio bold"></p>
                     <figure class="Img__Foto-Producto_envio">
                         <img src="" alt="">
                     </figure>
                     <div class="Contenedor__detalle-Producto_envio">
-                        <p class="carrito__nombre-producto_envio"></p>
-                        <p class="contenedor__carrito__precio-producto_envio">S/ 
-                            <span class="carrito__precio-producto_envio"></span>
-                        </p>
+                        <p class="carrito__nombre-producto_envio bold500"></p>
+                        <div>
+                            <p style="font-size: var(--Text-small);">Precio Unidad:</p>
+                            <p class="contenedor__carrito__precio-producto_envio bold">S/
+                                <span class="carrito__precio-producto_envio"></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="contenedor-productos-totales-finales">
                     <!-- PLANTILLA PRODUCTOS FINALIZADOS -->
                     
                 </div>
-                <div class="flex-centradoXY">
-                    <p>TOTAL:</p>
-                    <p>S/. <span id="Total_productos-envio"></span></p>
+                <div class="flex-centradoXY TOTAL">
+                    <p class="bold-long">TOTAL:</p>
+                    <p class="bold-long">S/. <span id="Total_productos-envio"></span></p>
                 </div>
             </div>
         </div>
     </main>
 
-    <script type="module" src="./js/finalizar-venta.mjs"></script>
+    <script type="module" src="./finalizar-venta.mjs"></script>
 </body>
 </html>

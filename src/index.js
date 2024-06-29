@@ -6,6 +6,9 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
+const {idUserByCorreo, calcularTotal, anidadirDetalle} = require('./indexUsuario.js')
+
+
 const fs = require('node:fs');
 
 const multer = require('multer');
@@ -34,6 +37,52 @@ const verifyToken = (req, res, next) => {
         req.user = decoded;
         next();
     });
+};
+
+const verifyCorreo = async (req, res, next) => {
+    const {Distrito, CalleDireccion,comentarioAdicional = '-',
+        correo,nombre,apellido ,telefono,dni,
+        MetodoPago, productosGuardados} = req.body;
+
+        const totalPrecio  = await calcularTotal(productosGuardados);
+    try {
+        const idUsuario = await idUserByCorreo(correo);
+        //si el correo existe, le aniadimos el producto al cliente
+        if (idUsuario) {    
+            const [results] = await sequelize.query('SELECT idcliente FROM cliente WHERE usuarioid  = ?',
+                {
+                    replacements: [idUsuario]
+                }
+            )
+            if (Distrito && CalleDireccion) {
+                const [result2]= await sequelize.query(
+                    `INSERT INTO compra (fecha,  clienteid, total, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                     VALUES (CURDATE(),?, ?, ?, ?, ?, ?,?, 'Domicilio')`,
+                    {
+                        replacements: [ results[0].idcliente,totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
+                    }
+                )
+                await anidadirDetalle(result2, productosGuardados);
+                
+            }else{
+                const [result2]= await sequelize.query(
+                    `INSERT INTO compra (fecha,  clienteid, total,  comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                     VALUES (CURDATE(), ?, ?, ?, ?, ?, 'Retiro Tienda')`,
+                    {
+                        replacements: [ results[0].idcliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
+                    }
+                )
+                await anidadirDetalle(result2, productosGuardados);
+            }
+            res.json(req.body)
+        } else {
+            //si el correo no existe, creamos un nuevo usuario
+            next();
+        }
+    } catch (error) {
+        console.error('Error al realizar la consulta:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }
 };
 
 app.post('/images/single', upload.single('avatar'), async (req, res)=>{
@@ -323,13 +372,24 @@ app.post('/procesar-datos', async (req, res) => {
     const { name, email, password } = req.body;
   
     try {
-        const [result] = await sequelize.query(
+         await sequelize.query(
             'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
             { replacements: [name, email, password,"cliente" ] }
           );
-    
-        // Simula una operación exitosa
-        res.json({ message: 'Datos recibidos correctamente', id: result.insertId });
+
+          const idUser = await idUserByCorreo(email)
+
+          await sequelize.query(
+            'INSERT INTO cliente (usuarioid) VALUES (?)',
+            { replacements: [idUser] }
+          );
+
+          if (name && email && password) {
+            const token = jwt.sign({ email }, SECRET_KEY);
+            res.json({ success: true, token, message: 'Datos recibidos correctamente' });
+        } else {
+            res.json({ success: false, message: 'Failed to register user.'});
+        }
       } catch (error) {
         console.error('Error al insertar los datos:', error);
         res.status(500).json({ message: 'Error al procesar los datos' });
@@ -338,6 +398,8 @@ app.post('/procesar-datos', async (req, res) => {
 
   app.post('/login', async (req, res) => {
     const { email, password } = req.body;
+
+    console.log(req.body);
 
     try {
         const [results] = await sequelize.query(
@@ -360,13 +422,13 @@ app.post('/procesar-datos', async (req, res) => {
 app.get('/user-info', verifyToken, async (req, res) => {
     try {
         const [results] = await sequelize.query(
-            'SELECT idusuario FROM usuario WHERE email = ?',
+            'SELECT * FROM usuario WHERE email = ?',
             {
                 replacements: [req.user.email]
             }
         );
         if (results.length > 0) {
-            res.json({ idUsuario: results[0].idusuario});
+            res.json(results[0]);
         } else {
             res.status(404).json({ message: 'User not found'});
         }
@@ -377,25 +439,59 @@ app.get('/user-info', verifyToken, async (req, res) => {
 });
 
 
-app.post('/productos/envios', async (req,res)=>{
-    const {Distrito, CalleDireccion,comentarioAdicional,
-    correo,nombre,apellido,telefono,dni,
-    MetodoPago} = req.body;
+app.post('/productos/envios', verifyCorreo, async (req,res)=>{
+    const {Distrito, CalleDireccion,comentarioAdicional = '-',
+        correo,nombre,apellido ,telefono,dni,
+        MetodoPago, productosGuardados} = req.body;
 
-    // if(Distrito){
-    //     const [results] = await sequelize.query(
-    //         'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
-    //         { replacements: [email, password] }
-    //     );
-    // }else{
-    //     const [results] = await sequelize.query(
-    //         'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
-    //         { replacements: [email, password] }
-    //     );
-    // }
+    const totalPrecio  = await calcularTotal(productosGuardados);
 
-    res.json(resultados)
+    try {
+        //INSERTAMOS EN USUARIO
+        await sequelize.query(`INSERT INTO usuario (email, nombre, apellido, telefono, rol) VALUES (?,?,?,?, 'cliente')`,
+            {
+                replacements: [correo,nombre,apellido, telefono]
+            }
+        )
+        // OBTENEMOS DE USUARIO SU ID PARA INSERTARLO EN CLIENTE
+        const usuarioId = await idUserByCorreo(correo);
+
+
+        const [idCliente] = await sequelize.query(`INSERT INTO cliente (usuarioid, direccion,dni) VALUES (?,?,?)`,
+            {
+                replacements: [usuarioId, CalleDireccion, dni]
+            }
+        )
+        if (Distrito && CalleDireccion) {
+            const [result2] = await sequelize.query(
+                `INSERT INTO compra (fecha,  clienteid, total, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                 VALUES (CURDATE(),?, ?, ?, ?, ?, ?,?, 'Domicilio')`,
+                {
+                    replacements: [ idCliente,totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
+                }
+            )
+            await anidadirDetalle(result2, productosGuardados);
+        }else{
+            const [result2] = await sequelize.query(
+                `INSERT INTO compra (fecha,  clienteid, total,  comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                 VALUES (CURDATE(), ?, ?, ?, ?, ?, 'Retiro Tienda')`,
+                {
+                    replacements: [ idCliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
+                }
+            )
+            await anidadirDetalle(result2, productosGuardados);
+        }
+        res.json(req.body)
+    } catch (error) {
+        console.error('Error al realizar la consulta:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }    
+    
 })
+
+
+
+// app.get('/datosUsuario', verifyToken, DatosUser);
 
 
 app.listen(port, () => {

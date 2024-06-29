@@ -36,6 +36,22 @@ input[type=number]::-webkit-inner-spin-button{
     margin: 0;
 }
 
+
+.opacidad-80:hover{
+   opacity: 80%;
+}
+.flex-centradoXY{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.flex-centradoYX{
+   display: flex;
+   flex-direction:column !important;
+   justify-content: space-between;
+   align-items: center;
+}
+
 .boton-generico-primario{
       display:block;
       width: 95%;
@@ -560,7 +576,7 @@ section#detalle-personal aside.contenedor-socialmedia{
    padding-left: 8px;
    background-color: var(--Negro-25);
    height: 34px;
-   width: 400px;
+   width: 300px;
    border-radius: 8px;
 }
 .cliente-img.lupa{
@@ -1126,4 +1142,58 @@ main.contenedor-productos .detalle-producto .precio-producto{
    height: 40px;
    width: 40px;
    padding-left: 2px;
+}
+
+/* MODAL OPCIONES DE USUARIO (ORDENES - CUENTA- SALIR) */
+#modal-opcion-cliente-logout{
+   background-color: var(--Negro-0);
+   position: absolute;
+   top: 84px;
+   right: 85px;
+   height: 100px;
+   box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.4);
+   border-radius: 8px;
+   width: 160px;
+   padding: 20px;
+   font-weight: 900;
+   height: 200px;
+   font-size: 19px;
+}
+.opciones-cliente-datos{
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+   align-items: end;
+}
+.opciones-cliente-datos p{
+   cursor: pointer;
+}
+
+.triangulo {
+   width: 0;
+   height: 0;
+   border-left: 20px solid transparent;
+   border-right: 20px solid transparent;
+   border-bottom: 10px solid var(--Negro-50); /* Cambia el color del triángulo aquí */
+}
+.opciones-cliente-datos .botonSalir-cliente{
+   padding-top: 20px;
+   border-top: 1px solid var(--Negro-50);
+   width: 100%;
+   text-align: end;
+   color: var(--Orange-75);
+}
+.nombreUser-token{
+   margin-right: 10px;
+   background-color: var(--Negro-25);
+   padding: 4px 10px 4px 10px;
+   border-radius: 8px;
+   max-width: 200px;
+   font-weight: bold;
+}
+
+.triangulo-cliente{
+   position: absolute;
+   top: -11px;
+   right: 10px;
 }

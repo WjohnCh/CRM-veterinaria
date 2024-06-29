@@ -158,7 +158,7 @@ export async function VerDetalleProducto(producto, botonProducto, productosPulsa
     const idDetalleProducto = modalDetalleProducto.querySelector(".Detalle-producto-id")
     const inputCantidadProducto = document.getElementById("Descripcion-input_cantidad-producto")
     idDetalleProducto.innerText = idproductos;
-    imagenProducto.src = `.${url}`;
+    imagenProducto.src = `../.${url}`;
     PrecioProducto.innerText = precio.toFixed(2);
     nombreProducto.innerText = nombre;
     descripcionProducto.innerText = descripcion;

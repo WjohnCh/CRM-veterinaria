@@ -149,7 +149,7 @@ function CrearEstructuraObjetoCarrito(producto, plantillaProductoCarrito ,produc
     nuevoProductoAniadido.style.display='flex';
 
     const imgProducto = nuevoProductoAniadido.querySelector(".Img__Foto-Producto img")
-    imgProducto.src = `.${producto.url}`;
+    imgProducto.src = `../.${producto.url}`;
 
     const nombreProducto = nuevoProductoAniadido.querySelector(".carrito__nombre-producto")
     nombreProducto.innerText = producto.nombre;

@@ -97,6 +97,11 @@ CREATE TABLE IF NOT EXISTS compra (
     fecha DATE,
     total FLOAT ,
     clienteid INT,
+	distrito varchar(50),
+    CalleDireccion varchar(200),
+    comentarios varchar(400),
+    metododePago varchar(20),
+    tipoEnvio varchar(30),
     PRIMARY KEY (idcompra),
     FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
 );

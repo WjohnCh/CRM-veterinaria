@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         const botonProducto = nuevoProducto.querySelector('.Boton_añadir_carro');
         // Aniadimos el ID al elemento contenedor para identificarlo
         nuevoProducto.setAttribute('id-producto', producto.idproductos);
-        imagenProducto.src = `.${producto.url}`;
+        imagenProducto.src = `../.${producto.url}`;
         imagenProducto.alt = producto.nombre;
         precioProducto.textContent = `S/ ${producto.precio.toFixed(2)}`;
         descripcionProducto.textContent = producto.nombre;
@@ -106,4 +106,9 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     //Funciones addEventListener
     clickearBotonDetalleProducto(productosPulsados);
     NumeroProductosElegidos();
+
+
+    
 })
+
+

@@ -9,14 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <title>Document</title>
     <script>
         async function verifyToken() {
             const token = localStorage.getItem('token');
             if (!token) {
                 
-                window.location.href = './navbar.html'; // Redirige al login si no hay token
+                window.location.href = '../navbar.html'; // Redirige al login si no hay token
                 return;
             }
 
@@ -34,7 +34,8 @@
                 }
 
                 const data = await response.json();
-            } catch (error) {
+                document.body.style.display = "block"
+            }catch (error) {
                 console.error('Token verification failed:', error);
                 // alert('Invalid token, please login again.');
                 window.location.href = './navbar.html'; // Redirige al login si el token no es válido
@@ -44,12 +45,12 @@
         window.onload = verifyToken;
     </script>
 </head>
-<body>
+<body style="display: none;">
     <nav class="Barra-Navegacion" id="Barra-Navegacion_Productos">
         <div class="Container-Logo">
             <a href="#">
                 <figure>
-                    <img src="./Íconos - Logos/Mask group.svg">
+                    <img src="../Íconos - Logos/Mask group.svg">
                 </figure>
                 <p> CITY CAN</p>
             </a>
@@ -69,30 +70,43 @@
             </ul>
             <div class="Inicio-Sesion">
                 <div style="position: relative;">
-                <input id="barra-busqueda">
+                <input id="barra-busqueda" placeholder="Buscar">
                         <figure class="cliente-img lupa">
-                            <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
+                            <a href="#"><img src="../Íconos - Logos/Lupaa.svg"></a>
                         </figure>
                 </input>
             </div>
+
         </div>
             <div class="Inicio-Sesion">
-                
-                <figure class="cliente-img user">
-                    <a href="#"><img class="img-user" src="./Íconos - Logos/user.svg"></a>
+                <div class="nombreUser-token">
+                    <p>Hola <span id="nombreUser-token">Mundo</span></p>
+                </div>
+                <figure class="cliente-img user" >
+                    <a href="#"><img id="cliente-img user"class="img-user" src="../Íconos - Logos/user.svg"></a>
                 </figure>
+
+                <div class="modal-opcion-cliente" id="modal-opcion-cliente-logout" style="display: none;">
+                    <div class="triangulo triangulo-cliente"></div>
+                        <div class="opciones-cliente-datos">
+                            <p>Mis ordenes</p>
+                            <p>Mi cuenta</p>
+                            <p class="botonSalir-cliente">Salir</p>
+                        </div>
+                </div>
+
                 <div class="carrito__contenedor_valor-numerico">
                     <span id="valor-productos" class="white-letter">0</span>
                 </div>
                 <figure class="carrito" style="cursor: pointer;">
-                    <img src="./Íconos - Logos/Carrito-Compras.svg">
+                    <img src="../Íconos - Logos/Carrito-Compras.svg">
                 </figure>
                 <aside id="Contenedor__Sombreado-Modal" class="Contenedor__Sombreado-Modal">
                     <div class="Contenedor-CarritoCompras">
                         <div class="Cabecera_Carrito-Compras">
                             <p>Carrito de compras</p>
                             <figure id="Cerrar_Carrito-Compras">
-                                <img src="./Íconos - Logos/Equis.svg" alt="">
+                                <img src="../Íconos - Logos/Equis.svg" alt="">
                                 <span>Cerrar</span>
                             </figure>
                         </div>
@@ -114,13 +128,13 @@
                                 <button class="btn btn-aumentar">+</button>
                             </div>
                             <figure class="Img__Eliminar-Producto">
-                                <img src="./Íconos - Logos/trash-bold.svg" alt="">
+                                <img src="../Íconos - Logos/trash-bold.svg" alt="">
                             </figure>
                         </div>
 
                         <div class="Contenedor__productos-Seleccionados">
                             <div class="Contenedor__productos-vacios" style="display: none;">
-                                <img src="./Íconos - Logos/carrito vacio.svg" alt="">
+                                <img src="../Íconos - Logos/carrito vacio.svg" alt="">
                                 <p class="mensaje__productos-vacios">No hay productos en el carrito</p>
                                 <button class="btn__productos-vacios boton-generico-primario">Regresar a la tienda</button>
                             </div>
@@ -135,7 +149,7 @@
                                     S/<span class="precio-total-subtotal">0.00</span>
                                 </p>
                             </div>
-                            <button class="boton-generico-primario" onclick="location.href='pagar-productos.html'">Finalizar Compra</button>
+                            <button class="boton-generico-primario" onclick="location.href='./cliente-productos/pagar-productos.html'">Finalizar Compra</button>
                         </div>
                     </div>
                 </aside>
@@ -144,9 +158,9 @@
 
     <aside class="banner-cliente">
         <div class="contenido-banner">
-            <img class="flecha-banner derecha" src="./Íconos - Logos/flecha-banner.svg" alt="">
-            <img src="./Íconos - Logos/banner.svg" alt="">
-            <img class="flecha-banner izquierda" src="./Íconos - Logos/flecha-banner.svg" alt="">
+            <img class="flecha-banner derecha" src="../Íconos - Logos/flecha-banner.svg" alt="">
+            <img src="../Íconos - Logos/banner.svg" alt="">
+            <img class="flecha-banner izquierda" src="../Íconos - Logos/flecha-banner.svg" alt="">
         </div>
     </aside>
 
@@ -155,7 +169,7 @@
         <div class="Sección_Filtrado_busqueda">
             <div class="hover-naranja" id="contenedor__filtrado-categoria-producto">
                 <button class="botton_filtrado  Filtro_Categoría_Producto">Categoria de productos</button>
-                <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+                <img src="../Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
                 <div class="Filtrado__Opciones Filtrado_Categorias-productos" style="display: none;">
                     <ul>
                         <li id="Filtrado__Todas-las-Categorias" >Todas las Categorias</li>
@@ -168,7 +182,7 @@
             </div>
             <div class="hover-naranja" id="contenedor__filtrado-mascotas">
                 <button class="botton_filtrado  Filtro_Mascotas">Mascotas</button>
-                <img src="./Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+                <img src="../Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
                 <div class="Filtrado__Opciones Filtrado_para-mascotas" style="display: none;">
                     <ul>
                         <li id="Filtrado_Para-todos" >Para todos</li>
@@ -177,13 +191,6 @@
                     </ul>
                 </div>
             </div>
-            <!-- <div style="position: relative;">
-                <input id="barra-busqueda">
-                        <figure class="cliente-img lupa">
-                            <a href="#"><img src="./Íconos - Logos/Lupaa.svg"></a>
-                        </figure>
-                </input>
-            </div> -->
         </div>
     </div>
     
@@ -229,10 +236,10 @@
         <div class="Contenedor_Detalle-producto Contenedor-CarritoCompras">
             <div class="Contenedor__Detalle-producto_imagen">
                 <figure class="Detalle-producto_equis">
-                    <img class="TamanioEquis" src="./Íconos - Logos/Equis.svg" alt="">
+                    <img class="TamanioEquis" src="../Íconos - Logos/Equis.svg" alt="">
                 </figure>
                 <figure class="Detalle-producto_imagen">
-                    <img src="../src/uploads/whiskas-1kg-bolsa-gatos.jpg" alt="">
+                    <img src="../../src/uploads/whiskas-1kg-bolsa-gatos.jpg" alt="">
                 </figure>
             </div>
             <div class="Contenedor_Especificacion-Producto">
@@ -259,6 +266,7 @@
 
 
 
-    <script type="module" src="./js/carga-productos.mjs"></script>
+    <script type="module" src="./cliente-productos/carga-productos.mjs"></script>
+    <script type="module" src="./cliente.mjs"></script>
 </body>
 </html>

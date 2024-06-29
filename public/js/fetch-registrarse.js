@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const buttonRegistrate = document.getElementById('boton-registrarse-modal2')
   buttonRegistrate.addEventListener('click', async (event) => {
+    event.preventDefault();
     const campos = [
       document.getElementById('registrate-name'),
       document.getElementById('registrate-email'),
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     
-    event.preventDefault();
+    
     
     try {
       const response = await fetch('http://localhost:3000/procesar-datos', {
@@ -63,20 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
           password: password,
         })
       });
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Éxito:', result);
+      const result = await response.json();
+      console.log(result.token);
+      if (response.ok && result.success) {
+        localStorage.setItem('token', result.token);
     
         // Redirigir al usuario a otra página después de un registro exitoso
-        window.location.href = '/public/cliente.html';
+        window.location.href = '/public/cliente/cliente-index.html';
       } else {
         // Manejo de errores cuando la respuesta no es exitosa
         console.error('Error en la respuesta de la red:', response.statusText);
         alert('Hubo un problema al procesar los datos. Por favor, inténtalo de nuevo.');
       }
       }catch(err){
-        console.error('Error:', error);
+        console.error('Error:', err);
       }
   });
 });

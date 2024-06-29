@@ -18,17 +18,54 @@ document.addEventListener("DOMContentLoaded", ()=>{
         nuevoContenedorPlantilla.style.display = "flex"
 
         cantidad.innerText = producto.cantidad
-        imagen.src = `.${producto.url}`
+        imagen.src = `../../.${producto.url}`
         nombreProducto.innerText = producto.nombre
-        precio.innerText = producto.precio
+        precio.innerText = producto.precio.toFixed(2)
 
-        totalPriceProductos += parseFloat(producto.precio)
+        totalPriceProductos += parseFloat(producto.precio) * parseInt(producto.cantidad)
 
         contenedorPadreFinal.appendChild(nuevoContenedorPlantilla)
     })
 
     const formEnvioDatosProductos = document.getElementById("form_contenedor-Principal-envio")
     const contenedorDireccion = document.getElementById("contenedor_datos_direccion")
+
+    formEnvioDatosProductos.addEventListener('submit',async function(event) {
+        event.preventDefault();
+        const formData = new FormData(formEnvioDatosProductos);
+        const productosGuardados1 = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
+           
+        const data = {};
+
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Añadir datos del localStorage al objeto
+        data.productosGuardados = productosGuardados1;
+
+        try {
+            // Enviar los datos usando fetch
+            const response = await fetch('http://localhost:3000/productos/envios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Error al enviar los datos');
+            }
+    
+            // Manejar la respuesta exitosa
+            console.log('Datos enviados exitosamente');
+        } catch (error) {
+            // Manejar los errores de la solicitud
+            console.error('Error al enviar los datos:', error);
+        }
+    })
+
 
     btn_envioDomicilio.addEventListener("click", ()=>{
         btn_envioTienda.style.backgroundColor = "#FFFFFF"

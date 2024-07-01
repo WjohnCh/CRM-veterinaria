@@ -32,4 +32,11 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         
     }
 
+
+    const btnSalirCliente = document.getElementById("botonSalir-cliente")
+    btnSalirCliente.addEventListener("click", ()=>{
+        localStorage.removeItem('token');
+        window.location.href = '../navbar.html'
+    })
+
 })

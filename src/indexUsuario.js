@@ -99,8 +99,39 @@ async function anidadirDetalle(idventa, Productos){
     }
 }
 
+async function DetallePedidos(req, res){
+    try {
+        const [results] = await sequelize.query(`SELECT CONCAT(u.nombre, ' ', u.apellido) AS nombre_completo, 
+                            co.telefonoEnvio, co.fecha, co.total, co.metododePago, co.tipoEnvio, 
+                            co.comentarios, co.idcompra, u.email, co.distrito, c.dni, co.CalleDireccion
+                            FROM usuario as u INNER JOIN cliente as c ON u.idusuario = c.usuarioid INNER JOIN compra as co
+                            ON co.clienteid = c.idcliente INNER JOIN detalle_compra as dc ON dc.idd_compra = co.idcompra
+                            `);
 
+        res.json(results);
+    } catch (error) {
+        console.error('ERROR AL PROCESAR LA SOLICITUD', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
+}
 
-module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle};
+async function detallPedidoProducto(req, res){
+    const {idVenta} = req.params;
+    
+    try {
+        const [results] = await sequelize.query(`SELECT precio_instante, cantidad, nombre FROM detalle_compra dc INNER JOIN
+                                            productos as p ON p.idproductos = dc.productosid
+                                            WHERE dc.ventaid = ?`,
+                                        {
+                                            replacements:[idVenta]
+                                        })
+        res.json(results)
+    } catch (error) {
+        console.error('ERROR AL PROCESAR LA SOLICITUD', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
+}
+
+module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto};
 
 

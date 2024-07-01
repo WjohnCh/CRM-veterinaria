@@ -1,3 +1,5 @@
+import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
+
 export async function AbrirCerrarInterfaz() {
     const nuevaCita = document.getElementById("opcion_Nueva-Cita")
     const solicitudesCita = document.getElementById("opcion_Solicitudes")
@@ -54,6 +56,7 @@ export async function AbrirCerrarInterfaz() {
             UltimoContenedorClick.style.display = "none";
         }
         interfazGestionPedidos.style.display = 'block'
+        mostrarTablaPedidos()
         UltimoContenedorClick = interfazGestionPedidos
     })
 
@@ -165,7 +168,6 @@ async function MostrarTablaObjeto(endopoint) {
                 }
         
                 const result = await response.json();
-                console.log(result);
                 alert('Producto actualizado exitosamente');
             } catch (error) {
                 console.error(error);

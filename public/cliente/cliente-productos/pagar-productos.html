@@ -6,7 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pagar-producto.css">
+    
+    <script>
+        const productosGuardados1 = JSON.parse(localStorage.getItem("productosAniadidos")) || [];
+
+        if(productosGuardados1.length == 0){
+            window.location.href = '../../navbar.html';
+        }
+    </script>
+
     <title>Document</title>
 
     <style>
@@ -287,6 +297,37 @@
             </div>
         </div>
     </main>
+<!-- /----------------------------------INTERFAZ DE EXITO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal" id="Modal-InterfazExito" style="display: none">
+        <div class="message-container">
+            <div class="close-button" onclick="window.history.back();">×</div>
+            <div class="message-content">
+                <img src="../../Íconos - Logos/cheque.png" alt="Success" class="success-image">
+                <p class="success-text">¡Solicitud Enviada Exitosamente!</p>
+                <p class="thanks-text">En unos minutos nos comunicaremos con usted</p>
+                <button class="btn-verde" onclick="window.history.back();"> Regresar</button>
+            </div>
+        </div>
+    </div>
+
+<!-- /----------------------------------INTERFAZ DE RECHAZO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal" id="Modal-InterfazRechazo" style="display: none">
+        <div class="message-container">
+            <div class="close-button">×</div>
+            <div class="message-content">
+                <img src="../../Íconos - Logos/boton-eliminar.png" alt="Error" class="error-image">
+                <p class="error-text">¡Error al procesar tu solicitud!</p>
+                <p class="warning-text">Por favor, revisar los datos ingresados y vuelve a intentar</p>
+                <button class="btn-rojo"> Regresar</button>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="./finalizar-venta.mjs"></script>
 </body>

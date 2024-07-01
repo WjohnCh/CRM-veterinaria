@@ -38,7 +38,7 @@
             }catch (error) {
                 console.error('Token verification failed:', error);
                 // alert('Invalid token, please login again.');
-                window.location.href = './navbar.html'; // Redirige al login si el token no es válido
+                window.location.href = '../navbar.html'; // Redirige al login si el token no es válido
             }
         }
         // Verifica el token al cargar la página
@@ -91,7 +91,7 @@
                         <div class="opciones-cliente-datos">
                             <p>Mis ordenes</p>
                             <p>Mi cuenta</p>
-                            <p class="botonSalir-cliente">Salir</p>
+                            <p class="botonSalir-cliente" id="botonSalir-cliente">Salir</p>
                         </div>
                 </div>
 
@@ -269,4 +269,5 @@
     <script type="module" src="./cliente-productos/carga-productos.mjs"></script>
     <script type="module" src="./cliente.mjs"></script>
 </body>
+
 </html>

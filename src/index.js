@@ -6,7 +6,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
-const {idUserByCorreo, calcularTotal, anidadirDetalle} = require('./indexUsuario.js')
+const {idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto} = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -399,8 +399,6 @@ app.post('/procesar-datos', async (req, res) => {
   app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    console.log(req.body);
-
     try {
         const [results] = await sequelize.query(
             'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
@@ -489,10 +487,10 @@ app.post('/productos/envios', verifyCorreo, async (req,res)=>{
     
 })
 
+app.get('/pedidos', DetallePedidos)
 
 
-// app.get('/datosUsuario', verifyToken, DatosUser);
-
+app.get('/pedidos/productos/:idVenta', detallPedidoProducto)
 
 app.listen(port, () => {
     console.log('Mi port ' +  port);

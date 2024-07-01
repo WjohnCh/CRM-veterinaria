@@ -1,4 +1,5 @@
-import {AbrirCerrarInterfaz} from './admin-Interfaz.mjs'
+import {AbrirCerrarInterfaz} from '../js-admin/admin-Interfaz.mjs';
+
 
 document.addEventListener("DOMContentLoaded", async ()=> {
 
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async ()=> {
         const contenedorNavbarAdmin= document.querySelector('.administrador-navbar');
         const arrayInterfazOpciones = document.querySelectorAll('.Mostrar-Opcion-Interfaz')
 
-
+        
 
         let UltimaOpcionClick = null;
         let UltimaOpcionAdmin = null;
@@ -63,8 +64,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
                 estadoFlecha = flecha
             })
         })
-
-
 
         asideNabvarClose.addEventListener('click', ()=>{
             document.body.appendChild(asideNabvarClose);

@@ -29,6 +29,31 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     const formEnvioDatosProductos = document.getElementById("form_contenedor-Principal-envio")
     const contenedorDireccion = document.getElementById("contenedor_datos_direccion")
+    
+    const contenedorExito = document.getElementById("Modal-InterfazExito")
+    const contenedorRechazo = document.getElementById("Modal-InterfazRechazo")
+    const modalGrid = document.querySelectorAll(".modal");
+    const btn_rechazo = contenedorRechazo.querySelector(".btn-rojo")
+    const equis_rechazo = contenedorRechazo.querySelector(".close-button")
+    modalGrid.forEach(element=>{
+
+        element.addEventListener("click", (event)=>{
+            if(event.target == element){
+                element.style.display = "none";
+            }
+            if(contenedorExito){
+                window.history.back();
+            }
+        })
+    })
+
+    // botones 
+    btn_rechazo.addEventListener("click", ()=>{
+        contenedorRechazo.style.display = "none";
+    })
+    equis_rechazo.addEventListener("click", ()=>{
+        contenedorRechazo.style.display = "none";
+    })
 
     formEnvioDatosProductos.addEventListener('submit',async function(event) {
         event.preventDefault();
@@ -55,11 +80,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
             });
     
             if (!response.ok) {
+                contenedorRechazo.style.display = "grid";
                 throw new Error('Error al enviar los datos');
             }
-    
+                                
             // Manejar la respuesta exitosa
-            console.log('Datos enviados exitosamente');
+            contenedorExito.style.display = "grid";
+            localStorage.removeItem('productosAniadidos');
         } catch (error) {
             // Manejar los errores de la solicitud
             console.error('Error al enviar los datos:', error);

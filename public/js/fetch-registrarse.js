@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mensajeError = document.querySelector(`p[for="${campos[1].id}-err"]`);
         mensajeError.classList.add('motrar-elemento')
         label.classList.add('label-red');
+        alert('ERROR AL REGISTRARSE\nEl correo electrónico ya existe.');
       }
 
       if (response.ok && result.success) {
@@ -45,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         // Manejo de errores cuando la respuesta no es exitosa
         console.error('Error en la respuesta de la red:', response.statusText);
-        alert('Hubo un problema al procesar los datos. Por favor, inténtalo de nuevo.');
       }
       }catch(err){
         console.error('Error:', err);

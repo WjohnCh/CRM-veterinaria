@@ -51,12 +51,13 @@
         })
 
         try {
+            padre.innerText='';
             const results = await fetch("http://localhost:3000/pedidos");
             const body = await results.json()
             body.forEach(element =>{
                  crearEstructuratablaPedidos(element);
             })
-        } catch (error) {
+        }catch (error){
             throw new Error("Error al hacer la peticion");
         }
 

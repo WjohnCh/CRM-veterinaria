@@ -263,81 +263,103 @@
         <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Productos" style="display: none;">
 
             <!-- MODAL QUE ANIADE NUEVOS PRODUCTOS -->
-            <div id="modal_MostrarFormulario-AñadirProducto" style="display: none">
+            <div class="modal-generico" id="modal_MostrarFormulario-AñadirProducto" style="display: none">
                 <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data" 
-                id="Formulario_AñadirProductoBD"
-                >
-                    <h2>AÑADIR NUEVO PRODUCTO</h2>
-                    <label for="nombre">Nombre del Producto:</label>
-                    <input type="text" name="nombre" placeholder="Nombre del producto">
-                    <label for="precio">Precio del Producto:</label>
-                    <input type="number" name="precio" placeholder="Precio del Producto" step="0.01">
-                
-                    <label for="descripcion">Descripción:</label>
-                    <textarea name="descripcion" id="" placeholder="Descripcion detallada del producto"></textarea>
-                    <div class="frm_select_opciones">
-                        <div>
-                            <label for="categoria">Categoría: </label>
-                            <select name="categoria" id="">
-                                <option value="" disabled selected>Categoría</option>
-                                <option value="1">Alimentos</option>
-                                <option value="2">Accesorios y equipamiento</option>
-                                <option value="3">Transportes y dormitorios</option>
-                                <option value="4">Higiene y Limpieza</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="tipoMascota">Tipo mascota: </label>
-                            <select name="mascota" id="">
-                                <option value="" disabled selected>Destinatario </option>
-                                <option value="perro">para perros</option>
-                                <option value="gato">para gatos</option>
-                                <option value="todos">Todos</option>
-                            </select>
-                        </div>
+                id="Formulario_AñadirProductoBD" class="flex-YX">
+                <h3 class="flex-YX centrado">AÑADIR NUEVO PRODUCTO</h3>
+                <hr class="divider">
+                <img src="./Íconos - Logos/Equis.svg" class="equis-ubicacion"alt="">
+                <div class="contenedor-datos-frNuevoProducto flex-YX">
+                    <div class="flex-YX">
+                        <label for="nombre" class="bold">Nombre del Producto:</label>
+                        <input type="text" name="nombre" placeholder="Nombre del producto" class="input-generico"required>
                     </div>
-                    <label for="avatar">Subir Foto:</label>
-                    <input type="file" name="avatar" id="">
-                    <input type="submit" name="" id="" value="Añadir Producto" class="boton-generico-primario">
+                    <div class="flex-XY centrado">
+                        <label for="precio"class="bold">Precio del Producto:</label>
+                        <input type="number" name="precio" placeholder="Precio del Producto" step="0.01" class="input-generico mitad50" required>
+                    </div>
+                            <div class="flex-XY centrado">
+                                <label for="categoria"class="bold">Categoría: </label>
+                                <select name="categoria" id="" required class="input-generico mitad50">
+                                    <option value="" disabled selected>Categoría</option>
+                                    <option value="1">Alimentos</option>
+                                    <option value="2">Accesorios y equipamiento</option>
+                                    <option value="3">Transportes y dormitorios</option>
+                                    <option value="4">Higiene y Limpieza</option>
+                                </select>
+                            </div>
+                            <div class="flex-XY centrado">
+                                <label for="mascota"class="bold">Tipo mascota: </label>
+                                <select name="mascota" id="" required class="input-generico mitad50">
+                                    <option value="" disabled selected>Destinatario </option>
+                                    <option value="perro">para perros</option>
+                                    <option value="gato">para gatos</option>
+                                    <option value="todos">Todos</option>
+                                </select>
+                            </div>
+                        
+                    
+                        <div class="flex-YX">
+                            <label for="avatar"class="bold">Subir Foto:</label>
+                            <input type="file" name="avatar" id="" class="input-generico"required>
+                        </div>
+                        <div class="flex-YX">
+                            <label for="descripcion" class="bold">Descripción:</label>
+                            <textarea class="input-generico" name="descripcion" id="" placeholder="Descripcion detallada del producto" required></textarea>
+                        </div>
+                        <input type="submit" name="" id="btn-CrearNuevoPor" value="Añadir Producto" class="boton-generico-primario">
+                    </div>
                 </form>
             </div>
             <!-- FIN DEL MODAL DE FORMULARIO -->
 
             <!-- FORMULARIO QUE ACTUALIZA UN PRODUCTO -->
-                <div id="Contenedor__Formulario-ActualizarProducto" style="display: none;"> 
+                <div class="modal-generico" id="Contenedor__Formulario-ActualizarProducto" style="display: none;"> 
                     <form id="Formulario_ActualizarProductoBD" enctype="multipart/form-data" >
-                        <h2>ACTUALIZAR PRODUCTO</h2>
-                        <label for="nombre">Nombre del Producto:</label>
-                        <input type="text" name="nombre" value="" id="Actualizar-Producto_nombre" required>
-                        <label for="precio">Precio del Producto:</label>
-                        <input type="number" name="precio" id="Actualizar-Producto_precio" value="" step="0.01" required>
-                    
-                        <label for="descripcion">Descripción:</label>
-                        <textarea name="descripcion" id="Actualizar-Producto_descripcion" required></textarea>
-                        <div class="frm_select_opciones">
-                            <div>
-                                <label for="categoria">Categoría: </label>
-                                <select name="categoria" required id="Actualizar-Producto_Categoria">
-                                    <option value="" disabled>Categoría</option>
-                                    <option value="1" id="Actualizar_categoria-1" >Alimentos</option>
-                                    <option value="2" id="Actualizar_categoria-2" >Accesorios y equipamiento</option>
-                                    <option value="3" id="Actualizar_categoria-3" >Transportes y dormitorios</option>
-                                    <option value="4" id="Actualizar_categoria-4" >Higiene y Limpieza</option>
-                                </select>
+                        <h3 class="flex-YX centrado">ACTUALIZAR PRODUCTO</h3>
+                        <img src="./Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">  
+                        <hr class="divider">
+                        <div class="contenedor-datos-frNuevoProducto flex-YX">
+                            <div class="flex-YX">
+                                <label for="nombre">Nombre del Producto:</label>
+                                <input type="text" name="nombre" value="" placeholder="Nombre del producto" id="Actualizar-Producto_nombre" class="input-generico" required>
                             </div>
-                            <div>
-                                <label for="mascota">Tipo mascota: </label>
-                                <select name="mascota" required id="Actualizar-Producto_masocta">
-                                    <option value="" disabled selected>Destinatario </option>
-                                    <option value="perro" id="destinatario_actualizar-perro">para perros</option>
-                                    <option value="gato"  id="destinatario_actualizar-gato">para gatos</option>
-                                    <option value="todos" id="destinatario_actualizar-todos" >Todos</option>
-                                </select>
+                            <div class="flex-XY centrado">
+                                <label for="precio">Precio del Producto:</label>
+                                <input type="number" name="precio" id="Actualizar-Producto_precio" class="input-generico mitad50"value="" step="0.01" required>
                             </div>
+                                    <div class="flex-XY centrado">
+                                        <label for="categoria">Categoría:</label>
+                                        <select name="categoria" required id="Actualizar-Producto_Categoria" class="input-generico mitad50">
+                                            <option value="" disabled selected>Categoría</option>
+                                            <option value="1" id="Actualizar_categoria-1" >Alimentos</option>
+                                            <option value="2" id="Actualizar_categoria-2" >Accesorios y equipamiento</option>
+                                            <option value="3" id="Actualizar_categoria-3" >Transportes y dormitorios</option>
+                                            <option value="4" id="Actualizar_categoria-4" >Higiene y Limpieza</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex-XY centrado">
+                                        <label for="mascota">Tipo mascota: </label>
+                                        <select name="mascota" required id="Actualizar-Producto_mascota" class="input-generico mitad50">
+                                            <option value="" disabled selected>Destinatario </option>
+                                            <option value="perro" id="destinatario_actualizar-perro">para perros</option>
+                                            <option value="gato"  id="destinatario_actualizar-gato">para gatos</option>
+                                            <option value="todos" id="destinatario_actualizar-todos" >Todos</option>
+                                        </select>
+                                    </div>
+                            <div class="flex-YX">
+                                <label for="avatar">Actualizar Foto:</label>
+                                <input type="file" class="input-generico" name="avatar" id="avatar" required>
+                            </div>
+                            
+                            <div class="flex-YX">
+                                <label for="descripcion">Descripción:</label>
+                                <textarea name="descripcion" class="input-generico" id="Actualizar-Producto_descripcion" required></textarea>
+                            </div>
+                            
+                            <input type="submit" value="Actualizar Producto" class="boton-generico-primario" onclick="ActualizarProducto()" id="btn_generalActualizar-Producto">
+                            
                         </div>
-                        <label for="avatar">Actualizar Foto:</label>
-                        <input type="file" name="avatar" id="avatar">
-                        <input type="submit" value="Actualizar Producto" class="boton-generico-primario" onclick="ActualizarProducto()" id="btn_generalActualizar-Producto">
                     </form>
                 </div>
             <!-- FIN DEL MODAL DE FORMULARIO -->
@@ -400,7 +422,7 @@
                 </div>
 
                 <!-- PLANITLLA DETALLE PRODUCTO -->
-                <div class="Modal-Detalle-Producto modal" id="modal-Detalle-Producto-tabla" style="display: none">
+                <div class="Modal-Detalle-Producto modal-generico" id="modal-Detalle-Producto-tabla" style="display: none">
                     <div class="modal-content">
                         <span class="close-button">&times;</span>
                         <h2>Detalle del Producto</h2>

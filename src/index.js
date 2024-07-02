@@ -6,7 +6,9 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
-const {idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto} = require('./indexUsuario.js')
+const {idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
+    ,detallPedidoCancelado
+} = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -98,7 +100,7 @@ app.post('/images/single', upload.single('avatar'), async (req, res)=>{
             VALUES (?, ?, ?, ?, ?, ?)`,
             { replacements: [nombre, parseFloat(precio),mascota, newPath, parseInt(categoria), descripcion] }
         );
-        res.send('Archivo subido y movido exitosamente');
+        res.json({success: true});
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al mover el archivo');
@@ -489,8 +491,9 @@ app.post('/productos/envios', verifyCorreo, async (req,res)=>{
 
 app.get('/pedidos', DetallePedidos)
 
-
 app.get('/pedidos/productos/:idVenta', detallPedidoProducto)
+
+app.get('/pedidos/Cancelled/:idVenta', detallPedidoCancelado)
 
 app.listen(port, () => {
     console.log('Mi port ' +  port);

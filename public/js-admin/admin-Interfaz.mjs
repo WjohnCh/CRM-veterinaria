@@ -117,7 +117,7 @@ async function MostrarTablaObjeto(endopoint) {
 
         // LOGICA PARA ABRIR Y CERRAR DETALLE DE PRODUCTOS
         imgMostrarDetalleProducto.addEventListener("click", () => {
-            ModalDetalleProducto.classList.add("motrar-elemento-grid");
+            ModalDetalleProducto.style.display = "grid"
             detalle_nombre.innerText = producto.nombre
             detalle_id.innerText = producto.idproductos
             detalle_precio.innerText = `S/. ${producto.precio.toFixed(2)}`
@@ -176,7 +176,8 @@ async function MostrarTablaObjeto(endopoint) {
         }
 
         async function ActualizarDatosProducto(){
-            ctnFrmActualizarProducto.classList.add("motrar-elemento-grid");
+            ctnFrmActualizarProducto.style.display = "grid";
+            ModalDetalleProducto.style.display = "none"
             inputActuNomProducto.value = producto.nombre;
             inputActuPriceProducto.value = producto.precio.toFixed(2);
             inputActuDescripProducto.value = producto.descripcion;
@@ -246,13 +247,7 @@ async function MostrarFiltradoTabla() {
     })
 
     btnAniadirProducto.addEventListener("click", () => {
-        frmAniadirProducto.classList.toggle("motrar-elemento-grid")
-    })
-
-    frmAniadirProducto.addEventListener("click", (event) => {
-        if (event.target == frmAniadirProducto) {
-            frmAniadirProducto.classList.remove("motrar-elemento-grid")
-        }
+        frmAniadirProducto.style.display = "grid";
     })
 
     // FUNCION QUE MUESTRA O OCULTA PRODUCTOS ELIMINADOS

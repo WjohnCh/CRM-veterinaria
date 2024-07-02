@@ -1,13 +1,11 @@
-drop database if exists crm_oficial1;
-create database crm_oficial1;
-use crm_oficial1;
+-- drop database if exists crm_oficial1;
+-- create database crm_oficial1;
+use clini587_crm_oficial1;
 CREATE TABLE IF NOT EXISTS usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) ,
     apellido VARCHAR(100) ,
     email VARCHAR(100),
-    direccion VARCHAR(100),
-    dni VARCHAR(100) ,
     Fecha_Nacimiento DATE,
     telefono varchar(20),
     genero VARCHAR(15),
@@ -18,6 +16,8 @@ CREATE TABLE IF NOT EXISTS usuario (
 CREATE TABLE IF NOT EXISTS cliente (
     idcliente INT(11) AUTO_INCREMENT,
     usuarioid INT(11),
+	direccion VARCHAR(100),
+    dni VARCHAR(100),
     PRIMARY KEY (idcliente),
     FOREIGN KEY (usuarioid) REFERENCES usuario(idusuario)
 );
@@ -102,6 +102,8 @@ CREATE TABLE IF NOT EXISTS compra (
     comentarios varchar(400),
     metododePago varchar(20),
     tipoEnvio varchar(30),
+    telefonoEnvio varchar(20),
+    isCancelled BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (idcompra),
     FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
 );
@@ -195,4 +197,12 @@ INSERT INTO productos (nombre, precio, razaMascota, url, descripcion, idCategori
 ('Toalla', 9.00, 'todos', './src/uploads/toalla-mascota-todos.jpg', 'Toalla para mascotas, suave y absorbente.', 4),
 ('Porta Rollo', 7.50, 'todos', './src/uploads/porta-rollo-tela-todos.jpg', 'Porta rollo de tela, práctico y útil para todas las mascotas.', 4),
 ('Bolsa Biodegradables', 5.00, 'todos', './src/uploads/bolsa-biodegradables-todos.jpeg', 'Bolsas biodegradables, ideales para recoger los desechos de tu mascota de manera ecológica.', 4),
-('Dispensador de Bolsas', 6.50, 'todos', './src/uploads/dispensador-bolsa-todos.jpg', 'Dispensador de bolsas, práctico y fácil de usar durante los paseos.', 4)
+('Dispensador de Bolsas', 6.50, 'todos', './src/uploads/dispensador-bolsa-todos.jpg', 'Dispensador de bolsas, práctico y fácil de usar durante los paseos.', 4);
+
+INSERT INTO usuario (idusuario, nombre, apellido, email, Fecha_Nacimiento, genero, contrasena, rol) VALUES
+ (112, 'Juan', 'Perez', 'juan.perez@example.com', '1985-06-15', 'Masculino', 'contrasena123', 'cliente'),
+ (111, 'Maria', 'Gonzalez', 'maria.gonzalez@example.com', '1990-08-20', 'Femenino', 'contrasena456', 'admin');
+ 
+ INSERT INTO cliente (usuarioid, direccion,dni) VALUES
+	(112, '789 Calle Real', '11223344C'),
+    (111, '321 Calle Ejemplo', '22334455D');

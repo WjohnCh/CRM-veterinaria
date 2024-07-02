@@ -106,7 +106,7 @@ async function DetallePedidos(req, res){
                             co.comentarios, co.idcompra, u.email, co.distrito, c.dni, co.CalleDireccion
                             FROM usuario as u INNER JOIN cliente as c ON u.idusuario = c.usuarioid INNER JOIN compra as co
                             ON co.clienteid = c.idcliente INNER JOIN detalle_compra as dc ON dc.idd_compra = co.idcompra
-                            `);
+                            WHERE isCancelled = 0`);
 
         res.json(results);
     } catch (error) {
@@ -132,6 +132,21 @@ async function detallPedidoProducto(req, res){
     }
 }
 
-module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto};
+async function detallPedidoCancelado(req,res){
+    const {idVenta} = req.params;
+    try {
+        const [result] = await sequelize.query(
+            `UPDATE compra SET isCancelled = TRUE WHERE idcompra = ?`,
+            {
+                replacements: [idVenta]
+            }
+        );
+        res.json(result)
+    } catch (error){
+        console.error('ERROR AL PROCESAR LA SOLICITUD', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
+}
+module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado};
 
 

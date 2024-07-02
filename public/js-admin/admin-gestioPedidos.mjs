@@ -32,20 +32,22 @@
         const totalBOLETAGENERAL = document.getElementById("totalBOLETAGENERAL")
 
         equis.forEach(element=>{
-            const equisCerrar =element.querySelector(".equis-ubicacion")
-            if(equisCerrar)
+            const equisCerrar = element.querySelector(".equis-ubicacion")
+            console.log(equisCerrar);
+            console.log("hola");
+            if(equisCerrar){
+                console.log("hola");
                 equisCerrar.addEventListener("click", ()=>{
                 element.style.display = "none";
-            })
+                console.log(element);
+            })           
+            }
 
             element.addEventListener("click", (event)=>{
                 if(event.target == element){
                     element.style.display = "none";
                 }
             })
-        })
-        btn_verBoleta.addEventListener("click",()=>{
-            
         })
 
         try {
@@ -131,13 +133,17 @@
                     })
                     totalBOLETAGENERAL.innerText = totalBoleta.toFixed(2)
                 } catch (error) {
-                    
+                    console.error('ERROR AL PROCESAR LA SOLICITUD', error);
                 }
                 contenedorBOleta.style.display = "grid";
             }
 
-            function EliminarPedido(){
-                console.log("chao");
+            async function EliminarPedido(){
+                try {
+                    await fetch(`http://localhost:3000/pedidos/Cancelled/${idcompra}`)
+                } catch (error) {
+                    console.error('ERROR AL PROCESAR LA SOLICITUD', error);
+                }
             }
             
             newFila.style.display = "table-row";

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
 const {idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
-    ,detallPedidoCancelado
+    ,detallPedidoCancelado, existeEmail
 } = require('./indexUsuario.js')
 
 
@@ -372,30 +372,42 @@ app.get("/images/single", async (req, res)=>{
 
 app.post('/procesar-datos', async (req, res) => {
     const { name, email, password } = req.body;
-  
+    
+    if (!name || !email || !password) {
+        return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios' });
+    }
+
     try {
-         await sequelize.query(
-            'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
-            { replacements: [name, email, password,"cliente" ] }
-          );
 
-          const idUser = await idUserByCorreo(email)
+    const existeEmail = await fetch(`http://localhost:3000/email/existe/${email}`)
 
-          await sequelize.query(
-            'INSERT INTO cliente (usuarioid) VALUES (?)',
-            { replacements: [idUser] }
-          );
+    const existenciaEmail = await existeEmail.json();
 
-          if (name && email && password) {
-            const token = jwt.sign({ email }, SECRET_KEY);
-            res.json({ success: true, token, message: 'Datos recibidos correctamente' });
-        } else {
-            res.json({ success: false, message: 'Failed to register user.'});
-        }
-      } catch (error) {
-        console.error('Error al insertar los datos:', error);
-        res.status(500).json({ message: 'Error al procesar los datos' });
-      }
+    if (existenciaEmail.existe) {
+        return res.status(400).json({ success: false, message: 'El email ya está registrado',existenciaCorreo: true });
+    }
+            await sequelize.query(
+               'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
+               { replacements: [name, email, password,"cliente" ] }
+             );
+   
+             const idUser = await idUserByCorreo(email)
+   
+             await sequelize.query(
+               'INSERT INTO cliente (usuarioid) VALUES (?)',
+               { replacements: [idUser] }
+             );
+   
+             if (name && email && password) {
+               const token = jwt.sign({ email }, SECRET_KEY);
+               res.json({ success: true, token, message: 'Datos recibidos correctamente',existenciaCorreo: false });
+           } else {
+               res.json({ success: false, message: 'Failed to register user.', existenciaCorreo: false});
+           }
+         } catch (error) {
+           console.error('Error al insertar los datos:', error);
+           res.status(500).json({ message: 'Error al procesar los datos',existenciaCorreo: false });
+         }
   });
 
   app.post('/login', async (req, res) => {
@@ -494,6 +506,9 @@ app.get('/pedidos', DetallePedidos)
 app.get('/pedidos/productos/:idVenta', detallPedidoProducto)
 
 app.get('/pedidos/Cancelled/:idVenta', detallPedidoCancelado)
+
+//EXISTENCIA DEL EMAIL
+app.get('/email/existe/:email', existeEmail)
 
 app.listen(port, () => {
     console.log('Mi port ' +  port);

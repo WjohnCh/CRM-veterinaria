@@ -74,6 +74,7 @@ export async function filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProdu
         
 
             products.forEach(product => {
+                console.log(product);
                 CrearEstructuraObjeto(product, plantilla, productList);
             });
             //Actualizamos el nombre de seccion

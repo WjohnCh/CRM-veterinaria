@@ -155,10 +155,8 @@ async function MostrarTablaObjeto(endopoint) {
             const form = document.getElementById('Formulario_ActualizarProductoBD');
             const formData = new FormData(form);
 
-            
-
             try {
-                const response = await fetch(`http://localhost:3000/update/products/${producto.idproductos}`, {
+                const response = await fetch(`http://localhost:3000/update/products/${producto.idproductos}`,{
                     method: 'PUT',
                     body: formData
                 });
@@ -261,7 +259,6 @@ async function MostrarFiltradoTabla() {
             btnMostrarOcultos.innerText = "Mostrar Ocultos";
         }
     })
-
 }
 
 

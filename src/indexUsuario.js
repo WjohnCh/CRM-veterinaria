@@ -147,6 +147,27 @@ async function detallPedidoCancelado(req,res){
         res.status(500).json({ error: 'Error al procesar la solicitud' });
     }
 }
-module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado};
+
+async function existeEmail(req, res){
+    const {email} = req.params;
+    try {
+        const [result] = await sequelize.query(
+            `SELECT idusuario FROM usuario WHERE email = ?`,
+            {
+                replacements: [email]
+            }
+        );
+        if(result.length == 1){
+            res.json({existe: true})
+        }else{
+            res.json({existe: false})
+        }
+    } catch (error){
+        console.error('ERROR AL PROCESAR LA SOLICITUD', error);
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
+}
+
+module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado, existeEmail};
 
 

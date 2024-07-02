@@ -1,7 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
   const buttonRegistrate = document.getElementById('boton-registrarse-modal2')
-  buttonRegistrate.addEventListener('click', async (event) => {
+  const formUserRegistration = document.getElementById("user-registrate");
+
+  formUserRegistration.addEventListener("submit", async (event)=>{
     event.preventDefault();
+    const campos = [
+      document.getElementById('registrate-name'),
+      document.getElementById('registrate-email'),
+      document.getElementById('registrate-password'),
+    ]
+    const [nameField, emailField,passwordField] = campos;
+    const name = nameField.value.trim();
+    const email = emailField.value.trim();
+    const password = passwordField.value.trim();
+
+
+    try {
+      const response = await fetch('http://localhost:3000/procesar-datos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+        })
+      });
+      const result = await response.json();
+      
+      if(result.existenciaCorreo){
+        campos[1].classList.add('sin-llenar');
+        const label = document.querySelector(`label[for="${campos[1].id}"]`);
+        const mensajeError = document.querySelector(`p[for="${campos[1].id}-err"]`);
+        mensajeError.classList.add('motrar-elemento')
+        label.classList.add('label-red');
+      }
+
+      if (response.ok && result.success) {
+        localStorage.setItem('token', result.token);
+    
+        // Redirigir al usuario a otra página después de un registro exitoso
+        window.location.href = '/public/cliente/cliente-index.html';
+      } else {
+        // Manejo de errores cuando la respuesta no es exitosa
+        console.error('Error en la respuesta de la red:', response.statusText);
+        alert('Hubo un problema al procesar los datos. Por favor, inténtalo de nuevo.');
+      }
+      }catch(err){
+        console.error('Error:', err);
+      }
+  })
+  buttonRegistrate.addEventListener('click', async (event) => {
     const campos = [
       document.getElementById('registrate-name'),
       document.getElementById('registrate-email'),
@@ -49,35 +99,5 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('Debes aceptar los Términos y Condiciones.');
       return;
     }
-    
-    
-    
-    try {
-      const response = await fetch('http://localhost:3000/procesar-datos', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          password: password,
-        })
-      });
-      const result = await response.json();
-      console.log(result.token);
-      if (response.ok && result.success) {
-        localStorage.setItem('token', result.token);
-    
-        // Redirigir al usuario a otra página después de un registro exitoso
-        window.location.href = '/public/cliente/cliente-index.html';
-      } else {
-        // Manejo de errores cuando la respuesta no es exitosa
-        console.error('Error en la respuesta de la red:', response.statusText);
-        alert('Hubo un problema al procesar los datos. Por favor, inténtalo de nuevo.');
-      }
-      }catch(err){
-        console.error('Error:', err);
-      }
   });
 });

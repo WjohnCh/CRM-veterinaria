@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
             elemento.addEventListener("click", ()=>{
                 if(UltimaOpcionAdmin){
                     UltimaOpcionAdmin.classList.remove('active')
-                    console.log("hello");
                 }
                 elemento.classList.add('active')
                 UltimaOpcionAdmin = elemento;
@@ -93,9 +92,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
         const btEnviar = document.getElementById("Formulario_AñadirProductoBD");
 
-        console.log("HOLA");
-
-        console.log(btEnviar, "pepe");
         btEnviar.addEventListener("submit", async (event)=>{
             alert('Producto actualizado exitosamente');
             event.preventDefault();

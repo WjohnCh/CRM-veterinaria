@@ -404,12 +404,6 @@ nav.administrador-navbar .user-information {
     width: auto;
 }
 
-.Contenedor_Filtros-Tabla-productos {
-    width: 100%;
-    max-width: 1400px;
-    margin: auto;
-}
-
 .classeOverflow {
     overflow: auto;
     max-height: calc(100vh - 220px);
@@ -417,13 +411,48 @@ nav.administrador-navbar .user-information {
 
 /* SECCION FILTRADO DE LA TABLA  */
 .Contenedor_Filtros-Tabla-productos {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
     background-color: var(--Negro-0);
+    box-shadow: 0px 4px 8px rgba(181, 181, 181, 0.8);
     padding: 8px 20px 10px 20px;
     margin-bottom: 20px;
     border-radius: 10px;
 }
+.Contenedor_Filtros-Tabla-productos .boton-generico-primario{
+    width: 200px;
+    margin: 0px;
+    padding: 8px;
+    margin-top: 32px;
+    font-weight: 600;
+}
+.btnFiltradoGestionProductos{
+    padding: 10px;
+    font-size: var(--Text-small);
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: var(--Negro-75);
+}
+.seccionFiltradoProducto{
+    border-radius: 20px;
+    width: 75%;
+}
+.Contenedor_Filtros-Tabla-productos select{
+    border: 1px solid var(--Negro-50);
+    border-radius: 8px;
+    width: 180px;
+    height: 38px;
+    margin-right: 10px;
+}
+.Contenedor_Filtros-Tabla-productos input{
+    border: 1px solid var(--Negro-75);
+    height: 38px;
+    width: 120px;
+}
 
 .Filtros-Tabla-productos {
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -723,7 +752,9 @@ nav.administrador-navbar .user-information {
 .antibold {
     font-weight: 400;
 }
-
+.tittle{
+    font-size: var(--Text-long);
+}
 
 .comentario-detalle-pedido {
     max-height: 70px;
@@ -792,4 +823,53 @@ nav.administrador-navbar .user-information {
 
 .boleta thead tr {
     border-bottom: 1px solid black;
+}
+
+
+/* MODALES DE AYUDA */
+.message-container {
+    width: 350px;
+    padding: 50px 20px 50px 20px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    position: relative;
+    text-align: center;
+}
+.btn-Ayuda{
+    margin-top: 20px;
+    width: 100%;
+    height: 44px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.btn-verde{
+    background-color:#7ed321;
+}
+.btn-rojo{
+    background-color:#FF4141;
+}
+.btn-naranja{
+    background-color:#F8C100;
+}
+.Ayuda-image {
+    width: 60px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.color-text-ayuda-verde {
+    color: #7ed321;
+}
+.color-text-ayuda-rojo {
+    color: #FF4141;
+}
+.color-text-ayuda-naranja {
+    color: #F8C100;
+}
+.Ayuda-text {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555555;
 }

@@ -326,7 +326,7 @@
                             </div>
                             <div class="flex-XY centrado">
                                 <label for="precio">Precio del Producto:</label>
-                                <input type="number" name="precio" id="Actualizar-Producto_precio" class="input-generico mitad50"value="" step="0.01" required>
+                                <input type="number" name="precio" id="Actualizar-Producto_precio" class="input-generico mitad50"value="" step="0.01" min="0"required>
                             </div>
                                     <div class="flex-XY centrado">
                                         <label for="categoria">Categoría:</label>
@@ -340,7 +340,7 @@
                                     </div>
                                     <div class="flex-XY centrado">
                                         <label for="mascota">Tipo mascota: </label>
-                                        <select name="mascota" required id="Actualizar-Producto_mascota" class="input-generico mitad50">
+                                        <select name="mascota" required id="Actualizar-Producto_mascota" class="input-generico mitad50" required>
                                             <option value="" disabled selected>Destinatario </option>
                                             <option value="perro" id="destinatario_actualizar-perro">para perros</option>
                                             <option value="gato"  id="destinatario_actualizar-gato">para gatos</option>
@@ -349,7 +349,7 @@
                                     </div>
                             <div class="flex-YX">
                                 <label for="avatar">Actualizar Foto:</label>
-                                <input type="file" class="input-generico" name="avatar" id="avatar" required>
+                                <input type="file" class="input-generico" name="avatar" id="avatar">
                             </div>
                             
                             <div class="flex-YX">
@@ -366,26 +366,28 @@
 
             <div class="pruebaaa">
                 <h1 style="width: 100%; text-align: center; margin-bottom: 30px;">GESTIÓN DE PRODUCTOS</h1>
-                <div class="Contenedor_Filtros-Tabla-productos flex-YX centrado">
-                    <h3>FILTROS</h3>
-                    <div class="flex-XY centrado Filtros-Tabla-productos">
-                        <div>
-                            <input type="text" name="" id="Buscar-Tabla_ID-Producto-INPUT" placeholder="Buscar por ID">
-                            <button id="Buscar-Tabla_ID-Producto">Buscar</button>
+                <div class="Contenedor_Filtros-Tabla-productos flex-XY">
+                    <div class="flex-YX centrado seccionFiltradoProducto">
+                        <h3>FILTROS</h3>
+                        <div class="flex-XY centrado Filtros-Tabla-productos">
+                            <div>
+                                <input type="text" name="" id="Buscar-Tabla_ID-Producto-INPUT" placeholder="Buscar por ID" class="input-generico">
+                                <button id="Buscar-Tabla_ID-Producto" class="opacidad-80 btnFiltradoGestionProductos white-letter">Buscar</button>
+                            </div>
+                            <div>
+                                <label for="">Por Categoría:</label>
+                                <select id="Filtro-tabla_categoria">
+                                    <option value="" disabled selected>Seleccionar</option>
+                                    <option value="Filtro-tabla_Alimentos" id="Filtro-tabla_Alimentos">Alimentos</option>
+                                    <option value="Filtro-tabla_Accesorios" id="Filtro-tabla_Accesorios">Accesorios y equipamento</option>
+                                    <option value="Filtro-tabla_Transportes" id="Filtro-tabla_Transportes">Transportes y dormitorios</option>
+                                    <option value="Filtro-tabla_Higiene" id="Filtro-tabla_Higiene">Higiene y limpieza</option>
+                                </select>
+                            </div> 
+                            <button id="Estado-producto-BD" class="opacidad-80 btnFiltradoGestionProductos white-letter">Mostrar Ocultos</button>
                         </div>
-                        <div>
-                            <label for="">Por Categoría:</label>
-                            <select id="Filtro-tabla_categoria">
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option value="Filtro-tabla_Alimentos" id="Filtro-tabla_Alimentos">Alimentos</option>
-                                <option value="Filtro-tabla_Accesorios" id="Filtro-tabla_Accesorios">Accesorios y equipamento</option>
-                                <option value="Filtro-tabla_Transportes" id="Filtro-tabla_Transportes">Transportes y dormitorios</option>
-                                <option value="Filtro-tabla_Higiene" id="Filtro-tabla_Higiene">Higiene y limpieza</option>
-                            </select>
-                        </div>
-                        <button id="Estado-producto-BD">Mostrar Ocultos</button>
-                        <button id="Anidir-Producto-BD">Añadir Producto</button>
                     </div>
+                    <button id="Anidir-Producto-BD" class="boton-generico-primario aniadirProducto_btn opacidad-80 ">+ Añadir Producto</button>
                 </div>
                 <div class="classeOverflow">
                     <table class="Tabla_Gestion-Productos">
@@ -473,7 +475,7 @@
 
         <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Pedidos" style="display: none;">
             <div class="pruebaaa">
-                <h1 style="width: 100%; text-align: center; margin-bottom: 30px;">GESTIÓN DE PRODUCTOS</h1>
+                <h1 style="width: 100%; text-align: center; margin-bottom: 30px;">GESTIÓN DE PEDIDOS</h1>
                 <div class="classeOverflow">
                     <table class="Tabla_Gestion-Productos" id="tabla_gestion-pedidos">
                         <!-- PLANTILLA FILA -->
@@ -559,7 +561,7 @@
          ---------------------------------------------INTERFAZ BOLETA DE VENTA ------------------------------------------------------
          ------------------------------------------------------------------------------------------------------------------>
          <div class="modal-generico" id="boletaDeVenta-modal" style="display: none;">
-             <div class="boleta" >
+             <div class="boleta">
                 <div class="header flex-YX centrado" id="datosvet">
                     <h2 id="veterinariaNombre">VETERINARIA MARVET</h2>
                     <label id="veterinariaRUC">RUC: 123456789012</label>
@@ -570,15 +572,15 @@
                 <div class="header flex-YX centrado" id="boletavet">
                     <h3 id="tituloBoleta">BOLETA DE VENTA ELECTRÓNICA</h3>
                     <label id="boletaNumero">B001 - 00000001</label>
-                    <label id="clienteNombre">Cliente: <span id="nombre">John Anahua</span></label>
-                    <label id="clienteDNI">DNI: <span id="dni">87654321</span></label>
+                    <label id="clienteNombre">Cliente: <span id="nombre_cliente_boleta">John Anahua</span></label>
+                    <label id="clienteDNI">DNI: <span id="dni_cliente_boleta">87654321</span></label>
                 </div>
                 <table class="items" id="tablaItems">
                     <tr style="display: none;" class="Fila-producto-tabla-boleta">
-                        <td class="boleta-producto-descripcion">Camisa Moderna Juguete</td>
-                        <td class="boleta-producto-Cantidad">2</td>
-                        <td class="boleta-producto-P_Unitario">S/.200.00</td>
-                        <td class="boleta-producto-Total">S/.400.00</td>
+                        <td class="boleta-producto-descripcion"></td>
+                        <td class="boleta-producto-Cantidad"></td>
+                        <td class="boleta-producto-P_Unitario"></td>
+                        <td class="boleta-producto-Total"></td>
                     </tr>
                     <thead>
                         <tr>
@@ -610,10 +612,57 @@
         
     </div>
 
-    
-
-
     </div>
+
+
+<!-- /----------------------------------INTERFAZ DE EXITO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+ <div class="modal-generico" id="Modal-InterfazExito" style="display: none">
+    <div class="message-container flex-YX centrado">
+        <img src="./Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+        <div class="message-content">
+            <img src="./Íconos - Logos/cheque.png" alt="Success" class="Ayuda-image">
+            <p class="bold tittle color-text-ayuda-verde">¡Acción realizada con éxito!</p>
+            <p class="Ayuda-text">La acción se completó correctamente. Sus cambios han sido guardados.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- /----------------------------------INTERFAZ DE RECHAZO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal-generico" id="Modal-InterfazRechazo" style="display: none">
+        <div class="message-container flex-XY centrado">
+            <img src="./Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <div class="message-content">
+                <img src="./Íconos - Logos/boton-eliminar.png" alt="Error" class="Ayuda-image">
+                <p class="bold tittle color-text-ayuda-rojo">¡Error al procesar la solicitud!</p>
+                <p class="Ayuda-text">Por favor, revisar los datos ingresados y vuelva a intentarlo</p>
+                <button class="btn-Ayuda btn-rojo opacidad-80"> Regresar</button>
+            </div>
+        </div>
+    </div>
+
+<!-- /----------------------------------INTERFAZ DE ADVERTENCIA-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal-generico" id="Modal-InterfazAdvertencia"style="display: none">
+        <div class="message-container flex-XY centrado">
+            <img src="./Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <div class="message-content">
+                <img src="./Íconos - Logos/advertencia.svg" alt="Error" class="Ayuda-image">
+                <p class="bold tittle color-text-ayuda-naranja">¿Está seguro que quiere realizar esta acción?</p>
+                <p class="Ayuda-text">Por favor, revisar los datos ingresados y vuelve a intentar</p>
+                <button class="btn-Ayuda btn-naranja opacidad-80">Continuar</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="./js-admin/admin.mjs" ></script>
 
 </body>

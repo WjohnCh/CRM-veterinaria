@@ -1,4 +1,5 @@
 import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
+let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
 export async function AbrirCerrarInterfaz() {
     const nuevaCita = document.getElementById("opcion_Nueva-Cita")
@@ -13,7 +14,6 @@ export async function AbrirCerrarInterfaz() {
     const interfazGestionCitas = document.getElementById("Contenedor-general__Gestion-Citas")
     const interfazGestionProductos = document.getElementById("Contenedor-general__Gestion-Productos")
     const interfazGestionPedidos = document.getElementById("Contenedor-general__Gestion-Pedidos")
-
 
 
     const filtradoTablaAccesorios = document.getElementById("Filtro-tabla_Accesorios");
@@ -87,11 +87,22 @@ const inputActuNomProducto = document.getElementById("Actualizar-Producto_nombre
 const inputActuPriceProducto = document.getElementById("Actualizar-Producto_precio")
 const inputActuDescripProducto = document.getElementById("Actualizar-Producto_descripcion")
 const optionCategoria = document.getElementById("Actualizar-Producto_Categoria")
-const optionDestinatario = document.getElementById("Actualizar-Producto_masocta")
+const optionDestinatario = document.getElementById("Actualizar-Producto_mascota")
 
 const btnGeneralActualizar = document.getElementById("btn_generalActualizar-Producto")
 let preguardadoCategoria;
 let preguardadodestinatario;
+
+//Elementos del los mensajes de ayuda (exito, error, advertencia)
+const modalExito = document.getElementById("Modal-InterfazExito")
+const modalRechazo = document.getElementById("Modal-InterfazRechazo")
+const modalAdvertencia = document.getElementById("Modal-InterfazAdvertencia")
+//BOTONES CADA UNO
+const btnModalExito = modalExito.querySelector(".btn-Ayuda")
+const btnModalRechazo = modalRechazo.querySelector(".btn-Ayuda")
+const btnModalAdvertencia = modalAdvertencia.querySelector(".btn-Ayuda")
+//Mensaje de cada uno
+const mensajeModalAdvertencia = modalAdvertencia.querySelector(".Ayuda-text")
 
 async function MostrarTablaObjeto(endopoint) {
     try {
@@ -128,49 +139,48 @@ async function MostrarTablaObjeto(endopoint) {
 
             if(producto.is_visible == false){
                 btn_ocultarProducto.innerText = "Mostrar Producto"
+                mensajeModalAdvertencia.innerText = "Este producto estará visible para el cliente en la página principal"
+            }
+            if(producto.is_visible == true){
+                btn_ocultarProducto.innerText = "Ocultar Producto"
+                mensajeModalAdvertencia.innerText = "Un producto ocultado no se mostrará al cliente en la página principal"
             }
             btn_editarProducto.onclick = ActualizarDatosProducto
-            btn_ocultarProducto.onclick = ocultarMostrarProducto; // Asigna a la funcion para ocultar producto
+            btn_ocultarProducto.onclick = MensajeDeAdvertencia; // Asigna a la funcion para ocultar producto
             btnGeneralActualizar.onclick = ActualizarProducto
         })
         // /update/products/:id
-        async function ocultarMostrarProducto(){
-            try {
-                if(producto.is_visible == true){
-                    producto.is_visible = 0
-                    await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/0`, { method: 'PUT' });
-                    btn_ocultarProducto.innerText = "Mostrar Producto"
-                }else if(producto.is_visible == false){
-                    producto.is_visible = 1
-                    await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/1`, { method: 'PUT' });
-                    btn_ocultarProducto.innerText = "Ocultar Producto"
+        async function MensajeDeAdvertencia(){
+
+            modalAdvertencia.style.display = "grid"
+            btnModalAdvertencia.onclick = ocultarMostrarProducto
+
+            async function ocultarMostrarProducto(){
+                modalAdvertencia.style.display = "none"
+                try {
+                    let response
+                    if(producto.is_visible == true){
+                        producto.is_visible = 0
+                         response = await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/0`, { method: 'PUT' });
+                        btn_ocultarProducto.innerText = "Mostrar Producto"
+                    }else if(producto.is_visible == false){
+                        producto.is_visible = 1
+                         response = await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/1`, { method: 'PUT' });
+                        btn_ocultarProducto.innerText = "Ocultar Producto"
+                    }
+                    if(response.ok){
+                        modalExito.style.display = "grid"
+                    }else{
+                        modalRechazo.style.display = "grid"
+                    }
+                } catch (error){
+                  console.error(error);
                 }
-            } catch (error){
-              console.error(error);
             }
         }
 
         async function ActualizarProducto(event){
-            event.preventDefault();
-            const form = document.getElementById('Formulario_ActualizarProductoBD');
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch(`http://localhost:3000/update/products/${producto.idproductos}`,{
-                    method: 'PUT',
-                    body: formData
-                });
-        
-                if (!response.ok) {
-                    throw new Error('Error al actualizar el producto');
-                }
-        
-                const result = await response.json();
-                alert('Producto actualizado exitosamente');
-            } catch (error) {
-                console.error(error);
-                alert('Error al actualizar el producto');
-            }
+            idProductoParaActualizar = producto.idproductos
         }
 
         async function ActualizarDatosProducto(){
@@ -187,6 +197,7 @@ async function MostrarTablaObjeto(endopoint) {
                 preguardadodestinatario.selected = false;
             }
             preguardadoCategoria = optionCategoria.querySelector(`option[value="${producto.idCategoria}"]`)
+            console.log(preguardadoCategoria);
             preguardadodestinatario = optionDestinatario.querySelector(`option[value="${producto.razaMascota}"]`)
             preguardadoCategoria.selected = true;
             preguardadodestinatario.selected = true;
@@ -195,6 +206,7 @@ async function MostrarTablaObjeto(endopoint) {
         nombreProducto.innerText = producto.nombre;
         categoriaProducto.innerText = producto["Nombre Categoria"];
         precioProducto.innerText = producto.precio.toFixed(2);
+
         descripcionProducto.innerText = producto.descripcion;
 
 
@@ -202,15 +214,7 @@ async function MostrarTablaObjeto(endopoint) {
         ContenedorTabla.appendChild(nuevaFila);
     }
 
-    // CERRA MODAL DETALLE PRODUCTO
-    equisCierremodalDetalleProducto.addEventListener("click", () => {
-        ModalDetalleProducto.classList.remove("motrar-elemento-grid");
-    })
-    ModalDetalleProducto.addEventListener("click", (event) => {
-        if (event.target == ModalDetalleProducto) {
-            ModalDetalleProducto.classList.remove("motrar-elemento-grid");
-        }
-    })
+
 }
 
 
@@ -222,6 +226,7 @@ const INPUTbotonBuscarID = document.getElementById("Buscar-Tabla_ID-Producto-INP
 const btnAniadirProducto = document.getElementById("Anidir-Producto-BD");
 const frmAniadirProducto = document.getElementById("modal_MostrarFormulario-AñadirProducto")
 const btnMostrarOcultos = document.getElementById("Estado-producto-BD");
+const formActualizarProducto = document.getElementById('Formulario_ActualizarProductoBD');
 
 async function MostrarFiltradoTabla() {
 
@@ -257,6 +262,26 @@ async function MostrarFiltradoTabla() {
         }else if(btnMostrarOcultos.innerText == "No mostrar Ocultos"){
             MostrarTablaObjeto(`http://localhost:3000/productos/categoria/gestion`)
             btnMostrarOcultos.innerText = "Mostrar Ocultos";
+        }
+    })
+
+    formActualizarProducto.addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const formData = new FormData(formActualizarProducto);
+        try {
+            const response = await fetch(`http://localhost:3000/update/products/${idProductoParaActualizar}`,{
+                method: 'PUT',
+                body: formData
+            });
+
+            if (!response.ok) {
+
+                throw new Error('Error al actualizar el producto');
+            }
+
+            modalExito.style.display = "grid"
+        } catch (error) {
+            modalRechazo.style.display = "grid"
         }
     })
 }

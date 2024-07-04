@@ -30,16 +30,13 @@
         const plantillaBoleta = document.querySelector(".Fila-producto-tabla-boleta");
         const contenedorPadreBoleta = document.getElementById("Contenedor-central-boleta")
         const totalBOLETAGENERAL = document.getElementById("totalBOLETAGENERAL")
-
+        const nombreCLiente = document.getElementById("nombre_cliente_boleta")
+        const dniCLiente = document.getElementById("dni_cliente_boleta")
         equis.forEach(element=>{
             const equisCerrar = element.querySelector(".equis-ubicacion")
-            console.log(equisCerrar);
-            console.log("hola");
             if(equisCerrar){
-                console.log("hola");
                 equisCerrar.addEventListener("click", ()=>{
                 element.style.display = "none";
-                console.log(element);
             })           
             }
 
@@ -115,6 +112,8 @@
                     const result = await fetch(`http://localhost:3000/pedidos/productos/${idcompra}`)
                     const body  = await result.json();
                     contenedorPadreBoleta.innerText = ''
+                    nombreCLiente.innerText = nombre_completo
+                    dniCLiente.innerText = dni
                     let totalBoleta = 0
                     body.forEach(element=>{
                         let totalFila = 0;

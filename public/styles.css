@@ -915,7 +915,7 @@ main.contenedor-productos .detalle-producto .image-producto{
    border-radius: 10px;
    font-weight: bold;
    color: var(--Negro-0);
-   background-color: var(--Orange-50);
+   background-color: #FF9843;
    cursor: pointer;
 }
 

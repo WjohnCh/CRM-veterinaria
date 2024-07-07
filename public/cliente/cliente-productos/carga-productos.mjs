@@ -1,8 +1,9 @@
+
 import { clickearBotonDetalleProducto, NumeroProductosElegidos, ActualizarCarrito, editarEstadoProducto} from "./addEventListener.mjs";
 import  { HoverFiltradoOpciones, filtradoCategorias, VerDetalleProducto} from "./funciones-productos.mjs"
 
-document.addEventListener("DOMContentLoaded", async ()=>{
-
+export async function FuncionCargarProductos(){
+    
     const cantidadProducto = document.getElementById('valor-productos');
     const contenedorProductosCarritoVacio = document.querySelector(".Contenedor__productos-vacios");
     const contenedorSubtotal = document.getElementById("contenedor-general__Subtotal-Productos");
@@ -19,12 +20,12 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
 
     botonProductosCarritoVacio.addEventListener("click", ()=>{
-        console.log("HOLA");
         window.scrollTo(0, 0);
         location.reload();
     })
     
     function cargarEstadoProducto(){
+        
         if(productosPulsados.length !== 0){
             cantidadProducto.innerText = productosPulsados.length;
             contenedorSubtotal.style.display = "block"
@@ -107,8 +108,4 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     clickearBotonDetalleProducto(productosPulsados);
     NumeroProductosElegidos();
 
-
-    
-})
-
-
+}

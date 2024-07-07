@@ -2,7 +2,6 @@
 export function HoverFiltradoOpciones(){
     const botonFiltradoCategoria = document.getElementById("contenedor__filtrado-categoria-producto");
     const botonFiltradomascota = document.getElementById("contenedor__filtrado-mascotas");
-
     function MostrarFiltro(boton){
         const opcionesFiltrado = boton.querySelector(".Filtrado__Opciones");
         opcionesFiltrado.style.display = "block"
@@ -74,7 +73,7 @@ export async function filtradoCategorias(CrearEstructuraObjeto,cargarEstadoProdu
         
 
             products.forEach(product => {
-                console.log(product);
+                
                 CrearEstructuraObjeto(product, plantilla, productList);
             });
             //Actualizamos el nombre de seccion

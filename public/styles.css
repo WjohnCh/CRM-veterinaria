@@ -14,7 +14,7 @@
     /* Tamaño de letra */
     --ExtraGrande: 70px;
     --Tittle: 22px;
-    --Text-long: 18px;
+    --Text-long: 18px !important;
     --Text-medium: 16px;
     --Text-small: 14px;
 }
@@ -51,7 +51,7 @@ input[type=number]::-webkit-inner-spin-button{
    align-items: center;
 }
 
-.boton-generico-primario{
+.boton-generico-primario-amarillo{
       display:block;
       width: 95%;
       padding: 12px;
@@ -1152,10 +1152,10 @@ main.contenedor-productos .detalle-producto .precio-producto{
    height: 100px;
    box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.4);
    border-radius: 8px;
-   width: 160px;
+   width: 180px;
    padding: 20px;
    font-weight: 900;
-   height: 200px;
+   height: max-content;
    font-size: 19px;
 }
 .opciones-cliente-datos{

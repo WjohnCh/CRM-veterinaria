@@ -1,0 +1,104 @@
+<aside class="banner-cliente" style="margin-top: 100px;">
+    <div class="contenido-banner">
+        <img class="flecha-banner derecha" src="../Íconos - Logos/flecha-banner.svg" alt="">
+        <img src="../Íconos - Logos/banner.svg" alt="">
+        <img class="flecha-banner izquierda" src="../Íconos - Logos/flecha-banner.svg" alt="">
+    </div>
+</aside>
+
+<div class="Contenedor__Sección_Filtrado_busqueda clienteOPT" >
+    <div class="Sección_Filtrado_busqueda">
+        <div class="hover-naranja" id="contenedor__filtrado-categoria-producto">
+            <button class="botton_filtrado  Filtro_Categoría_Producto">Categoria de productos</button>
+            <img src="../Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+            <div class="Filtrado__Opciones Filtrado_Categorias-productos" style="display: none;">
+                <ul>
+                    <li id="Filtrado__Todas-las-Categorias" >Todas las Categorias</li>
+                    <li id="Filtrado__Accesorios&equipamento" >Accesorios y equipamento</li>
+                    <li id="Filtrado__Transportes&dormitorios" >Transportes y dormitorios</li>
+                    <li id="Filtrado__Alimentos" >Alimentos</li>
+                    <li id="Filtrado__Higiene&limpieza" >Higiene y limpieza</li>
+                </ul>
+            </div>
+        </div>
+        <div class="hover-naranja" id="contenedor__filtrado-mascotas">
+            <button class="botton_filtrado  Filtro_Mascotas">Mascotas</button>
+            <img src="../Íconos - Logos/felcha abajo copy.svg" alt="" fill="black">
+            <div class="Filtrado__Opciones Filtrado_para-mascotas" style="display: none;">
+                <ul>
+                    <li id="Filtrado_Para-todos" >Para todos</li>
+                    <li id="Filtrado_Para-perros" >Para Perros</li>
+                    <li id="Filtrado_Para-gatos" >Para Gatos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- PLANTILLA PRODUCTO -->
+    <div class="detalle-producto" style="display: none">
+        <div class="image-producto">
+            <img src="" alt="">
+        </div>
+        <div>
+            <p class="Nombre-producto"></p>
+            <p class="precio-producto"></p>
+            <button class="Boton_añadir_carro">Añadir al carrito</button>
+        </div>
+    </div>
+<main class="contenedor-productos">
+    <div class="Contenedor_Informacion-Productos-General">
+        <div>
+            <span id="Info-producto_Nombre-Section">Todos</span>
+            <p>
+                Mostrando <span id="Cantidad_Producto-Visible-Minimo">0</span> de <span id="Cantidad_Producto-Maximo">0</span>
+            </p>
+        </div>
+        <div class="Contenedor_Ordenar-Productos-Seleccionados">
+            <select name="Ordenar_Productos-Seleccionados" class="Ordenar_Productos-Seleccionados">
+                <option value="" disabled selected>Ordenar Por: </option>
+                <option value="Precio_Menor-Mayor" id="Precio_Menor-Mayor">Precio: Menor a Mayor</option>
+                <option value="Precio_Mayor-Menor" id="Precio_Mayor-Menor" >Precio: Mayor a Menor</option>
+                <option value="Nombre_A-Z" id="Nombre_A-Z" >Nombre: A a Z</option>
+                <option value="Nombre_Z-A" id="Nombre_Z-A" >Nombre: Z a A</option>
+            </select>
+        </div>
+    </div>
+    <div class="contenedor-productos-centro" id="productList" >
+        <!-- SE INSERTAN LOS DATOS DINAMICAMENTE -->
+    </div>
+</main>
+
+<!-- PLANTILLA DESCRIPCION DEL PRODUCTO -->
+<div class="modal__DetalleProducto Contenedor__Sombreado-Modal" id="modal__DetalleProducto" style="display: none;">
+    <div class="Contenedor_Detalle-producto Contenedor-CarritoCompras">
+        <div class="Contenedor__Detalle-producto_imagen">
+            <figure class="Detalle-producto_equis">
+                <img class="TamanioEquis" src="../Íconos - Logos/Equis.svg" alt="">
+            </figure>
+            <figure class="Detalle-producto_imagen">
+                <img src="../../src/uploads/whiskas-1kg-bolsa-gatos.jpg" alt="">
+            </figure>
+        </div>
+        <div class="Contenedor_Especificacion-Producto">
+            <div class="Btn_Aumentar-Cantidad-Producto Aumentar-Cantidad-Producto-modifiqued">
+                <p class="Detalle-producto_precio">S/
+                    <span id="span-producto_precio"></span>
+                </p>
+                <div>
+                    <button class="btn btn-disminuir_Descripcion">-</button>
+                    <input class="input__cantidad-producto" type="number" name="" id="Descripcion-input_cantidad-producto" value="1" max="999" oninput="this.value = this.value.slice(0, 3);">
+                    <button class="btn btn-aumentar__Descripcion">+</button>
+                </div>
+            </div>
+            <div>
+                <p class="Detalle-producto-id" style="display: none;"></p>
+                <p class="Detalle-producto_Nombre"></p>
+                <p class="Detalle-producto_descripcion"></p>
+            </div>
+            <button class="Detalle-producto_btn-aniadir boton-generico-primario">Añadir al carrito</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/public/cliente/cliente-productos/carga-productos.mjs"></script>

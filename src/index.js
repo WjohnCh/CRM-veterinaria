@@ -6,15 +6,14 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 3000;
 
-const {idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
-    ,detallPedidoCancelado, existeEmail
-} = require('./indexUsuario.js')
+const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
+    , detallPedidoCancelado, existeEmail, ArrayMascotas } = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
 
 const multer = require('multer');
-const upload = multer({dest: './src/uploads/'});
+const upload = multer({ dest: './src/uploads/' });
 
 const SECRET_KEY = 'crm_vet_2024'; // CLAVE SECRETA SE CAMBIARÁ CUANDO SE LANZE A PRODUCCIÓN
 
@@ -25,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const verifyToken = (req, res, next) => {
     const token = req.headers['authorization'] || req.query.accesstoken;
-    
+
     if (!token) {
         return res.status(403).json({ message: 'No token provided' });
     }
@@ -35,43 +34,43 @@ const verifyToken = (req, res, next) => {
             console.error('Token error:', err);
             return res.status(500).json({ message: 'Failed to authenticate token' });
         }
-        
+
         req.user = decoded;
         next();
     });
 };
 
 const verifyCorreo = async (req, res, next) => {
-    const {Distrito, CalleDireccion,comentarioAdicional = '-',
-        correo,nombre,apellido ,telefono,dni,
-        MetodoPago, productosGuardados} = req.body;
+    const { Distrito, CalleDireccion, comentarioAdicional = '-',
+        correo, nombre, apellido, telefono, dni,
+        MetodoPago, productosGuardados } = req.body;
 
-        const totalPrecio  = await calcularTotal(productosGuardados);
+    const totalPrecio = await calcularTotal(productosGuardados);
     try {
         const idUsuario = await idUserByCorreo(correo);
         //si el correo existe, le aniadimos el producto al cliente
-        if (idUsuario) {    
+        if (idUsuario) {
             const [results] = await sequelize.query('SELECT idcliente FROM cliente WHERE usuarioid  = ?',
                 {
                     replacements: [idUsuario]
                 }
             )
             if (Distrito && CalleDireccion) {
-                const [result2]= await sequelize.query(
+                const [result2] = await sequelize.query(
                     `INSERT INTO compra (fecha,  clienteid, total, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
                      VALUES (CURDATE(),?, ?, ?, ?, ?, ?,?, 'Domicilio')`,
                     {
-                        replacements: [ results[0].idcliente,totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
+                        replacements: [results[0].idcliente, totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
                     }
                 )
                 await anidadirDetalle(result2, productosGuardados);
-                
-            }else{
-                const [result2]= await sequelize.query(
+
+            } else {
+                const [result2] = await sequelize.query(
                     `INSERT INTO compra (fecha,  clienteid, total,  comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
                      VALUES (CURDATE(), ?, ?, ?, ?, ?, 'Retiro Tienda')`,
                     {
-                        replacements: [ results[0].idcliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
+                        replacements: [results[0].idcliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
                     }
                 )
                 await anidadirDetalle(result2, productosGuardados);
@@ -87,7 +86,7 @@ const verifyCorreo = async (req, res, next) => {
     }
 };
 
-app.post('/images/single', upload.single('avatar'), async (req, res)=>{
+app.post('/images/single', upload.single('avatar'), async (req, res) => {
     const file = req.file;
     const { nombre, precio, categoria, descripcion, mascota } = req.body;
 
@@ -98,16 +97,16 @@ app.post('/images/single', upload.single('avatar'), async (req, res)=>{
         await sequelize.query(
             `INSERT INTO productos (nombre, precio, razaMascota,  url, idCategoria, descripcion) 
             VALUES (?, ?, ?, ?, ?, ?)`,
-            { replacements: [nombre, parseFloat(precio),mascota, newPath, parseInt(categoria), descripcion] }
+            { replacements: [nombre, parseFloat(precio), mascota, newPath, parseInt(categoria), descripcion] }
         );
-        res.json({success: true});
+        res.json({ success: true });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al mover el archivo');
     }
 })
 
-app.put('/update/products/:id', upload.single('avatar'), async (req, res)=>{
+app.put('/update/products/:id', upload.single('avatar'), async (req, res) => {
     const { id } = req.params
     const file = req.file;
     const { nombre, precio, categoria, descripcion, mascota } = req.body;
@@ -116,26 +115,26 @@ app.put('/update/products/:id', upload.single('avatar'), async (req, res)=>{
 
     try {
         let query;
-        if(file){
+        if (file) {
             newPath = `./src/uploads/${file.originalname}`
             fs.renameSync(file.path, newPath);
             [query] = await sequelize.query(
-                    ` UPDATE productos SET 
+                ` UPDATE productos SET 
                     nombre = ?, precio = ?, razaMascota = ?, url = ?, idCategoria = ?, descripcion = ?
                     WHERE idproductos = ?`,
-                    { replacements: [nombre, parseFloat(precio), mascota , newPath, parseInt(categoria), descripcion, parseInt(id)] }
-                );
-        }else{
+                { replacements: [nombre, parseFloat(precio), mascota, newPath, parseInt(categoria), descripcion, parseInt(id)] }
+            );
+        } else {
             [query] = await sequelize.query(
-                    ` UPDATE productos SET 
+                ` UPDATE productos SET 
                     nombre = ?, precio = ?, razaMascota = ?, idCategoria = ?, descripcion = ?
                     WHERE idproductos = ?`,
-                    { replacements: [nombre, parseFloat(precio), mascota, parseInt(categoria), descripcion, parseInt(id)] }
-                );
+                { replacements: [nombre, parseFloat(precio), mascota, parseInt(categoria), descripcion, parseInt(id)] }
+            );
         }
         res.json(query);
     } catch (error) {
-        console.error("console.error('Error al actualizar el producto:', error);",error);
+        console.error("console.error('Error al actualizar el producto:', error);", error);
         res.status(500).send('Error al actualizar el producto');
     }
 })
@@ -143,7 +142,7 @@ app.put('/update/products/:id', upload.single('avatar'), async (req, res)=>{
 
 
 
-app.get('/', async (req, res)=>{
+app.get('/', async (req, res) => {
     const [results] = await sequelize.query('SELECT * FROM productos');
     res.send(results);
 })
@@ -189,8 +188,8 @@ app.get('/productos/categoria/alimentos', async (req, res) => {
     }
 });
 
-app.get('/citas', async(req, res) =>{
-    try{
+app.get('/citas', async (req, res) => {
+    try {
         const [results] = await sequelize.query(`SELECT * FROM cita`);
         res.json(results);
     }
@@ -263,28 +262,28 @@ app.get('/productos/mascota/gato', async (req, res) => {
 
 
 // CONSULTA PARA CREAR LA TABLA GESTIONAR PRODUCTOS
-app.get("/productos/categoria/gestion", async (req, res)=>{
+app.get("/productos/categoria/gestion", async (req, res) => {
     try {
         const [results] = await sequelize.query(
             `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
             p.precio, p.razaMascota, p.descripcion, p.url, p.is_visible, c.idCategoria  
             FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
             WHERE p.is_visible = TRUE;`
-            );
+        );
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
         res.status(500).send('Error al obtener los productos');
     }
 })
-app.get("/productos/categoria/gestion/ocultos", async (req, res)=>{
+app.get("/productos/categoria/gestion/ocultos", async (req, res) => {
     try {
         const [results] = await sequelize.query(
             `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
             p.precio, p.razaMascota, p.descripcion, p.url, p.is_visible , c.idCategoria 
             FROM productos p INNER JOIN categoria c ON p.idCategoria = c.idCategoria
             WHERE p.is_visible = FALSE;`
-            );
+        );
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -292,19 +291,19 @@ app.get("/productos/categoria/gestion/ocultos", async (req, res)=>{
     }
 })
 
-app.get("/productos/categoria/gestion/:categoria", async (req, res)=>{
+app.get("/productos/categoria/gestion/:categoria", async (req, res) => {
     try {
-            const { categoria } = req.params;
-            const [results] = await sequelize.query(
-                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+        const { categoria } = req.params;
+        const [results] = await sequelize.query(
+            `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
                 p.precio, p.razaMascota, p.descripcion, p.is_visible, p.url, c.idCategoria
                 FROM productos p 
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
                 WHERE c.idCategoria = ?;`,
-                {
-                    replacements: [categoria]
-                }
-            );
+            {
+                replacements: [categoria]
+            }
+        );
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -312,19 +311,19 @@ app.get("/productos/categoria/gestion/:categoria", async (req, res)=>{
     }
 })
 
-app.get("/productos/id/gestion/:id", async (req, res)=>{
+app.get("/productos/id/gestion/:id", async (req, res) => {
     try {
-            const { id } = req.params;
-            const [results] = await sequelize.query(
-                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+        const { id } = req.params;
+        const [results] = await sequelize.query(
+            `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
                 p.precio, p.razaMascota, p.descripcion, p.is_visible, p.url, c.idCategoria  
                 FROM productos p
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
                 WHERE p.idproductos = ?;`,
-                {
-                    replacements: [id]
-                }
-            );
+            {
+                replacements: [id]
+            }
+        );
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -349,19 +348,19 @@ app.put('/productos/:id/visibilidad/:estado', async (req, res) => {
 });
 
 
-app.get("/images/single", async (req, res)=>{
+app.get("/images/single", async (req, res) => {
     try {
-            const { id } = req.params;
-            const [results] = await sequelize.query(
-                `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
+        const { id } = req.params;
+        const [results] = await sequelize.query(
+            `SELECT p.idproductos, p.nombre, c.nombre AS "Nombre Categoria",
                 p.precio, p.razaMascota, p.descripcion 
                 FROM productos p 
                 INNER JOIN categoria c ON p.idCategoria = c.idCategoria
                 WHERE p.idproductos  = ?;`,
-                {
-                    replacements: [id]
-                }
-            );
+            {
+                replacements: [id]
+            }
+        );
         res.json(results);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -372,59 +371,59 @@ app.get("/images/single", async (req, res)=>{
 
 app.post('/procesar-datos', async (req, res) => {
     const { name, email, password } = req.body;
-    
+
     if (!name || !email || !password) {
         return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios' });
     }
 
     try {
 
-    const existeEmail = await fetch(`http://localhost:3000/email/existe/${email}`)
+        const existeEmail = await fetch(`http://localhost:3000/email/existe/${email}`)
 
-    const existenciaEmail = await existeEmail.json();
+        const existenciaEmail = await existeEmail.json();
 
-    if (existenciaEmail.existe) {
-        return res.status(400).json({ success: false, message: 'El email ya está registrado',existenciaCorreo: true });
+        if (existenciaEmail.existe) {
+            return res.status(400).json({ success: false, message: 'El email ya está registrado', existenciaCorreo: true });
+        }
+        await sequelize.query(
+            'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
+            { replacements: [name, email, password, "cliente"] }
+        );
+
+        const idUser = await idUserByCorreo(email)
+
+        await sequelize.query(
+            'INSERT INTO cliente (usuarioid) VALUES (?)',
+            { replacements: [idUser] }
+        );
+
+        if (name && email && password) {
+            const token = jwt.sign({ email }, SECRET_KEY);
+            res.json({ success: true, token, message: 'Datos recibidos correctamente', existenciaCorreo: false });
+        } else {
+            res.json({ success: false, message: 'Failed to register user.', existenciaCorreo: false });
+        }
+    } catch (error) {
+        console.error('Error al insertar los datos:', error);
+        res.status(500).json({ message: 'Error al procesar los datos', existenciaCorreo: false });
     }
-            await sequelize.query(
-               'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
-               { replacements: [name, email, password,"cliente" ] }
-             );
-   
-             const idUser = await idUserByCorreo(email)
-   
-             await sequelize.query(
-               'INSERT INTO cliente (usuarioid) VALUES (?)',
-               { replacements: [idUser] }
-             );
-   
-             if (name && email && password) {
-               const token = jwt.sign({ email }, SECRET_KEY);
-               res.json({ success: true, token, message: 'Datos recibidos correctamente',existenciaCorreo: false });
-           } else {
-               res.json({ success: false, message: 'Failed to register user.', existenciaCorreo: false});
-           }
-         } catch (error) {
-           console.error('Error al insertar los datos:', error);
-           res.status(500).json({ message: 'Error al procesar los datos',existenciaCorreo: false });
-         }
-  });
+});
 
-  app.post('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const [results] = await sequelize.query(
             'SELECT * FROM usuario WHERE email = ? AND contrasena = ?',
-            { replacements: [email, password]}
+            { replacements: [email, password] }
         );
         if (results.length > 0) {
             const token = jwt.sign({ email: results[0].email }, SECRET_KEY);
-            res.json({token, results, success: true});
+            res.json({ token, results, success: true });
         } else {
-            res.json({ success: false, message: 'Invalid email or password.'});
+            res.json({ success: false, message: 'Invalid email or password.' });
         }
-    } catch (error){
+    } catch (error) {
         console.error('Error al realizar la consulta:', error);
         res.status(500).json({ message: 'Error al procesar los datos' });
     }
@@ -442,7 +441,7 @@ app.get('/user-info', verifyToken, async (req, res) => {
         if (results.length > 0) {
             res.json(results[0]);
         } else {
-            res.status(404).json({ message: 'User not found'});
+            res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
         console.error('Error al realizar la consulta:', error);
@@ -451,18 +450,18 @@ app.get('/user-info', verifyToken, async (req, res) => {
 });
 
 
-app.post('/productos/envios', verifyCorreo, async (req,res)=>{
-    const {Distrito, CalleDireccion,comentarioAdicional = '-',
-        correo,nombre,apellido ,telefono,dni,
-        MetodoPago, productosGuardados} = req.body;
+app.post('/productos/envios', verifyCorreo, async (req, res) => {
+    const { Distrito, CalleDireccion, comentarioAdicional = '-',
+        correo, nombre, apellido, telefono, dni,
+        MetodoPago, productosGuardados } = req.body;
 
-    const totalPrecio  = await calcularTotal(productosGuardados);
+    const totalPrecio = await calcularTotal(productosGuardados);
 
     try {
         //INSERTAMOS EN USUARIO
         await sequelize.query(`INSERT INTO usuario (email, nombre, apellido, telefono, rol) VALUES (?,?,?,?, 'cliente')`,
             {
-                replacements: [correo,nombre,apellido, telefono]
+                replacements: [correo, nombre, apellido, telefono]
             }
         )
         // OBTENEMOS DE USUARIO SU ID PARA INSERTARLO EN CLIENTE
@@ -479,16 +478,16 @@ app.post('/productos/envios', verifyCorreo, async (req,res)=>{
                 `INSERT INTO compra (fecha,  clienteid, total, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
                  VALUES (CURDATE(),?, ?, ?, ?, ?, ?,?, 'Domicilio')`,
                 {
-                    replacements: [ idCliente,totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
+                    replacements: [idCliente, totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
                 }
             )
             await anidadirDetalle(result2, productosGuardados);
-        }else{
+        } else {
             const [result2] = await sequelize.query(
                 `INSERT INTO compra (fecha,  clienteid, total,  comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
                  VALUES (CURDATE(), ?, ?, ?, ?, ?, 'Retiro Tienda')`,
                 {
-                    replacements: [ idCliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
+                    replacements: [idCliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
                 }
             )
             await anidadirDetalle(result2, productosGuardados);
@@ -497,8 +496,8 @@ app.post('/productos/envios', verifyCorreo, async (req,res)=>{
     } catch (error) {
         console.error('Error al realizar la consulta:', error);
         res.status(500).json({ message: 'Error al procesar los datos' });
-    }    
-    
+    }
+
 })
 
 app.get('/pedidos', DetallePedidos)
@@ -510,7 +509,9 @@ app.get('/pedidos/Cancelled/:idVenta', detallPedidoCancelado)
 //EXISTENCIA DEL EMAIL
 app.get('/email/existe/:email', existeEmail)
 
+//API MASCOTAS DEL CLIENTE
+app.get("/api/cliente/mascotas", verifyToken, ArrayMascotas);
+
 app.listen(port, () => {
-    console.log('Mi port ' +  port);
-  });
-  
+    console.log('Mi port ' + port);
+});

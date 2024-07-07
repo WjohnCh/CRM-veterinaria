@@ -1,9 +1,18 @@
+import {FuncionCargarProductos} from "./cliente-productos/carga-productos.mjs"
+import {GestionMascotasCliente} from "./cliente-interfaces/GestionMascotasCliente.mjs"
+
 document.addEventListener("DOMContentLoaded",async ()=>{
     const imgUser = document.getElementById("cliente-img user")
     const cerrarModalOpcionesAdmin = document.getElementById("modal-opcion-cliente-logout")
     const nombreUsuario = document.getElementById("nombreUser-token")
     
     const token = localStorage.getItem('token');
+
+    const btnMisCompras = document.getElementById("btn_clienite-mis_compras")
+    const btnMisMascotas = document.getElementById("btn_clienite-mis_Mascotas")
+    const btnMiCuenta = document.getElementById("btn_clienite-mi_cuenta")
+    const btnProductos = document.getElementById("Cliente-listaProductos-Content")
+    const contenedorDinamico = document.getElementById("caja_contenedora_cliente-content")
 
     imgUser.addEventListener("click", ()=>{
         cerrarModalOpcionesAdmin.classList.toggle("motrar-elemento");
@@ -15,8 +24,6 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         }
     })
     
-
-
     try {
         const response = await fetch('http://localhost:3000/user-info', {
             method: 'GET',
@@ -29,7 +36,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         const {nombre} = await response.json();
         nombreUsuario.innerText= nombre
     } catch (error) {
-        
+        console.log(error)
     }
 
 
@@ -39,4 +46,36 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         window.location.href = '../navbar.html'
     })
 
+    // LOGICA DE INFORMACION HISTORIAL DEL USUARIO
+
+    await CargarContenido("Lista-productos+aside.html")
+    await FuncionCargarProductos();
+
+    btnMisCompras.addEventListener("click",()=>{
+    })
+    btnMisMascotas.addEventListener("click",async()=>{
+        await CargarContenido("Lista-mascotas.html");
+        await GestionMascotasCliente();
+    })
+    btnMiCuenta.addEventListener("click",()=>{
+        
+    })
+    btnProductos.addEventListener("click",async ()=>{
+        await CargarContenido("Lista-productos.html")
+        await FuncionCargarProductos();
+    })
+
+    async function CargarContenido(url){
+        try {
+            let respuesta = await fetch(`/public/cliente/cliente-interfaces/${url}`);
+            if (!respuesta.ok){
+                throw new Error('Error al cargar los datos');
+            }
+            let contenido = await respuesta.text();
+            contenedorDinamico.innerHTML = contenido
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 })

@@ -1,6 +1,6 @@
 const sequelize = require('./libs/conexionMsql')
 
-async function DatosUser(req, res){
+async function DatosUser(req, res) {
     try {
         const [results] = await sequelize.query(
             'SELECT  FROM usuario WHERE email = ?',
@@ -9,9 +9,9 @@ async function DatosUser(req, res){
             }
         );
         if (results.length > 0) {
-            res.json({ idUsuario: results[0].idusuario});
+            res.json({ idUsuario: results[0].idusuario });
         } else {
-            res.status(404).json({ message: 'User not found'});
+            res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
         console.error('Error al realizar la consulta:', error);
@@ -21,7 +21,7 @@ async function DatosUser(req, res){
 
 // obtener el id del Usuario Mediante el correo
 
-async function idUserByCorreo(correo){
+async function idUserByCorreo(correo) {
     try {
         const [results] = await sequelize.query(
             'SELECT idusuario FROM usuario WHERE email = ?',
@@ -40,13 +40,10 @@ async function idUserByCorreo(correo){
     }
 }
 
-function CalcularSumaValores(){
-    
-}
 
 
-async function calcularTotal(Productos){
-    let totalProductos=0;
+async function calcularTotal(Productos) {
+    let totalProductos = 0;
 
     try {
         const precios = await Promise.all(Productos.map(async (producto) => {
@@ -54,7 +51,7 @@ async function calcularTotal(Productos){
             if (!response.ok) {
                 throw new Error(`Error al obtener el producto con id ${producto.idproductos}`);
             }
-            const result = await response.json(); 
+            const result = await response.json();
             return result.precio * producto.cantidad;
         }));
 
@@ -75,7 +72,7 @@ async function calcularTotal(Productos){
 // anidadirDetalle(15, productos)
 
 
-async function anidadirDetalle(idventa, Productos){
+async function anidadirDetalle(idventa, Productos) {
 
     try {
         for (const producto of Productos) {
@@ -99,7 +96,7 @@ async function anidadirDetalle(idventa, Productos){
     }
 }
 
-async function DetallePedidos(req, res){
+async function DetallePedidos(req, res) {
     try {
         const [results] = await sequelize.query(`SELECT CONCAT(u.nombre, ' ', u.apellido) AS nombre_completo, 
                             co.telefonoEnvio, co.fecha, co.total, co.metododePago, co.tipoEnvio, 
@@ -115,16 +112,16 @@ async function DetallePedidos(req, res){
     }
 }
 
-async function detallPedidoProducto(req, res){
-    const {idVenta} = req.params;
-    
+async function detallPedidoProducto(req, res) {
+    const { idVenta } = req.params;
+
     try {
         const [results] = await sequelize.query(`SELECT precio_instante, cantidad, nombre FROM detalle_compra dc INNER JOIN
                                             productos as p ON p.idproductos = dc.productosid
                                             WHERE dc.ventaid = ?`,
-                                        {
-                                            replacements:[idVenta]
-                                        })
+            {
+                replacements: [idVenta]
+            })
         res.json(results)
     } catch (error) {
         console.error('ERROR AL PROCESAR LA SOLICITUD', error);
@@ -132,8 +129,8 @@ async function detallPedidoProducto(req, res){
     }
 }
 
-async function detallPedidoCancelado(req,res){
-    const {idVenta} = req.params;
+async function detallPedidoCancelado(req, res) {
+    const { idVenta } = req.params;
     try {
         const [result] = await sequelize.query(
             `UPDATE compra SET isCancelled = TRUE WHERE idcompra = ?`,
@@ -142,14 +139,14 @@ async function detallPedidoCancelado(req,res){
             }
         );
         res.json(result)
-    } catch (error){
+    } catch (error) {
         console.error('ERROR AL PROCESAR LA SOLICITUD', error);
         res.status(500).json({ error: 'Error al procesar la solicitud' });
     }
 }
 
-async function existeEmail(req, res){
-    const {email} = req.params;
+async function existeEmail(req, res) {
+    const { email } = req.params;
     try {
         const [result] = await sequelize.query(
             `SELECT idusuario FROM usuario WHERE email = ?`,
@@ -157,17 +154,49 @@ async function existeEmail(req, res){
                 replacements: [email]
             }
         );
-        if(result.length == 1){
-            res.json({existe: true})
-        }else{
-            res.json({existe: false})
+        if (result.length == 1) {
+            res.json({ existe: true })
+        } else {
+            res.json({ existe: false })
         }
-    } catch (error){
+    } catch (error) {
         console.error('ERROR AL PROCESAR LA SOLICITUD', error);
         res.status(500).json({ error: 'Error al procesar la solicitud' });
     }
 }
 
-module.exports = {idUserByCorreo,calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado, existeEmail};
+// FUNCION QUE DEVUELVE LAS MASCOTAS DE UN CLIENTE
+async function ArrayMascotas(req, res){
+        try {
+            const [results] = await sequelize.query(
+                "CALL obtener_idUsuarioXCorreo(?)",
+                {
+                    replacements: [req.user.email],
+                }
+            );
+            if (results) {
+                const resultado = await sequelize.query(
+                    "CALL usuario_mascotas_verdetalle(?)",
+                    {
+                      replacements: [results.idcliente],
+                    }
+                  );
+              
+                  if (resultado.length == 0) {
+                    res.json({pets: false , message: "Sin Mascotas"});
+                  } else {
+                    res.json(resultado);
+                  }
+            } else {
+                res.status(404).json({ message: 'User not found' });
+            }
+        } catch (error) {
+            console.error("Error al obtener los datos de las mascotas:", error.message);
+            res.status(500).send("Error al procesar la solicitud");
+        }
+}
+
+
+module.exports = { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado, existeEmail, ArrayMascotas };
 
 

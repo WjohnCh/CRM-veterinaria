@@ -4,10 +4,11 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 const port = process.env.PORT || 3000;
 
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
-    , detallPedidoCancelado, existeEmail, ArrayMascotas } = require('./indexUsuario.js')
+    , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota } = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -511,6 +512,10 @@ app.get('/email/existe/:email', existeEmail)
 
 //API MASCOTAS DEL CLIENTE
 app.get("/api/cliente/mascotas", verifyToken, ArrayMascotas);
+
+app.post('/crear-mascota',verifyToken, crearMascota);
+
+app.put('/editar-mascota/cliente/:idmascota', verifyToken, editarMascota);
 
 app.listen(port, () => {
     console.log('Mi port ' + port);

@@ -23,6 +23,25 @@ document.addEventListener("DOMContentLoaded",async ()=>{
             cerrarModalOpcionesAdmin.classList.remove("motrar-elemento");
         }
     })
+
+    // LOGICA GENERAL A TODOS LOS MODALES
+    const equis = document.querySelectorAll(".modal-generico");
+
+    equis.forEach(element=>{
+
+        const equisCerrar = element.querySelector(".equis-ubicacion")
+        if(equisCerrar){
+            equisCerrar.addEventListener("click", ()=>{
+            element.style.display = "none";
+        })           
+        }
+
+        element.addEventListener("click", (event)=>{
+            if(event.target == element){
+                element.style.display = "none";
+            }
+        })
+    })
     
     try {
         const response = await fetch('http://localhost:3000/user-info', {

@@ -162,8 +162,52 @@
         
     </div>
 
-    <div id="CargarModalGenerico">
+<!-- /----------------------------------INTERFAZ DE EXITO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+ <div class="modal-generico" id="Modal-InterfazExito"style="display: none">
+    <div class="message-container flex-YX centrado">
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+        <div class="message-content">
+            <img src="../Íconos - Logos/cheque.png" alt="Success" class="Ayuda-image">
+            <p class="bold tittle color-text-ayuda-verde">¡Acción realizada con éxito!</p>
+            <p class="Ayuda-text">La acción se completó correctamente. Sus cambios han sido guardados.
+            </p>
+        </div>
+    </div>
+</div>
 
+<!-- /----------------------------------INTERFAZ DE RECHAZO-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal-generico" id="Modal-InterfazRechazo"style="display: none" >
+        <div class="message-container flex-XY centrado">
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <div class="message-content">
+                <img src="../Íconos - Logos/boton-eliminar.png" alt="Error" class="Ayuda-image">
+                <p class="bold tittle color-text-ayuda-rojo">¡Error al procesar la solicitud!</p>
+                <p class="Ayuda-text">Por favor, revisar los datos ingresados y vuelva a intentarlo</p>
+                <button class="btn-Ayuda btn-rojo opacidad-80"> Regresar</button>
+            </div>
+        </div>
+    </div>
+
+<!-- /----------------------------------INTERFAZ DE ADVERTENCIA-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+    <div class="modal-generico" id="Modal-InterfazAdvertencia"style="display: none">
+        <div class="message-container flex-XY centrado">
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <div class="message-content">
+                <img src="../Íconos - Logos/advertencia.svg" alt="Error" class="Ayuda-image">
+                <p class="bold tittle color-text-ayuda-naranja">¿Está seguro que quiere realizar esta acción?</p>
+                <p class="Ayuda-text">Por favor, revisar los datos ingresados y vuelve a intentar</p>
+                <button class="btn-Ayuda btn-naranja opacidad-80">Continuar</button>
+            </div>
+        </div>
     </div>
     <script type="module" src="./cliente.mjs"></script>
     

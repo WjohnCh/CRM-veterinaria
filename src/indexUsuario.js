@@ -1,5 +1,5 @@
 const sequelize = require('./libs/conexionMsql')
-
+const validator = require('validator');
 async function DatosUser(req, res) {
     try {
         const [results] = await sequelize.query(
@@ -166,37 +166,127 @@ async function existeEmail(req, res) {
 }
 
 // FUNCION QUE DEVUELVE LAS MASCOTAS DE UN CLIENTE
-async function ArrayMascotas(req, res){
-        try {
-            const [results] = await sequelize.query(
-                "CALL obtener_idUsuarioXCorreo(?)",
+async function ArrayMascotas(req, res) {
+    try {
+        const [results] = await sequelize.query(
+            "CALL obtener_idUsuarioXCorreo(?)",
+            {
+                replacements: [req.user.email],
+            }
+        );
+        if (results) {
+            const resultado = await sequelize.query(
+                "CALL usuario_mascotas_verdetalle(?)",
                 {
-                    replacements: [req.user.email],
+                    replacements: [results.idcliente],
                 }
             );
-            if (results) {
-                const resultado = await sequelize.query(
-                    "CALL usuario_mascotas_verdetalle(?)",
-                    {
-                      replacements: [results.idcliente],
-                    }
-                  );
-              
-                  if (resultado.length == 0) {
-                    res.json({pets: false , message: "Sin Mascotas"});
-                  } else {
-                    res.json(resultado);
-                  }
+
+            if (resultado.length == 0) {
+                res.json({ pets: false, message: "Sin Mascotas" });
             } else {
-                res.status(404).json({ message: 'User not found' });
+                res.json(resultado);
             }
-        } catch (error) {
-            console.error("Error al obtener los datos de las mascotas:", error.message);
-            res.status(500).send("Error al procesar la solicitud");
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
+    } catch (error) {
+        console.error("Error al obtener los datos de las mascotas:", error.message);
+        res.status(500).send("Error al procesar la solicitud");
+    }
 }
 
+// CREAR NUEVAS MASCOTAS
+const crearMascota = async (req, res) => {
+    let { nombre_mascota, fecha_nacimiento, especie, raza = null, peso = null, color, sexo } = req.body;
+    console.log(req.body);
+    if (raza == '') {
+        raza = null;
+    }
+    if (peso == '') {
+        peso = null;
+    }
+    // Validación de los datos
 
-module.exports = { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado, existeEmail, ArrayMascotas };
+    if (!nombre_mascota || !fecha_nacimiento || !especie || !color || !sexo) {
+        return res.json({ success: false, message: 'Todos los campos son obligatorios' });
+    }
+
+    const isValidDate = value => !isNaN(Date.parse(value));
+    const isString = value => typeof value === 'string';
+
+    if (!isString(nombre_mascota) || !isValidDate(fecha_nacimiento) || !isString(especie)
+        || !isString(color) || !isString(sexo)) {
+        return res.json({ success: false, message: 'Formato de datos incorrecto' });
+    }
+
+    try {
+        const [results] = await sequelize.query(
+            "CALL obtener_idUsuarioXCorreo(?)",
+            {
+                replacements: [req.user.email],
+            }
+        );
+        if (results) {
+            await sequelize.query(
+                `INSERT INTO mascota (nombre_mascota, clienteid, fecha_nacimiento, especie, raza, peso, color, sexo) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                { replacements: [nombre_mascota, results.idcliente, fecha_nacimiento, especie, raza, peso, color, sexo] }
+            );
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error al insertar la mascota:', error.message);
+        res.status(500).json({ success: false, message: 'Error al procesar los datos', error: error.message });
+    }
+
+};
+const editarMascota = async (req, res) => {
+    const { nombre_mascota, fecha_nacimiento, raza, peso} = req.body;
+    const { idmascota } = req.params
+
+    if (!validator.isLength(nombre_mascota, { min: 1 }) ||
+        !validator.isDate(fecha_nacimiento) ||
+        !validator.isLength(raza, { min: 1 }) ||
+        !validator.isFloat(peso, { min: 0 })) {
+        return res.json({ success: false, message: 'Formato de datos incorrecto' });
+    }
+    console.log(req.body);
+    console.log(req.params);
+    try {
+        const [results] = await sequelize.query(
+            "CALL obtener_idUsuarioXCorreo(?)",
+            {
+                replacements: [req.user.email],
+            }
+        );
+        if (results) {
+            const [result] = await sequelize.query(
+                `UPDATE mascota m
+                JOIN cliente c ON m.clienteid = c.idcliente
+                SET m.nombre_mascota = ?, m.fecha_nacimiento = ?, m.raza = ?, m.peso = ?
+                WHERE m.idmascota = ? AND c.idcliente = ?;
+                `,
+                { replacements: [nombre_mascota, fecha_nacimiento, raza, peso, idmascota, results.idcliente] }
+            );
+            if (result.affectedRows === 0) {
+                return res.json({ success: false, message: 'Cliente no encontrado o mascota no actualizada' });
+            }
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error al actualizar la mascota:', error.message);
+        res.status(500).json({ success: false, message: 'Error al procesar los datos', error: error.message });
+    }
+};
+
+module.exports = {
+    idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado,
+    existeEmail, ArrayMascotas, crearMascota, editarMascota
+};
 
 

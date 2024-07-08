@@ -1,5 +1,4 @@
  -- PROCEDIMIENTOS ALMACENADOS
-use crm_oficial1;
 DELIMITER $$
 
 -- PROCEDIMIENTO QUE DEVUELVE LOS DATOS DE LAS MASCOTAS DATO EL ID DEL CLIENTE
@@ -21,7 +20,5 @@ BEGIN
     JOIN usuario u ON c.usuarioid = u.idusuario
     WHERE u.email = userEmail;
 END $$
-
-CALL usuario_mascotas_verdetalle(1)
 
 DELIMITER ;

@@ -84,6 +84,55 @@ input[type=number]::-webkit-inner-spin-button{
     cursor: pointer;
 }
 
+/* MODAL AYUDA */
+.message-container {
+    width: 350px;
+    padding: 50px 20px 50px 20px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    position: relative;
+    text-align: center;
+}
+.btn-Ayuda{
+    margin-top: 20px;
+    width: 100%;
+    height: 44px;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.btn-verde{
+    background-color:#7ed321;
+}
+.btn-rojo{
+    background-color:#FF4141;
+}
+.btn-naranja{
+    background-color:#F8C100;
+}
+.Ayuda-image {
+    width: 60px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.color-text-ayuda-verde {
+    color: #7ed321;
+}
+.color-text-ayuda-rojo {
+    color: #FF4141;
+}
+.color-text-ayuda-naranja {
+    color: #F8C100;
+}
+.Ayuda-text {
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555555;
+}
+
+
 /* LISTA DE MASCOTAS */
 .Contenedor_Mascotas_cliente-general{
     margin-top: 100px;
@@ -175,4 +224,11 @@ input[type=number]::-webkit-inner-spin-button{
 .Mensaje-Vacio-cliente{
     font-size: 20px;
     color: var(--Negro-50);
+}
+/* EDITAR MASCOTA */
+.disabled-nomodificable{
+    background-color: var(--Negro-15);
+    font-size: var(--Text-small);
+    color: var(--Negro-50);
+    font-weight: 500;
 }

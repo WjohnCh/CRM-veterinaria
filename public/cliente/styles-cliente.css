@@ -163,7 +163,7 @@ input[type=number]::-webkit-inner-spin-button{
 .btn_editarMascota-cliente{
     background-color: transparent;
     font-size: 15px;
-    color: var(--Orange-85);
+    color: #E5AE00;
     margin-top: 30px;
     height: 40px;
     text-decoration: underline;

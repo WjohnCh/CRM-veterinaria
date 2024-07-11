@@ -382,7 +382,7 @@ app.post('/procesar-datos', async (req, res) => {
         const existeEmail = await fetch(`http://localhost:3000/email/existe/${email}`)
 
         const existenciaEmail = await existeEmail.json();
-
+ 
         if (existenciaEmail.existe) {
             return res.status(400).json({ success: false, message: 'El email ya está registrado', existenciaCorreo: true });
         }

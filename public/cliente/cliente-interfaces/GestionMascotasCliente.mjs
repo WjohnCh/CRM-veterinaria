@@ -13,6 +13,7 @@ export async function GestionMascotasCliente() {
     const modalAdvertencia = document.getElementById("Modal-InterfazAdvertencia");
     const modalAdvertenciaTittle = modalAdvertencia.querySelector(".tittle")
     const modalAdvertenciamensaje = modalAdvertencia.querySelector(".Ayuda-text")
+    const modalRechazomensaje = modalRechazo.querySelector(".Ayuda-text")
     const equis = document.querySelectorAll("#caja_contenedora_cliente-content .modal-generico");
 
     let idmascotaGlobal; // Guarda el id de la mascota
@@ -43,13 +44,25 @@ export async function GestionMascotasCliente() {
             
         })
     })
-
+    // FUNCION QUE VERIFICA SI SON SOLO LETRAS DE LA "A" A LA "Z"
+    function isOnlyLetters(str) {
+        const regex = /^[A-Za-z]+$/;
+        return regex.test(str);
+      }
+    function MensajeError(elemento){
+        elemento.style.border = "1px solid red"
+        elemento.style.backgroundColor = "white"
+    }
+    function MensajeNOError(elemento){
+        elemento.style.border = "none"
+        elemento.style.backgroundColor = "#EAEAEA"
+    }
     // LOGICA PARA VER LAS MASCOTAS DE CADA CLIENTE
 
     const ContenedorMascota = document.querySelector(".Contenedor_Mascotas_cliente-lista");
     const plantillaMascota = document.querySelector(".Descripcion_mascota_cliente-lista");
     const mensajeNoHayMascotas = document.getElementById("Mensaje_NoHayMascotas")
-    
+    let bad =  []; //GUARDA ELEMENTOS
     async function CrearEstructuraMascota() {
         try {
             ContenedorMascota.innerText = '';
@@ -95,6 +108,10 @@ export async function GestionMascotasCliente() {
                     btnEditarMascota.onclick = abrirInterfazEditarMascota;
 
                     function abrirInterfazEditarMascota(){
+                        for(let i=0; i<bad.length; i++){
+                            MensajeNOError(bad[i]);
+                        }
+                        bad =  []
                         ModalEditarMascota.style.display = "grid";
                         editar_nombre.value = mascota.nombre_mascota
                         editar_especie.innerText = mascota.especie;
@@ -129,13 +146,43 @@ export async function GestionMascotasCliente() {
     btnAniadirMascota.addEventListener("click", async () => {
         ModalAniadirNuevaMascota.style.display = "grid";
     })
+    const fechaNacimientoAgregar = document.getElementById("fechaNacimiento")
+    const today = new Date().toISOString().split('T')[0];
+    fechaNacimientoAgregar.setAttribute('max', today);
 
+    
     Formulario_AniadirMascota.addEventListener("submit", async (event) => {
         event.preventDefault();
+        for(let i=0; i<bad.length; i++){
+            MensajeNOError(bad[i]);
+        }
+        bad =  []; // Recolecta los elementos malos
+        const nombreMascota = document.getElementById("nombre_mascota-aniadorFRM")
+        const Raza = document.getElementById("raza_mascota-aniadorFRM");
+        const color = document.getElementById("color_mascota-aniadorFRM");
+        if (!isOnlyLetters(nombreMascota.value)) {
+            bad.push(nombreMascota)
+        }
+        if(!isOnlyLetters(Raza.value)){
+            bad.push(Raza)
+        }
+        if(!isOnlyLetters(color.value)){
+            bad.push(color)
+        }
+
+        if(bad.length >= 1){
+            for(let i=0; i<bad.length; i++){
+                MensajeError(bad[i]);
+            }
+            modalRechazomensaje.innerText = "Algunos campo solo pueden contener letras de la A a la Z"
+            modalRechazo.style.display = "grid";
+        }
+        else{
+
         const formData = new FormData(Formulario_AniadirMascota);
         const data = {};
         formData.forEach((value, key) => {
-            data[key] = value;
+            data[key] = value.trim();
         });
 
         try {
@@ -155,18 +202,43 @@ export async function GestionMascotasCliente() {
                 await CrearEstructuraMascota();
                 ModalAniadirNuevaMascota.style.display = "none";
                 modalExito.style.display = "grid"
+                Formulario_AniadirMascota.reset();
             }
 
         } catch (error) {
             modalRechazo.style.display = "grid"
             throw new Error('Error al actualizar el producto');
         }
+        }
     })
 
     const frm_editarMascota = document.getElementById("Formulario_EditarMascota");
-
+    const NacimientoEditar = frm_editarMascota.querySelector(".editar_nacimiento");
+    NacimientoEditar.setAttribute('max', today);
     frm_editarMascota.addEventListener("submit", async (event)=>{
         event.preventDefault();
+        for(let i=0; i<bad.length; i++){
+            MensajeNOError(bad[i]);
+        }
+        bad =  []; // Recolecta los elementos malos
+        const nombreMascota = document.getElementById("nombre_mascota-editarFRM")
+        const Raza = document.getElementById("raza_mascota-editarFRM");
+        if (!isOnlyLetters(nombreMascota.value)) {
+            bad.push(nombreMascota)
+        }
+        if(!isOnlyLetters(Raza.value)){
+            bad.push(Raza)
+        }
+
+        if(bad.length >= 1){
+            for(let i=0; i<bad.length; i++){
+                MensajeError(bad[i]);
+            }
+            modalRechazomensaje.innerText = "Algunos campo solo pueden contener letras de la A a la Z"
+            modalRechazo.style.display = "grid";
+        }else{
+
+        
         const formData = new FormData(frm_editarMascota);
         const data = {};
         formData.forEach((value, key) => {
@@ -200,6 +272,7 @@ export async function GestionMascotasCliente() {
         } catch (error) {
             modalRechazo.style.display = "grid"
             throw new Error('Error al actualizar el producto');
+        }
         }
     })
 

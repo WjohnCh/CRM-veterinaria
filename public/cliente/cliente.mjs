@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
     const btnMiCuenta = document.getElementById("btn_clienite-mi_cuenta")
     const btnProductos = document.getElementById("Cliente-listaProductos-Content")
     const contenedorDinamico = document.getElementById("caja_contenedora_cliente-content")
+    const contenedorLogo = document.querySelector(".Container-Logo");
 
     imgUser.addEventListener("click", ()=>{
         cerrarModalOpcionesAdmin.classList.toggle("motrar-elemento");
@@ -69,6 +70,11 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 
     await CargarContenido("Lista-productos+aside.html")
     await FuncionCargarProductos();
+
+    contenedorLogo.addEventListener("click", async ()=>{
+        await CargarContenido("Lista-productos+aside.html")
+        await FuncionCargarProductos();
+    })
 
     btnMisCompras.addEventListener("click",()=>{
     })

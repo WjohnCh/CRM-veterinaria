@@ -53,13 +53,13 @@
                 <div class="form-aniadirMascota">
                     <div class="flex-XY division-gap">
                         <div class="flex-YX">
-                            <label for="">Nombre: *</label>
-                            <input type="text" name="nombre_mascota" id="" class="input-aniadirMascota"
-                                placeholder="Nombre de la mascota" required>
+                            <label for="" id="">Nombre: *</label>
+                            <input type="text" name="nombre_mascota" id="nombre_mascota-aniadorFRM" class="input-aniadirMascota"
+                                placeholder="Nombre de la mascota" maxlength="20" required>
                         </div>
                         <div class="flex-YX">
                             <label for="">Fecha de Nacimiento: *</label>
-                            <input type="date" name="fecha_nacimiento" id="" class="input-aniadirMascota" required>
+                            <input type="date" name="fecha_nacimiento" id="fechaNacimiento" min="2000-01-01" class="input-aniadirMascota" required>
                         </div>
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Especie: *</label>
@@ -73,18 +73,18 @@
                     <div class="flex-XY centrado division-gap">
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Raza:</label>
-                            <input type="text" name="raza" id="" class="input-aniadirMascota"
-                                placeholder="Raza (opcional)">
+                            <input type="text" name="raza" id="raza_mascota-aniadorFRM" class="input-aniadirMascota"
+                                placeholder="Raza (opcional)" maxlength="20">
                         </div>
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Peso:</label>
-                            <input type="number" name="peso" id="" step="0.01" class="input-aniadirMascota"
+                            <input type="number" name="peso" id="" step="0.01" min="0.1" class="input-aniadirMascota"
                                 placeholder="Peso actual en KG (opcional)">
                         </div>
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Color: *</label>
-                            <input type="text" name="color" id="" class="input-aniadirMascota"
-                                placeholder="Color de la mascota" required>
+                            <input type="text" name="color" id="color_mascota-aniadorFRM" class="input-aniadirMascota"
+                                placeholder="Color de la mascota" maxlength="20" required>
                         </div>
                     </div>
                     <div class="flex-YX centrado">
@@ -122,12 +122,12 @@
                     <div class="flex-XY division-gap">
                         <div class="flex-YX">
                             <label for="">Nombre: *</label>
-                            <input type="text" name="nombre_mascota" id="" class="input-aniadirMascota editar_nombre"
+                            <input type="text" name="nombre_mascota" id="nombre_mascota-editarFRM" class="input-aniadirMascota editar_nombre"
                                 placeholder="Nombre de la mascota" required>
                         </div>
                         <div class="flex-YX">
                             <label for="">Fecha de Nacimiento: *</label>
-                            <input type="date" name="fecha_nacimiento" id="" class="input-aniadirMascota editar_nacimiento" required>
+                            <input type="date" name="fecha_nacimiento" id="" min="2000-01-01" class="input-aniadirMascota editar_nacimiento" required>
                         </div>
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Especie: *</label>
@@ -137,12 +137,12 @@
                     <div class="flex-XY centrado division-gap">
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Raza:</label>
-                            <input type="text" name="raza" id="" class="input-aniadirMascota editar_raza"
+                            <input type="text" name="raza" id="raza_mascota-editarFRM" class="input-aniadirMascota editar_raza"
                                 placeholder="Raza (opcional)">
                         </div>
                         <div class="flex-YX label-aniadirMascota">
                             <label for="">Peso:</label>
-                            <input type="number" name="peso" id="" step="0.01" class="input-aniadirMascota editar_peso"
+                            <input type="number" name="peso" id="" step="0.01" min="0.1" class="input-aniadirMascota editar_peso"
                                 placeholder="Peso actual en KG (opcional)">
                         </div>
                         <div class="flex-YX label-aniadirMascota">

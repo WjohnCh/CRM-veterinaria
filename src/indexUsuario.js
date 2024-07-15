@@ -199,7 +199,7 @@ async function ArrayMascotas(req, res) {
 // CREAR NUEVAS MASCOTAS
 const crearMascota = async (req, res) => {
     let { nombre_mascota, fecha_nacimiento, especie, raza = null, peso = null, color, sexo } = req.body;
-    console.log(req.body);
+
     if (raza == '') {
         raza = null;
     }
@@ -207,7 +207,6 @@ const crearMascota = async (req, res) => {
         peso = null;
     }
     // Validación de los datos
-
     if (!nombre_mascota || !fecha_nacimiento || !especie || !color || !sexo) {
         return res.json({ success: false, message: 'Todos los campos son obligatorios' });
     }
@@ -284,9 +283,54 @@ const editarMascota = async (req, res) => {
     }
 };
 
+const obtenerInfoUsuarioPorCorreo = async (req, res) => {
+    const email = req.user.email;
+
+    try {
+        const results = await sequelize.query(
+            "CALL obtener_info_usuario_por_correo(?)",
+            {
+                replacements: [email],
+            }
+        );
+
+        if (results.length > 0) {
+            res.json(results[0]);
+        } else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al obtener la información del usuario:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+const editarDatosUsuario = async (req, res) => {
+    try {
+      const id = req.user.email;
+      const { nombreUser, telefono, contrasena, direccion } = req.body;
+      try {
+        await sequelize.query(
+          `call editar_usuario(?, ?, ?, ?, ?)`,
+          {
+            replacements: [id, nombreUser, telefono,contrasena, direccion]
+          }
+        );
+        res.json({success: true,
+          message: "Usuario actualizado con éxito",});
+      } catch (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+      res.status(500).json({ message: "Error al actualizar el usuario" });
+    }
+  }
+
+
 module.exports = {
     idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado,
-    existeEmail, ArrayMascotas, crearMascota, editarMascota
+    existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo, editarDatosUsuario
 };
 
 

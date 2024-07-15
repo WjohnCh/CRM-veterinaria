@@ -1,5 +1,6 @@
 import {FuncionCargarProductos} from "./cliente-productos/carga-productos.mjs"
 import {GestionMascotasCliente} from "./cliente-interfaces/GestionMascotasCliente.mjs"
+import {cargarMisdatos} from "./cliente-interfaces/cliente-datos/micuenta-cliente.mjs"
 
 document.addEventListener("DOMContentLoaded",async ()=>{
     const imgUser = document.getElementById("cliente-img user")
@@ -53,8 +54,8 @@ document.addEventListener("DOMContentLoaded",async ()=>{
             }
         });
 
-        const {nombre} = await response.json();
-        nombreUsuario.innerText= nombre
+        const {username} = await response.json();
+        nombreUsuario.innerText= username;
     } catch (error) {
         console.log(error)
     }
@@ -82,8 +83,9 @@ document.addEventListener("DOMContentLoaded",async ()=>{
         await CargarContenido("Lista-mascotas.html");
         await GestionMascotasCliente();
     })
-    btnMiCuenta.addEventListener("click",()=>{
-        
+    btnMiCuenta.addEventListener("click",async ()=>{
+        await CargarContenido("cliente-datos/mi-Cuenta.html");
+        await cargarMisdatos();
     })
     btnProductos.addEventListener("click",async ()=>{
         await CargarContenido("Lista-productos.html")

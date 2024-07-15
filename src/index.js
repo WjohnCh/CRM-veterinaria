@@ -8,7 +8,8 @@ const validator = require('validator');
 const port = process.env.PORT || 3000;
 
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
-    , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota } = require('./indexUsuario.js')
+    , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota,obtenerInfoUsuarioPorCorreo
+    , editarDatosUsuario } = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -387,15 +388,8 @@ app.post('/procesar-datos', async (req, res) => {
             return res.status(400).json({ success: false, message: 'El email ya está registrado', existenciaCorreo: true });
         }
         await sequelize.query(
-            'INSERT INTO usuario (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)',
+            'INSERT INTO usuario (username, email, contrasena, rol) VALUES (?, ?, ?, ?)',
             { replacements: [name, email, password, "cliente"] }
-        );
-
-        const idUser = await idUserByCorreo(email)
-
-        await sequelize.query(
-            'INSERT INTO cliente (usuarioid) VALUES (?)',
-            { replacements: [idUser] }
         );
 
         if (name && email && password) {
@@ -516,6 +510,11 @@ app.get("/api/cliente/mascotas", verifyToken, ArrayMascotas);
 app.post('/crear-mascota',verifyToken, crearMascota);
 
 app.put('/editar-mascota/cliente/:idmascota', verifyToken, editarMascota);
+
+app.get('/datosCliente', verifyToken,  obtenerInfoUsuarioPorCorreo);
+
+app.put("/usuario/editar", verifyToken, editarDatosUsuario)
+
 
 app.listen(port, () => {
     console.log('Mi port ' + port);

@@ -1,0 +1,29 @@
+    <div class="flex-YX centrado contenedor-principal-micuenta-cliente">
+        <h1>Mi cuenta</h1>
+        <form  id="frm-micuenta-usuario">
+            <div class="flex-XY formularioBasico frm-micuenta-usuario">
+                <div class="flex-YX">
+                    <label for="input_miCuenta_usuario">Nombre de Usuario</label>
+                    <input id="input_miCuenta_usuario" type="text" name="nombreUser" class="MiCuenta_disabled_input" disabled placeholder="No proporcionado" required>
+                
+                    <label for="input_miCuenta_nombreCompleto">Nombre Completo</label>
+                    <input id="input_miCuenta_nombreCompleto" type="text" class="MiCuenta_disabled_input" disabled placeholder="No proporcionado">
+                
+                    <label for="input_miCuenta_email">Email</label>
+                    <input id="input_miCuenta_email" type="email" class="MiCuenta_disabled_input" disabled placeholder="No proporcionado">
+                </div>
+                <div class="flex-YX">
+                    <label for="input_miCuenta_telefono">Teléfono</label>
+                    <input id="input_miCuenta_telefono" inputmode="numeric" name="telefono" type="number" class="MiCuenta_disabled_input" disabled placeholder="No proporcionado">
+                
+                    <label for="input_miCuenta_contraseña">Contraseña</label>
+                    <input id="input_miCuenta_contraseña" type="text" class="MiCuenta_disabled_input" name="contrasena" disabled placeholder="No proporcionado" required>
+                
+                    <label for="input_miCuenta_direccion">Dirección</label>
+                    <textarea id="input_miCuenta_direccion" type="text" class="MiCuenta_disabled_input" name="direccion" disabled placeholder="No proporcionado"></textarea>
+                </div>
+            </div>
+            <button type="button" class="boton-generico-primario" id="btnEditarMicuenta">Editar</button>
+        </form>
+    </div>
+    <script type="module" src="./micuenta-cliente.mjs"></script>

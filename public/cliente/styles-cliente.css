@@ -38,6 +38,7 @@ input[type=number]::-webkit-inner-spin-button{
     margin: 0;
 }
 
+
 .opacidad-80:hover{
    opacity: 80%;
 }
@@ -231,4 +232,49 @@ input[type=number]::-webkit-inner-spin-button{
     font-size: var(--Text-small);
     color: var(--Negro-50);
     font-weight: 500;
+}
+
+/* MI CUENTA - CLIENTE DATOS */
+.contenedor-principal-micuenta-cliente{
+    margin-top: 100px;
+}
+.frm-micuenta-usuario{
+    position: relative;
+    margin: 20px 0px 20px;
+    border: 1px solid var(--Negro-50);
+    padding: 10px 30px 20px 30px;
+    border-radius: 10px;
+    gap: 400px;
+    font-size: var(--Text-long);
+}
+
+.formularioBasico label{
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+.MiCuenta_disabled_input{
+    background-color: var(--Negro-0);
+    font-size: var(--Text-medium);
+    padding: 8px 8px 8px 0px;
+    margin-bottom: 25px;
+    color: var(--Negro-75);
+    
+}
+.MiCuenta_NOdisabled_input{
+    background-color: var(--Negro-25);
+    border-radius: 10px;
+    padding-left: 8px;
+}
+.boton-generico-primario-Apretado{
+    background-color: var(--Negro-0);
+    border: 2px solid var(--yellow-50);
+    color: var(--yellow-50);
+}
+#btnEditarMicuenta{
+    width: 400px;
+}
+#input_miCuenta_direccion{
+    height: 60px;
+    margin-bottom: 0px;
 }

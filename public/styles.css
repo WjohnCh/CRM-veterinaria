@@ -72,7 +72,7 @@ input[type=number]::-webkit-inner-spin-button{
 
 .Container-info{
    display: flex;
-   background-color:  var(--yellow-50);
+   background-color: var(--Negro-15);
    width: 100%;
    height: 34px;
    align-items: center;
@@ -152,10 +152,16 @@ input[type=number]::-webkit-inner-spin-button{
    cursor: pointer;
 }
 .Barra-Navegacion .Enlaces-Navegacion ul li:hover{
-   border-bottom: 3px solid var(--Orange-75);
+   border-bottom: 3px solid #E72929;
 }
 .Barra-Navegacion .Enlaces-Navegacion ul li p{
-   color: var(--Orange-75);
+   color: var(--Negro-100);
+   /* text-shadow: 
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000; */
+   font-weight: bold;
 }
 .Barra-Navegacion .Inicio-Sesion{
    display: flex;
@@ -163,12 +169,12 @@ input[type=number]::-webkit-inner-spin-button{
    justify-content: space-between;
 }
 .Barra-Navegacion .Inicio-Sesion > a p{
-   color: var(--Orange-75);
+   color: var(--Negro-100);
    font-weight: 600;
-
+   font-weight: bold;
 }
 .Barra-Navegacion .Inicio-Sesion > a{
-   border-bottom: 3px solid var(--Negro-0);
+   border-bottom: 3px solid #FFDC34;
    box-sizing: border-box;
    display: flex;
    height: 100%;
@@ -429,12 +435,13 @@ input[type=number]::-webkit-inner-spin-button{
 }
 .container-body .text-container .button-container button {
    padding: 20px 100px;
-   background-color: #FF9843;
+   background-color: #E5AE00;
    color: #fff;
    border: none;
    border-radius: 15px;
    cursor: pointer;
    font-size: 18px;
+   font-weight: bold;
 }
 
 .container-body .text-container h1 {
@@ -915,14 +922,14 @@ main.contenedor-productos .detalle-producto .image-producto{
    border-radius: 10px;
    font-weight: bold;
    color: var(--Negro-0);
-   background-color: #FF9843;
+   background-color: #E5AE00;
    cursor: pointer;
 }
 
 .producto-aniadido{
    background-color: var(--Negro-0);
-   color: var(--Orange-75);
-   border: 1px solid var(--Orange-75);
+   color: #E5AE00;
+   border: 1px solid #E5AE00;
 }
 
 .Actualizar-Producto{

@@ -38,7 +38,7 @@ body {
     display: block;
     width: 95%;
     padding: 12px;
-    background-color: var(--Orange-50);
+    background-color: var(--yellow-50);
     color: var(--Negro-0);
     border-radius: 10px;
     font-size: var(--Text-long);
@@ -46,12 +46,34 @@ body {
     cursor: pointer;
     margin: 0px auto;
 }
+.frm-generico{
+    background-color: var(--Negro-0);
+    border: 1px solid var(--Negro-50);
+    border-radius: 8px;
+}
+
+.boton-generico-primario:hover{
+    opacity: 80%;
+}
+
+input{
+    background-color: var(--Negro-25);
+    padding: 8px;
+    border-radius: 8px;
+}
+label{
+    font-weight: 600;
+    font-size: var(--Text-medium);
+}
 
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+label:has(input[type="radio"]), input[type=radio] {
+    cursor: pointer;
+} 
 button {
     cursor: pointer;
 }
@@ -79,48 +101,51 @@ button {
 
 .white-letter {
     color: white;
+    -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
+            user-select: none; 
 }
 
 .administrador-navbar {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: grid;
-    width: 290px;
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    overflow: hidden;
     padding: 5px 15px;
     height: calc(100vh - 20px);
-    grid-template-rows: auto 1fr;
     background-color: #191919;
     border-radius: 12px;
 }
 
-.hidden-admin-navbar {
-    display: none;
-}
 
 .contenedor-opcion-admin {
     border-radius: 10px;
     margin-bottom: 10px;
 }
 
-
 nav.administrador-navbar .user-information {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid var(--Negro-75);
+    padding-top: 20px;
+    gap: 10px;
+    padding-left: 14px;
+    padding-bottom: 10px;
 }
 
 .texto-administrador {
     font-size: 26px;
     font-weight: bold;
-    margin-bottom: 10px;
 }
 
 .bar-right-img {
     width: 30px;
     cursor: pointer;
     position: absolute;
-    left: 250px;
-    top: 16px;
+    left: 240px;
+    top: 28px;
 }
 
 .bar-right-img.mover-bar {
@@ -142,6 +167,7 @@ nav.administrador-navbar .user-information {
     justify-content: space-between;
     cursor: pointer;
     align-items: center;
+    /* width: 50px; */
 }
 
 .option-admin:hover {
@@ -255,28 +281,6 @@ nav.administrador-navbar .user-information {
     background-color: #2B2B2F;
     cursor: pointer;
     border-radius: 10px;
-}
-
-.user-information2 {
-    border-top: 0.01px solid var(--Negro-75);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 10px;
-}
-
-.user-information2 div {
-    margin-top: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.exit-admin {
-    margin-top: 20px;
-    cursor: pointer;
 }
 
 /* CREAR NUEVA CITA -- INTERFAZ CITAS */
@@ -570,19 +574,6 @@ nav.administrador-navbar .user-information {
     width: 50%;
 }
 
-.boton-generico-primario {
-    display: block;
-    width: 95%;
-    padding: 12px;
-    background-color: var(--Orange-50);
-    color: var(--Negro-0);
-    border-radius: 10px;
-    font-size: var(--Text-long);
-    font-weight: bold;
-    cursor: pointer;
-    margin: 0px auto;
-}
-
 /* MODAL DE DETALLE DE PRODUCTO */
 
 .modal-content {
@@ -871,4 +862,114 @@ nav.administrador-navbar .user-information {
     font-size: 15px;
     font-weight: 600;
     color: #555555;
+}
+
+/* BUSCAR CLIENTES REGISTRADOS PARA REGISTRAR LA SESION  */
+#modal-buscar-sesion-cliente{
+    place-items: start center;
+}
+.Contenedor_principal-BuscarClienteSesion{
+    width: 550px;
+    background-color: var(--Negro-0);
+    padding: 20px;
+    margin-top: 40px;
+    position: absolute;
+    border-radius: 8px;
+}
+.Contenido-busquedaCliente-Sesion{
+    width: 100%;
+    display: grid;
+    border: 1px solid var(--Negro-25);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+}
+.Contenido-nombre-coincidencias{
+    margin: 20px 0px 20px;
+    max-height: calc(100vh - 300px);
+    overflow: auto;
+}
+.Nombre-coincidencia-sesion{
+    font-size: var(--Text-medium);
+    margin: 4px 0px 4px;
+    cursor: pointer;
+    padding: 8px;
+}
+.Nombre-coincidencia-sesion:hover{
+    background-color: var(--Negro-25);
+}
+.input-nombreCLiente-sesion{
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px;
+    padding-left: 40px;
+    background-color: var(--Negro-25);
+}
+.lupa-Buscar-cliente-sesion{
+    position: absolute;
+    width: 26px;
+    top: 4px;
+    left: 4px;
+    cursor: pointer;
+}
+
+#idBtAnidir-new-Cliente-sesion{
+    font-weight: 00px;
+    padding: 8px;
+    font-size: var(--Text-small);
+}
+
+/* FORMULARIO ANIADIR NUEVA MASCOTA NUEVO CLIENTE */
+
+#AniadirNuevoClienteMascota{
+    background-color: var(--Negro-0);
+    border-radius: 10px;
+    border: 1px solid var(--Negro-75);
+    padding: 30px;
+    position: relative;
+}
+.encerrarFRMBorde{
+    border: 1px solid var(--Negro-50);
+    padding: 16px;
+    border-radius: 8px;
+    margin: 10px 0px 30px
+}
+.encerrarFRMBorde.primerofrm{
+    gap: 30px
+}
+#AniadirNuevoClienteMascota input{
+    margin-top: 8px;
+    font-size: var(--Text-medium);
+}
+.min-content{
+    justify-content: start;
+    gap: 10px;
+}
+
+/* FRM VER MASCOTAS DEL CLIENTE PARA LA SESION */
+
+.frm-verMascotas-cliente_sesion{
+    width: 600px;
+    padding: 20px;
+}
+#ContenedorMascotas-cliente-sesion{
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+    margin: 10px 0px 10px;
+    
+}
+.frm-verMascotas-cliente_sesion p{
+    font-weight: 600;
+}
+.frm-verMascotas-cliente_sesion span{
+    font-weight: 400;
+}
+.Mascota-unica-cliente-sesion{
+    border: 1px solid var(--Negro-50);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

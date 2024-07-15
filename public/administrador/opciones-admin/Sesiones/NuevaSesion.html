@@ -1,0 +1,81 @@
+<div class="modal-generico" id="modal-buscar-sesion-cliente">
+    <div class="Contenedor_principal-BuscarClienteSesion flex-YX centrado">
+        <h2>Buscar Cliente Registrado</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="Contenido-busquedaCliente-Sesion">
+            <div style="position: relative;">
+                    <img src="../Íconos - Logos/Lupaa.svg" class="lupa-Buscar-cliente-sesion" id="lupa-Buscar-cliente-sesion" alt="">
+                <input type="text" class="input-nombreCLiente-sesion" id="input-nombreCLiente-sesion" placeholder="Nombre completo del cliente">
+            </div>
+            <p class="Nombre-coincidencia-sesion" style="display: none;">No se han encontrado coincidencias</p>
+            <div class="Contenido-nombre-coincidencias" id="Contenido-nombre-coincidencias">
+            </div>
+            <button class="boton-generico-primario" id="idBtAnidir-new-Cliente-sesion">Añadir nuevo cliente</button>
+        </div>
+    </div>
+</div>
+
+<!--------------------------------------------------------------------------------------------------
+-----------------------FORMULARIO PARA AÑADIR NUEVO CLIENTE Y NUEVO USUARIO--------------------------
+-----------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------->
+
+<div class="modal-generico" id="modal-AniadirNuevoCliente&&Mascota" style="display: none;">
+    <form action=""  class="flex-YX" id="AniadirNuevoClienteMascota">
+        <h2 class="flex-YX centrado" style="margin-bottom: 20px;">Añadir nuevo cliente</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <p class="bold tittle">Datos del cliente</p>
+        <div class="flex-XY encerrarFRMBorde primerofrm">
+            <div class="flex-YX">
+                <label for="input_nuevoclienteMascota_nombresCliente">Nombres:</label>
+                <input type="text" id="input_nuevoclienteMascota_nombresCliente"   name="nombresCliente" placeholder="Nombre del cliente" required>
+            </div>
+            <div class="flex-YX">
+                <label for="input_nuevoclienteMascota_apellidosCliente">Apellidos:</label>
+                <input type="text" id="input_nuevoclienteMascota_apellidosCliente" name="apellidosCliente" placeholder="Apellido del cliente" required>
+            </div>    
+            <div class="flex-YX">
+                <label for="input_nuevoclienteMascota_telefonoCliente">Teléfono:</label>
+                <input type="number" id="input_nuevoclienteMascota_telefonoCliente" name="telefonoCliente" placeholder="Número de teléfono">
+            </div>
+        </div>
+    
+        <p class="bold tittle">Datos de la mascota</p>
+        <div class="flex-XY encerrarFRMBorde">
+            <div>
+                <div class="flex-YX">
+                    <label for="input_nuevoclienteMascota_nombreMascota">Nombre:</label>
+                    <input type="text" id="input_nuevoclienteMascota_nombreMascota" name="nombreMascota" placeholder="Nombre de la mascota" required>
+                </div>
+                
+                <div class="flex-YX">
+                    <label for="input_nuevoclienteMascota_razaMascota">Raza:</label>
+                    <input type="text" id="input_nuevoclienteMascota_razaMascota" name="razaMascota" placeholder="Raza de la mascota">
+                </div>
+            </div>
+            
+            <div class="flex-YX min-content">
+                <label>Especie:</label>
+                    <label for="input_nuevoclienteMascota_especiePerro">
+                        <input type="radio" id="input_nuevoclienteMascota_especiePerro" name="especieMascota" value="perro" required> Perro
+                    </label>
+                    <label for="input_nuevoclienteMascota_especieGato">
+                        <input type="radio" id="input_nuevoclienteMascota_especieGato" name="especieMascota" value="gato" required> Gato
+                    </label>
+            </div>
+            <div class="flex-YX min-content">
+                <label>Sexo:</label>
+                        <label for="input_nuevoclienteMascota_sexoHembra">
+                            <input type="radio" id="input_nuevoclienteMascota_sexoHembra" name="sexoMascota" value="H" required> Hembra
+                        </label>
+                        <label for="input_nuevoclienteMascota_sexoMacho">
+                            <input type="radio" id="input_nuevoclienteMascota_sexoMacho" name="sexoMascota" value="M" required> Macho
+                        </label>
+            </div>
+        </div>
+        <button type="submit" class="boton-generico-primario">Añadir Cliente</button>
+    </form>
+</div>
+
+
+<script type="module" src="./logicaSesion.mjs"></script>

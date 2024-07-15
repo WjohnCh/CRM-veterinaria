@@ -11,11 +11,13 @@
     <title>Document</title>
     <style>
         .truncated-text {
-            width: 200px; /* Ajusta el ancho según sea necesario */
+            width: 200px;
+            /* Ajusta el ancho según sea necesario */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            border: 1px solid #000; /* Solo para visualización */
+            border: 1px solid #000;
+            /* Solo para visualización */
         }
     </style>
 </head>
@@ -24,7 +26,7 @@
     <nav class="administrador-navbar">
         <header class="user-information">
             <figure>
-                <img src="../Íconos - Logos/logoCan.svg" alt="">
+                <img src="../Íconos - Logos/logoCan.svg" alt="" class="imgLogoCAN">
             </figure>
             <p class="texto-administrador white-letter">MarVet</p>
             <figure>
@@ -32,8 +34,47 @@
             </figure>
         </header>
         <main class="container-options-admin">
- 
-            <div class="contenedor-opcion-admin opcionesAd">
+            <div class="contenedor-opcion-admin opcionesAd" id="contenedor-Crear-sesion-option">
+                <div class="option-admin">
+                    <div class="contenedor-admin">
+                        <figure>
+                            <img src="../Íconos - Logos/create-sesion.svg" alt="">
+                        </figure>
+                        <p class="white-letter descripcion-btn-admin">Crear Sesion</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contenedor-opcion-admin opcionesAd" id="contenedor-sesiones-option">
+                <div class="option-admin">
+                    <div class="contenedor-admin">
+                        <figure>
+                            <img src="../Íconos - Logos/logo-citas.svg" alt="">
+                        </figure>
+                        <p class="white-letter descripcion-btn-admin">Sesiones</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contenedor-opcion-admin opcionesAd" id="contenedor-productos-option">
+                <div class="option-admin">
+                    <div class="contenedor-admin">
+                        <figure>
+                            <img src="../Íconos - Logos/productos-logo.svg" alt="">
+                        </figure>
+                        <p class="white-letter descripcion-btn-admin">Productos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contenedor-opcion-admin" id="contenedor-pedidos-option">
+                <div class="option-admin">
+                    <div class="contenedor-admin">
+                        <figure>
+                            <img src="../Íconos - Logos/pedidos-logo.svg" alt="">
+                        </figure>
+                        <p class="white-letter descripcion-btn-admin">Pedidos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contenedor-opcion-admin" id="contenedor-clientes-option">
                 <div class="option-admin">
                     <div class="contenedor-admin">
                         <figure>
@@ -42,126 +83,44 @@
                                     d="M16 17v2H2v-2s0-4 7-4s7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.4 3.4 0 0 0-1.93.59a5 5 0 0 1 0 5.82A3.4 3.4 0 0 0 15 11a3.5 3.5 0 0 0 0-7" />
                             </svg>
                         </figure>
-                        <p class="white-letter">Crear Sesion</p>
+                        <p class="white-letter descripcion-btn-admin">Clientes</p>
                     </div>
-                    <figure>
-                        <img class="flecha-admin-opcion flecha-admin" src="../Íconos - Logos/felcha abajo.svg" alt="">
-                    </figure>
-                </div>
-                <div class="opciones-cita" id="opciones-clientes">
-                    <ul>
-                        <li class="white-letter opcion-admin">
-                            o Gestionar Clientes
-                        </li>
-                        <li class="white-letter opcion-admin">
-                            o Gestionar Mascotas
-                        </li>
-                    </ul>
                 </div>
             </div>
-            <div class="contenedor-opcion-admin opcionesAd">
-                <div class="option-admin" id="contenedor-citas-option">
-                    <div class="contenedor-admin">
-                        <figure>
-                            <img src="../Íconos - Logos/logo-citas.svg" alt="">
-                        </figure>
-                        <p class="white-letter">Sesiones</p>
-                    </div>
-                    <figure>
-                        <img class="flecha-admin-opcion flecha-admin" src="../Íconos - Logos/felcha abajo.svg" alt="">
-                    </figure>
-                </div>
-                <div class="opciones-cita" id="opciones-cita">
-                    <ul>
-                        <li class="white-letter opcion-admin" id="opcion_Nueva-Cita">
-                            o Nueva Cita
-                        </li>
-                        <li class="white-letter opcion-admin" id="opcion_Solicitudes">
-                            o Solicitudes
-                        </li>
-                        <li class="white-letter opcion-admin" id="opcion_Gestion-Cita">
-                            o Gestión de Citas
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="contenedor-opcion-admin opcionesAd">
+            <div class="contenedor-opcion-admin" id="contenedor-mascotas-option">
                 <div class="option-admin">
                     <div class="contenedor-admin">
                         <figure>
-                            <img src="../Íconos - Logos/productos-logo.svg" alt="">
+                            <img src="../Íconos - Logos/mascotas-logo.svg" alt="">
                         </figure>
-                        <p class="white-letter">Productos</p>
-                    </div>
-                    <figure>
-                        <img class="flecha-admin-opcion flecha-admin" src="../Íconos - Logos/felcha abajo.svg" alt="">
-                    </figure>
-                </div>
-                <div class="opciones-cita" id="opciones-productos">
-                    <ul>
-                        <li class="white-letter opcion-admin" id="opcion_Gestion-Productos">
-                            o Gestión de productos
-                        </li>
-                        <li class="white-letter opcion-admin" id="opcion_Gestion-Pedidos">
-                            o Gestión de Pedidos
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="contenedor-opcion-admin">
-                <div class="option-admin">
-                    <div class="contenedor-admin">
-                        <figure>
-                            <img src="../Íconos - Logos/usuarios-logo.svg" alt="">
-                        </figure>
-                        <p class="white-letter">Pedidos</p>
+                        <p class="white-letter descripcion-btn-admin">Mascotas</p>
                     </div>
                 </div>
             </div>
-            <div class="contenedor-opcion-admin">
-                <div class="option-admin">
-                    <div class="contenedor-admin">
-                        <figure>
-                            <img src="../Íconos - Logos/usuarios-logo.svg" alt="">
-                        </figure>
-                        <p class="white-letter">Clientes</p>
-                    </div>
-                </div>
-            </div>
-            <div class="contenedor-opcion-admin">
-                <div class="option-admin">
-                    <div class="contenedor-admin">
-                        <figure>
-                            <img src="../Íconos - Logos/usuarios-logo.svg" alt="">
-                        </figure>
-                        <p class="white-letter">Mascotas</p>
-                    </div>
-                </div>
-            </div>
-            <div class="contenedor-opcion-admin">
+            <div class="contenedor-opcion-admin" id="contenedor-historialMedico-option">
                 <div class="option-admin">
                     <div class="contenedor-admin">
                         <figure>
                             <img src="../Íconos - Logos/medical-history-cross-svgrepo-com.svg" alt="">
                         </figure>
-                        <p class="white-letter">Historial médico</p>
+                        <p class="white-letter descripcion-btn-admin">Historial médico</p>
                     </div>
                 </div>
             </div>
-            <div class="contenedor-opcion-admin">
+            <div class="contenedor-opcion-admin" id="contenedor-cuentas-option">
                 <div class="option-admin">
                     <div class="contenedor-admin">
                         <figure>
                             <img src="../Íconos - Logos/usuarios-logo.svg" alt="">
                         </figure>
-                        <p class="white-letter">Cuentas</p>
+                        <p class="white-letter descripcion-btn-admin">Cuentas</p>
                     </div>
                 </div>
             </div>
         </main>
     </nav>
-    
-    <main>
+
+    <main id="contenedor-main-admin">
 
         <div class="Panel-Control-General" style="display: none;">
             <h2>PANEL GENERAL</h2>
@@ -183,13 +142,15 @@
                     <div>
                         <h2 class="reserva-cita__subtitulo">Información del cliente:</h2>
                         <div class="reserva-cita__cliente">
-                            <label for="reserva_cita_cliente-nombre" class="reserva-cita__label">Nombre Completo:</label>
+                            <label for="reserva_cita_cliente-nombre" class="reserva-cita__label">Nombre
+                                Completo:</label>
                             <input type="text" id="reserva_cita_cliente-nombre" name="reserva_cita_cliente-nombre"
                                 class="reserva-cita__input" />
                             <label for="reserva_cita_cliente-dni" class="reserva-cita__label">Teléfono:</label>
                             <input type="text" id="reserva_cita_cliente-dni" name="reserva_cita_cliente-dni"
                                 class="reserva-cita__input" />
-                            <label for="reserva_cita_cliente-correo" class="reserva-cita__label">Correo Electrónico:</label>
+                            <label for="reserva_cita_cliente-correo" class="reserva-cita__label">Correo
+                                Electrónico:</label>
                             <input type="email" id="reserva_cita_cliente-correo" name="reserva_cita_cliente-correo"
                                 class="reserva-cita__input" />
                             <label for="reserva_cita_cliente-direccion" class="reserva-cita__label">Dirección:</label>
@@ -203,11 +164,12 @@
                             <div class="contenedor-datos-cita">
                                 <div>
                                     <label for="reserva_cita_mascota-nombre" class="reserva-cita__label">Nombre</label>
-                                    <input type="text" id="reserva_cita_mascota-nombre" name="reserva_cita_mascota-nombre"
-                                        class="reserva-cita__input" />
+                                    <input type="text" id="reserva_cita_mascota-nombre"
+                                        name="reserva_cita_mascota-nombre" class="reserva-cita__input" />
                                 </div>
                                 <div class="reserva-contenedor">
-                                    <label for="reserva_cita_mascota-especie" class="reserva-cita__label">Especie</label>
+                                    <label for="reserva_cita_mascota-especie"
+                                        class="reserva-cita__label">Especie</label>
                                     <select id="reserva_cita_mascota-especie" name="reserva_cita_mascota-especie"
                                         class="reserva-cita__select" placeholder="Seleccionar">
                                         <option value="" disabled selected>Seleccionar</option>
@@ -247,7 +209,8 @@
                                         class="reserva-cita__input" />
                                 </div>
                                 <div class="reserva-cita__cita-info">
-                                    <label for="reserva_cita_cita-info" class="reserva-cita__label">Más información</label>
+                                    <label for="reserva_cita_cita-info" class="reserva-cita__label">Más
+                                        información</label>
                                     <textarea id="reserva_cita_cita-info" name="reserva_cita_cita-info" rows="4"
                                         class="reserva-cita__textarea" placeholder="0/100 palabras"
                                         maxlength="100"></textarea>
@@ -264,7 +227,7 @@
                 <p>SOLICITUDES DE CITA</p>
             </div>
         </div>
-        
+
         <div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Citas" style="display: none;">
             <div>
                 <p>GESTIÓN DE CITAS</p>
@@ -275,104 +238,114 @@
 
             <!-- MODAL QUE ANIADE NUEVOS PRODUCTOS -->
             <div class="modal-generico" id="modal_MostrarFormulario-AñadirProducto" style="display: none">
-                <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data" 
-                id="Formulario_AñadirProductoBD" class="flex-YX">
-                <h3 class="flex-YX centrado">AÑADIR NUEVO PRODUCTO</h3>
-                <hr class="divider">
-                <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion"alt="">
-                <div class="contenedor-datos-frNuevoProducto flex-YX">
-                    <div class="flex-YX">
-                        <label for="nombre" class="bold">Nombre del Producto:</label>
-                        <input type="text" name="nombre" placeholder="Nombre del producto" class="input-generico"required>
-                    </div>
-                    <div class="flex-XY centrado">
-                        <label for="precio"class="bold">Precio del Producto:</label>
-                        <input type="number" name="precio" placeholder="Precio del Producto" step="0.01" class="input-generico mitad50" required>
-                    </div>
-                            <div class="flex-XY centrado">
-                                <label for="categoria"class="bold">Categoría: </label>
-                                <select name="categoria" id="" required class="input-generico mitad50">
-                                    <option value="" disabled selected>Categoría</option>
-                                    <option value="1">Alimentos</option>
-                                    <option value="2">Accesorios y equipamiento</option>
-                                    <option value="3">Transportes y dormitorios</option>
-                                    <option value="4">Higiene y Limpieza</option>
-                                </select>
-                            </div>
-                            <div class="flex-XY centrado">
-                                <label for="mascota"class="bold">Tipo mascota: </label>
-                                <select name="mascota" id="" required class="input-generico mitad50">
-                                    <option value="" disabled selected>Destinatario </option>
-                                    <option value="perro">para perros</option>
-                                    <option value="gato">para gatos</option>
-                                    <option value="todos">Todos</option>
-                                </select>
-                            </div>
-                        
-                    
+                <form action="http://localhost:3000/images/single" method="post" enctype="multipart/form-data"
+                    id="Formulario_AñadirProductoBD" class="flex-YX">
+                    <h3 class="flex-YX centrado">AÑADIR NUEVO PRODUCTO</h3>
+                    <hr class="divider">
+                    <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+                    <div class="contenedor-datos-frNuevoProducto flex-YX">
                         <div class="flex-YX">
-                            <label for="avatar"class="bold">Subir Foto:</label>
-                            <input type="file" name="avatar" id="" class="input-generico"required>
+                            <label for="nombre" class="bold">Nombre del Producto:</label>
+                            <input type="text" name="nombre" placeholder="Nombre del producto" class="input-generico"
+                                required>
+                        </div>
+                        <div class="flex-XY centrado">
+                            <label for="precio" class="bold">Precio del Producto:</label>
+                            <input type="number" name="precio" placeholder="Precio del Producto" step="0.01"
+                                class="input-generico mitad50" required>
+                        </div>
+                        <div class="flex-XY centrado">
+                            <label for="categoria" class="bold">Categoría: </label>
+                            <select name="categoria" id="" required class="input-generico mitad50">
+                                <option value="" disabled selected>Categoría</option>
+                                <option value="1">Alimentos</option>
+                                <option value="2">Accesorios y equipamiento</option>
+                                <option value="3">Transportes y dormitorios</option>
+                                <option value="4">Higiene y Limpieza</option>
+                            </select>
+                        </div>
+                        <div class="flex-XY centrado">
+                            <label for="mascota" class="bold">Tipo mascota: </label>
+                            <select name="mascota" id="" required class="input-generico mitad50">
+                                <option value="" disabled selected>Destinatario </option>
+                                <option value="perro">para perros</option>
+                                <option value="gato">para gatos</option>
+                                <option value="todos">Todos</option>
+                            </select>
+                        </div>
+
+
+                        <div class="flex-YX">
+                            <label for="avatar" class="bold">Subir Foto:</label>
+                            <input type="file" name="avatar" id="" class="input-generico" required>
                         </div>
                         <div class="flex-YX">
                             <label for="descripcion" class="bold">Descripción:</label>
-                            <textarea class="input-generico" name="descripcion" id="" placeholder="Descripcion detallada del producto" required></textarea>
+                            <textarea class="input-generico" name="descripcion" id=""
+                                placeholder="Descripcion detallada del producto" required></textarea>
                         </div>
-                        <input type="submit" name="" id="btn-CrearNuevoPor" value="Añadir Producto" class="boton-generico-primario">
+                        <input type="submit" name="" id="btn-CrearNuevoPor" value="Añadir Producto"
+                            class="boton-generico-primario">
                     </div>
                 </form>
             </div>
             <!-- FIN DEL MODAL DE FORMULARIO -->
 
             <!-- FORMULARIO QUE ACTUALIZA UN PRODUCTO -->
-                <div class="modal-generico" id="Contenedor__Formulario-ActualizarProducto" style="display: none;"> 
-                    <form id="Formulario_ActualizarProductoBD" enctype="multipart/form-data" >
-                        <h3 class="flex-YX centrado">ACTUALIZAR PRODUCTO</h3>
-                        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">  
-                        <hr class="divider">
-                        <div class="contenedor-datos-frNuevoProducto flex-YX">
-                            <div class="flex-YX">
-                                <label for="nombre">Nombre del Producto:</label>
-                                <input type="text" name="nombre" value="" placeholder="Nombre del producto" id="Actualizar-Producto_nombre" class="input-generico" required>
-                            </div>
-                            <div class="flex-XY centrado">
-                                <label for="precio">Precio del Producto:</label>
-                                <input type="number" name="precio" id="Actualizar-Producto_precio" class="input-generico mitad50"value="" step="0.01" min="0"required>
-                            </div>
-                                    <div class="flex-XY centrado">
-                                        <label for="categoria">Categoría:</label>
-                                        <select name="categoria" required id="Actualizar-Producto_Categoria" class="input-generico mitad50">
-                                            <option value="" disabled selected>Categoría</option>
-                                            <option value="1" id="Actualizar_categoria-1" >Alimentos</option>
-                                            <option value="2" id="Actualizar_categoria-2" >Accesorios y equipamiento</option>
-                                            <option value="3" id="Actualizar_categoria-3" >Transportes y dormitorios</option>
-                                            <option value="4" id="Actualizar_categoria-4" >Higiene y Limpieza</option>
-                                        </select>
-                                    </div>
-                                    <div class="flex-XY centrado">
-                                        <label for="mascota">Tipo mascota: </label>
-                                        <select name="mascota" required id="Actualizar-Producto_mascota" class="input-generico mitad50" required>
-                                            <option value="" disabled selected>Destinatario </option>
-                                            <option value="perro" id="destinatario_actualizar-perro">para perros</option>
-                                            <option value="gato"  id="destinatario_actualizar-gato">para gatos</option>
-                                            <option value="todos" id="destinatario_actualizar-todos" >Todos</option>
-                                        </select>
-                                    </div>
-                            <div class="flex-YX">
-                                <label for="avatar">Actualizar Foto:</label>
-                                <input type="file" class="input-generico" name="avatar" id="avatar">
-                            </div>
-                            
-                            <div class="flex-YX">
-                                <label for="descripcion">Descripción:</label>
-                                <textarea name="descripcion" class="input-generico" id="Actualizar-Producto_descripcion" required></textarea>
-                            </div>
-                            
-                            <input type="submit" value="Actualizar Producto" class="boton-generico-primario" onclick="ActualizarProducto()" id="btn_generalActualizar-Producto">
-                            
+            <div class="modal-generico" id="Contenedor__Formulario-ActualizarProducto" style="display: none;">
+                <form id="Formulario_ActualizarProductoBD" enctype="multipart/form-data">
+                    <h3 class="flex-YX centrado">ACTUALIZAR PRODUCTO</h3>
+                    <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+                    <hr class="divider">
+                    <div class="contenedor-datos-frNuevoProducto flex-YX">
+                        <div class="flex-YX">
+                            <label for="nombre">Nombre del Producto:</label>
+                            <input type="text" name="nombre" value="" placeholder="Nombre del producto"
+                                id="Actualizar-Producto_nombre" class="input-generico" required>
                         </div>
-                    </form>
-                </div>
+                        <div class="flex-XY centrado">
+                            <label for="precio">Precio del Producto:</label>
+                            <input type="number" name="precio" id="Actualizar-Producto_precio"
+                                class="input-generico mitad50" value="" step="0.01" min="0" required>
+                        </div>
+                        <div class="flex-XY centrado">
+                            <label for="categoria">Categoría:</label>
+                            <select name="categoria" required id="Actualizar-Producto_Categoria"
+                                class="input-generico mitad50">
+                                <option value="" disabled selected>Categoría</option>
+                                <option value="1" id="Actualizar_categoria-1">Alimentos</option>
+                                <option value="2" id="Actualizar_categoria-2">Accesorios y equipamiento</option>
+                                <option value="3" id="Actualizar_categoria-3">Transportes y dormitorios</option>
+                                <option value="4" id="Actualizar_categoria-4">Higiene y Limpieza</option>
+                            </select>
+                        </div>
+                        <div class="flex-XY centrado">
+                            <label for="mascota">Tipo mascota: </label>
+                            <select name="mascota" required id="Actualizar-Producto_mascota"
+                                class="input-generico mitad50" required>
+                                <option value="" disabled selected>Destinatario </option>
+                                <option value="perro" id="destinatario_actualizar-perro">para perros</option>
+                                <option value="gato" id="destinatario_actualizar-gato">para gatos</option>
+                                <option value="todos" id="destinatario_actualizar-todos">Todos</option>
+                            </select>
+                        </div>
+                        <div class="flex-YX">
+                            <label for="avatar">Actualizar Foto:</label>
+                            <input type="file" class="input-generico" name="avatar" id="avatar">
+                        </div>
+
+                        <div class="flex-YX">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea name="descripcion" class="input-generico" id="Actualizar-Producto_descripcion"
+                                required></textarea>
+                        </div>
+
+                        <input type="submit" value="Actualizar Producto" class="boton-generico-primario"
+                            onclick="ActualizarProducto()" id="btn_generalActualizar-Producto">
+
+                    </div>
+                </form>
+            </div>
             <!-- FIN DEL MODAL DE FORMULARIO -->
 
             <div class="pruebaaa">
@@ -382,23 +355,31 @@
                         <h3>FILTROS</h3>
                         <div class="flex-XY centrado Filtros-Tabla-productos">
                             <div>
-                                <input type="text" name="" id="Buscar-Tabla_ID-Producto-INPUT" placeholder="Buscar por ID" class="input-generico">
-                                <button id="Buscar-Tabla_ID-Producto" class="opacidad-80 btnFiltradoGestionProductos white-letter">Buscar</button>
+                                <input type="text" name="" id="Buscar-Tabla_ID-Producto-INPUT"
+                                    placeholder="Buscar por ID" class="input-generico">
+                                <button id="Buscar-Tabla_ID-Producto"
+                                    class="opacidad-80 btnFiltradoGestionProductos white-letter">Buscar</button>
                             </div>
                             <div>
                                 <label for="">Por Categoría:</label>
                                 <select id="Filtro-tabla_categoria">
                                     <option value="" disabled selected>Seleccionar</option>
-                                    <option value="Filtro-tabla_Alimentos" id="Filtro-tabla_Alimentos">Alimentos</option>
-                                    <option value="Filtro-tabla_Accesorios" id="Filtro-tabla_Accesorios">Accesorios y equipamento</option>
-                                    <option value="Filtro-tabla_Transportes" id="Filtro-tabla_Transportes">Transportes y dormitorios</option>
-                                    <option value="Filtro-tabla_Higiene" id="Filtro-tabla_Higiene">Higiene y limpieza</option>
+                                    <option value="Filtro-tabla_Alimentos" id="Filtro-tabla_Alimentos">Alimentos
+                                    </option>
+                                    <option value="Filtro-tabla_Accesorios" id="Filtro-tabla_Accesorios">Accesorios y
+                                        equipamento</option>
+                                    <option value="Filtro-tabla_Transportes" id="Filtro-tabla_Transportes">Transportes y
+                                        dormitorios</option>
+                                    <option value="Filtro-tabla_Higiene" id="Filtro-tabla_Higiene">Higiene y limpieza
+                                    </option>
                                 </select>
-                            </div> 
-                            <button id="Estado-producto-BD" class="opacidad-80 btnFiltradoGestionProductos white-letter">Mostrar Ocultos</button>
+                            </div>
+                            <button id="Estado-producto-BD"
+                                class="opacidad-80 btnFiltradoGestionProductos white-letter">Mostrar Ocultos</button>
                         </div>
                     </div>
-                    <button id="Anidir-Producto-BD" class="boton-generico-primario aniadirProducto_btn opacidad-80 ">+ Añadir Producto</button>
+                    <button id="Anidir-Producto-BD" class="boton-generico-primario aniadirProducto_btn opacidad-80 ">+
+                        Añadir Producto</button>
                 </div>
                 <div class="classeOverflow">
                     <table class="Tabla_Gestion-Productos">
@@ -413,7 +394,7 @@
                             <td class="Valor-Tabla__descripcion"></td>
                             <td class="Valor-Tabla__detalles">
                                 <figure class="img_Mostrar-Detalle-Producto opacidad-80">
-                                    <img  src="../Íconos - Logos/detailsIcon.svg" alt="">
+                                    <img src="../Íconos - Logos/detailsIcon.svg" alt="">
                                 </figure>
                             </td>
                         </tr>
@@ -436,29 +417,30 @@
                 </div>
 
                 <!-- PLANITLLA DETALLE PRODUCTO -->
-                <div class="Modal-Detalle-Producto modal-generico" id="modal-Detalle-Producto-tabla" style="display: none">
+                <div class="Modal-Detalle-Producto modal-generico" id="modal-Detalle-Producto-tabla"
+                    style="display: none">
                     <div class="modal-content">
                         <h2>Detalle del Producto</h2>
-                        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+                        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
                         <hr class="modal-divider">
                         <div>
                             <p>Nombre:</p>
-                                <span id="detalle-producto_nombre"></span>
+                            <span id="detalle-producto_nombre"></span>
                         </div>
                         <div>
                             <p>Id:</p>
-                                <span id="detalle-producto_ID"></span>
-                        </div>          
-                            <p>Precio:
-                                <span id="detalle-producto_precio"></span>
-                            </p>
+                            <span id="detalle-producto_ID"></span>
+                        </div>
+                        <p>Precio:
+                            <span id="detalle-producto_precio"></span>
+                        </p>
                         <div>
                             <p>Categoría:</p>
-                                <span id="detalle-producto_Categoria"></span>
+                            <span id="detalle-producto_Categoria"></span>
                         </div>
                         <div>
                             <p>Destinatario:</p>
-                                <span id="detalle-producto_Destinatario"></span>
+                            <span id="detalle-producto_Destinatario"></span>
                         </div>
                         <figure class="product-image">
                             <img src="../src/uploads/ropa-sapo-perro.jpg" alt="Product Image" id="detalle__img">
@@ -470,8 +452,10 @@
                             </div>
                         </div>
                         <div class="button-group">
-                            <button id="btn_EditarProducto" class="modal-button edit-button" onclick="ActualizarDatosProducto()">Editar Producto</button>
-                            <button id="btn_OcultarProducto" class="modal-button hide-button" onclick="ocultarMostrarProducto()">Ocultar Producto</button>
+                            <button id="btn_EditarProducto" class="modal-button edit-button"
+                                onclick="ActualizarDatosProducto()">Editar Producto</button>
+                            <button id="btn_OcultarProducto" class="modal-button hide-button"
+                                onclick="ocultarMostrarProducto()">Ocultar Producto</button>
                         </div>
                     </div>
                 </div>
@@ -491,17 +475,17 @@
                     <table class="Tabla_Gestion-Productos" id="tabla_gestion-pedidos">
                         <!-- PLANTILLA FILA -->
                         <tr class="Fila_producto Fila-pedidos" style="display: none;">
-                            <td class="Valor-pedidos_Tabla__nombre"    ></td>
-                            <td class="Valor-pedidos_Tabla__telefono"  ></td>
+                            <td class="Valor-pedidos_Tabla__nombre"></td>
+                            <td class="Valor-pedidos_Tabla__telefono"></td>
                             <td class="Valor-pedidos_Tabla__fecha"></td>
-                            <td class="Valor-pedidos_Tabla__tipoenvio" ></td>
+                            <td class="Valor-pedidos_Tabla__tipoenvio"></td>
                             <td class="Valor-pedidos_Tabla__metodopago"></td>
                             <td class="Valor-pedidos_Tabla__ValorTotal">
                                 <p>S/. <span class="Valor-Tabla__precio-pedidos"></span></p>
                             </td>
                             <td class="Valor-Tabla__detalles">
                                 <figure class="img_Mostrar-Detalle-Producto opacidad-80">
-                                    <img  src="../Íconos - Logos/detailsIcon.svg" alt="">
+                                    <img src="../Íconos - Logos/detailsIcon.svg" alt="">
                                 </figure>
                             </td>
                         </tr>
@@ -525,130 +509,144 @@
 
             </div>
 
-        <!--------------------------------------- INTERFAZ DETALLE DEL PEDIDO -------------------------------------
+            <!--------------------------------------- INTERFAZ DETALLE DEL PEDIDO -------------------------------------
          ------------------------------------------------------------------------------------------------------------------>
-         <div class="modal-generico" id="Modal-detalle-pedido" style="display: none;">
-            <div class="detallPedidoEnvio">
-                <header class="flex-YX centrado header-detallePedido">
-                    <h2>Detalle del pedido</h2>
-                </header>
-                <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">                        
-                <main>
-                    <div class="flex-XY centrado area-padding ">
-                        <p class="bold">Id Venta: <br> <span class="antibold" id="id-detalle-pedido-modal"></span></p>
-                        <p class="bold">Fecha: <br><span class="antibold" id="Fecha-detalle-pedido-modal"></span></p>
-                        <p class="bold alineado">Precio Total: <br>S/. <span class="antibold" id="Total-detalle-pedido-modal"></span></p>
-                    </div>
-                    <div class="flex-XY centrado area-padding">
-                        <div class="flex-YX gap-generico">
-                            <p class="bold">Nombre del Cliente: <br><span class="antibold" id="nombre-detalle-pedido-modal"></span></p>
-                            <p class="bold">Correo: <br><span class="antibold" id="correo-detalle-pedido-modal"></span></p>
+            <div class="modal-generico" id="Modal-detalle-pedido" style="display: none;">
+                <div class="detallPedidoEnvio">
+                    <header class="flex-YX centrado header-detallePedido">
+                        <h2>Detalle del pedido</h2>
+                    </header>
+                    <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+                    <main>
+                        <div class="flex-XY centrado area-padding ">
+                            <p class="bold">Id Venta: <br> <span class="antibold" id="id-detalle-pedido-modal"></span>
+                            </p>
+                            <p class="bold">Fecha: <br><span class="antibold" id="Fecha-detalle-pedido-modal"></span>
+                            </p>
+                            <p class="bold alineado">Precio Total: <br>S/. <span class="antibold"
+                                    id="Total-detalle-pedido-modal"></span></p>
                         </div>
-                        <div class="flex-YX gap-generico alineado">
-                            <p class="bold">DNI: <br><span class="antibold" id="dni-detalle-pedido-modal"></span></p>
-                            <p class="bold">Teléfono: <br> <span class="antibold" id="telefono-detalle-pedido-modal"></span></p>
-                        </div>
-                    </div>
-                    <div class="flex-XY centrado area-padding">
-                        <p class="bold">Método de pago: <br> <span class="antibold" id="metodoPago-detalle-pedido-modal"></span></p>
-                        <p class="bold alineado">Tipo de Envío: <br> <span class="antibold" id="TipoEnvio-detalle-pedido-modal"></span></p>
-                    </div>
-                    <div style="display: none;" class="Domicilio-ocultar">
                         <div class="flex-XY centrado area-padding">
-                            <p class="bold">Calle y Direccion: <br><span class="antibold" id="CalleDireccion-detalle-pedido-modal"></span></p>
-                            <p class="bold alineado">Distrito: <br><span class="antibold" id="Distrito-detalle-pedido-modal"></span></p>
+                            <div class="flex-YX gap-generico">
+                                <p class="bold">Nombre del Cliente: <br><span class="antibold"
+                                        id="nombre-detalle-pedido-modal"></span></p>
+                                <p class="bold">Correo: <br><span class="antibold"
+                                        id="correo-detalle-pedido-modal"></span></p>
+                            </div>
+                            <div class="flex-YX gap-generico alineado">
+                                <p class="bold">DNI: <br><span class="antibold" id="dni-detalle-pedido-modal"></span>
+                                </p>
+                                <p class="bold">Teléfono: <br> <span class="antibold"
+                                        id="telefono-detalle-pedido-modal"></span></p>
+                            </div>
                         </div>
-                        <p class="bold area-padding comentario-detalle-pedido">Comentarios:
-                            <br> <span class="antibold" id="comentario-detalle-pedido-modal">Sin Comentarios</span>
-                        </p>
-                    </div>
-                </main>
-                <button class="btnDetalleProducto bold opacidad-80 colorNaranja75" id="btn_detalle-masdetalles">Más Detalles</button>
-                <button class="btnDetalleProducto bold opacidad-80 colorNaranja80" id="btn_detalle-eliminarPedido">Eliminar Pedido</button>
+                        <div class="flex-XY centrado area-padding">
+                            <p class="bold">Método de pago: <br> <span class="antibold"
+                                    id="metodoPago-detalle-pedido-modal"></span></p>
+                            <p class="bold alineado">Tipo de Envío: <br> <span class="antibold"
+                                    id="TipoEnvio-detalle-pedido-modal"></span></p>
+                        </div>
+                        <div style="display: none;" class="Domicilio-ocultar">
+                            <div class="flex-XY centrado area-padding">
+                                <p class="bold">Calle y Direccion: <br><span class="antibold"
+                                        id="CalleDireccion-detalle-pedido-modal"></span></p>
+                                <p class="bold alineado">Distrito: <br><span class="antibold"
+                                        id="Distrito-detalle-pedido-modal"></span></p>
+                            </div>
+                            <p class="bold area-padding comentario-detalle-pedido">Comentarios:
+                                <br> <span class="antibold" id="comentario-detalle-pedido-modal">Sin Comentarios</span>
+                            </p>
+                        </div>
+                    </main>
+                    <button class="btnDetalleProducto bold opacidad-80 colorNaranja75" id="btn_detalle-masdetalles">Más
+                        Detalles</button>
+                    <button class="btnDetalleProducto bold opacidad-80 colorNaranja80"
+                        id="btn_detalle-eliminarPedido">Eliminar Pedido</button>
+                </div>
             </div>
-        </div>
 
-        <!---------------------------------------------------------------------------------------------------------------------
+            <!---------------------------------------------------------------------------------------------------------------------
          ---------------------------------------------INTERFAZ BOLETA DE VENTA ------------------------------------------------------
          ------------------------------------------------------------------------------------------------------------------>
-         <div class="modal-generico" id="boletaDeVenta-modal" style="display: none;">
-             <div class="boleta">
-                <div class="header flex-YX centrado" id="datosvet">
-                    <h2 id="veterinariaNombre">VETERINARIA MARVET</h2>
-                    <label id="veterinariaRUC">RUC: 123456789012</label>
-                    <label id="veterinariaDireccion">Av Bolognesi 330 23001</label>
-                    <label id="veterinariaTelefono">Telef: 522-27384</label>
-                </div>
-                <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
-                <div class="header flex-YX centrado" id="boletavet">
-                    <h3 id="tituloBoleta">BOLETA DE VENTA ELECTRÓNICA</h3>
-                    <label id="boletaNumero">B001 - 00000001</label>
-                    <label id="clienteNombre">Cliente: <span id="nombre_cliente_boleta">John Anahua</span></label>
-                    <label id="clienteDNI">DNI: <span id="dni_cliente_boleta">87654321</span></label>
-                </div>
-                <table class="items" id="tablaItems">
-                    <tr style="display: none;" class="Fila-producto-tabla-boleta">
-                        <td class="boleta-producto-descripcion"></td>
-                        <td class="boleta-producto-Cantidad"></td>
-                        <td class="boleta-producto-P_Unitario"></td>
-                        <td class="boleta-producto-Total"></td>
-                    </tr>
-                    <thead>
-                        <tr>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>P. Unitario</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="Contenedor-central-boleta">
-                        <tr>
-                            <td>Camisa Moderna Juguete</td>
-                            <td>2</td>
-                            <td>S/.200.00</td>
-                            <td>S/.400.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="footer flex-XY centrado" id="footerBoleta">
-                    <div class="fecha">
-                        <label class="bold">FECHA: <span id="fecha">06/12/2012</span></label>
+            <div class="modal-generico" id="boletaDeVenta-modal" style="display: none;">
+                <div class="boleta">
+                    <div class="header flex-YX centrado" id="datosvet">
+                        <h2 id="veterinariaNombre">VETERINARIA MARVET</h2>
+                        <label id="veterinariaRUC">RUC: 123456789012</label>
+                        <label id="veterinariaDireccion">Av Bolognesi 330 23001</label>
+                        <label id="veterinariaTelefono">Telef: 522-27384</label>
                     </div>
-                    <div class="total">
-                        <label class="bold">Total: <span id="signototal">S/.<span id="totalBOLETAGENERAL">0.00</span></span></label>
+                    <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+                    <div class="header flex-YX centrado" id="boletavet">
+                        <h3 id="tituloBoleta">BOLETA DE VENTA ELECTRÓNICA</h3>
+                        <label id="boletaNumero">B001 - 00000001</label>
+                        <label id="clienteNombre">Cliente: <span id="nombre_cliente_boleta">John Anahua</span></label>
+                        <label id="clienteDNI">DNI: <span id="dni_cliente_boleta">87654321</span></label>
                     </div>
-                </div>        
-                     </div>
-         </div>
-        
-    </div>
+                    <table class="items" id="tablaItems">
+                        <tr style="display: none;" class="Fila-producto-tabla-boleta">
+                            <td class="boleta-producto-descripcion"></td>
+                            <td class="boleta-producto-Cantidad"></td>
+                            <td class="boleta-producto-P_Unitario"></td>
+                            <td class="boleta-producto-Total"></td>
+                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>P. Unitario</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Contenedor-central-boleta">
+                            <tr>
+                                <td>Camisa Moderna Juguete</td>
+                                <td>2</td>
+                                <td>S/.200.00</td>
+                                <td>S/.400.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="footer flex-XY centrado" id="footerBoleta">
+                        <div class="fecha">
+                            <label class="bold">FECHA: <span id="fecha">06/12/2012</span></label>
+                        </div>
+                        <div class="total">
+                            <label class="bold">Total: <span id="signototal">S/.<span
+                                        id="totalBOLETAGENERAL">0.00</span></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
     </main>
 
 
-<!-- /----------------------------------INTERFAZ DE EXITO-----------------------------------
+    <!-- /----------------------------------INTERFAZ DE EXITO-----------------------------------
  -------------------------------------------------------------------------------------------
   -------------------------------------------------------------------------------------------
  -->
- <div class="modal-generico" id="Modal-InterfazExito" style="display: none">
-    <div class="message-container flex-YX centrado">
-        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
-        <div class="message-content">
-            <img src="../Íconos - Logos/cheque.png" alt="Success" class="Ayuda-image">
-            <p class="bold tittle color-text-ayuda-verde">¡Acción realizada con éxito!</p>
-            <p class="Ayuda-text">La acción se completó correctamente. Sus cambios han sido guardados.
-            </p>
+    <div class="modal-generico" id="Modal-InterfazExito" style="display: none">
+        <div class="message-container flex-YX centrado">
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+            <div class="message-content">
+                <img src="../Íconos - Logos/cheque.png" alt="Success" class="Ayuda-image">
+                <p class="bold tittle color-text-ayuda-verde">¡Acción realizada con éxito!</p>
+                <p class="Ayuda-text">La acción se completó correctamente. Sus cambios han sido guardados.
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- /----------------------------------INTERFAZ DE RECHAZO-----------------------------------
+    <!-- /----------------------------------INTERFAZ DE RECHAZO-----------------------------------
  -------------------------------------------------------------------------------------------
   -------------------------------------------------------------------------------------------
  -->
     <div class="modal-generico" id="Modal-InterfazRechazo" style="display: none">
         <div class="message-container flex-XY centrado">
-            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
             <div class="message-content">
                 <img src="../Íconos - Logos/boton-eliminar.png" alt="Error" class="Ayuda-image">
                 <p class="bold tittle color-text-ayuda-rojo">¡Error al procesar la solicitud!</p>
@@ -658,13 +656,13 @@
         </div>
     </div>
 
-<!-- /----------------------------------INTERFAZ DE ADVERTENCIA-----------------------------------
+    <!-- /----------------------------------INTERFAZ DE ADVERTENCIA-----------------------------------
  -------------------------------------------------------------------------------------------
   -------------------------------------------------------------------------------------------
  -->
-    <div class="modal-generico" id="Modal-InterfazAdvertencia"style="display: none">
+    <div class="modal-generico" id="Modal-InterfazAdvertencia" style="display: none">
         <div class="message-container flex-XY centrado">
-            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt=""> 
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
             <div class="message-content">
                 <img src="../Íconos - Logos/advertencia.svg" alt="Error" class="Ayuda-image">
                 <p class="bold tittle color-text-ayuda-naranja">¿Está seguro que quiere realizar esta acción?</p>
@@ -674,7 +672,7 @@
         </div>
     </div>
 
-    <script type="module" src="./js-admin/admin.mjs" ></script>
+    <script type="module" src="./js-admin/admin.mjs"></script>
 
 </body>
 

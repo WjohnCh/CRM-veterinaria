@@ -1,4 +1,6 @@
 import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
+import {LogicaSesion} from '../opciones-admin/Sesiones/logicaSesion.mjs';
+
 let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
 export async function AbrirCerrarInterfaz() {
@@ -19,46 +21,109 @@ export async function AbrirCerrarInterfaz() {
     const filtradoTablaAccesorios = document.getElementById("Filtro-tabla_Accesorios");
     let UltimoContenedorClick = null;
 
-    nuevaCita.addEventListener("click", () => {
-        if (UltimoContenedorClick) {
-            UltimoContenedorClick.style.display = "none";
-        }
-        interfazNuevaCita.style.display = 'block'
-        UltimoContenedorClick = interfazNuevaCita
+
+
+
+    const CrearSesion = document.getElementById("contenedor-Crear-sesion-option")
+    const Sesiones = document.getElementById("contenedor-sesiones-option")
+    const Productos = document.getElementById("contenedor-productos-option")
+    const Pedidos = document.getElementById("contenedor-pedidos-option")
+    const Clientes = document.getElementById("contenedor-clientes-option")
+    const Mascotas = document.getElementById("contenedor-mascotas-option")
+    const HistorialMedico = document.getElementById("contenedor-historialMedico-option")
+    const Cuentas = document.getElementById("contenedor-cuentas-option")
+
+
+    const contenedorDinamico = document.getElementById("contenedor-main-admin")
+
+    CrearSesion.addEventListener("click", async ()=>{
+        await CargarContenido("Sesiones/NuevaSesion.html")
+        await LogicaSesion();
     })
 
-    solicitudesCita.addEventListener("click", () => {
-        if (UltimoContenedorClick) {
-            UltimoContenedorClick.style.display = "none";
-        }
-        interfazSolicitudesCita.style.display = 'block'
-        UltimoContenedorClick = interfazSolicitudesCita
+    Sesiones.addEventListener("click",async ()=>{
+
     })
 
-    GestionCitas.addEventListener("click", () => {
-        if (UltimoContenedorClick) {
-            UltimoContenedorClick.style.display = "none";
-        }
-        interfazGestionCitas.style.display = 'block'
-        UltimoContenedorClick = interfazGestionCitas
+    Productos.addEventListener("click",async ()=>{
+
     })
 
-    gestionProductos.addEventListener("click", () => {
-        if (UltimoContenedorClick) {
-            UltimoContenedorClick.style.display = "none";
-        }
-        interfazGestionProductos.style.display = 'block';
-        UltimoContenedorClick = interfazGestionProductos;
-        MostrarTablaObjeto("http://localhost:3000/productos/categoria/gestion");
+    Pedidos.addEventListener("click",async()=>{
+
     })
-    gestionPedidos.addEventListener("click", () => {
-        if (UltimoContenedorClick) {
-            UltimoContenedorClick.style.display = "none";
-        }
-        interfazGestionPedidos.style.display = 'block'
-        mostrarTablaPedidos()
-        UltimoContenedorClick = interfazGestionPedidos
+
+    Clientes.addEventListener("click",async()=>{
+
     })
+
+    Mascotas.addEventListener("click",async()=>{
+
+    })
+
+    HistorialMedico.addEventListener("click",async()=>{
+
+    })
+
+    Cuentas.addEventListener("click",async()=>{
+
+    })
+
+
+    async function CargarContenido(url){
+        try {
+            let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
+            if (!respuesta.ok){
+                throw new Error('Error al cargar los datos');
+            }
+            let contenido = await respuesta.text();
+            contenedorDinamico.innerHTML = contenido
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // nuevaCita.addEventListener("click", () => {
+    //     if (UltimoContenedorClick) {
+    //         UltimoContenedorClick.style.display = "none";
+    //     }
+    //     interfazNuevaCita.style.display = 'block'
+    //     UltimoContenedorClick = interfazNuevaCita
+    // })
+
+    // solicitudesCita.addEventListener("click", () => {
+    //     if (UltimoContenedorClick) {
+    //         UltimoContenedorClick.style.display = "none";
+    //     }
+    //     interfazSolicitudesCita.style.display = 'block'
+    //     UltimoContenedorClick = interfazSolicitudesCita
+    // })
+
+    // GestionCitas.addEventListener("click", () => {
+    //     if (UltimoContenedorClick) {
+    //         UltimoContenedorClick.style.display = "none";
+    //     }
+    //     interfazGestionCitas.style.display = 'block'
+    //     UltimoContenedorClick = interfazGestionCitas
+    // })
+
+    // gestionProductos.addEventListener("click", () => {
+    //     if (UltimoContenedorClick) {
+    //         UltimoContenedorClick.style.display = "none";
+    //     }
+    //     interfazGestionProductos.style.display = 'block';
+    //     UltimoContenedorClick = interfazGestionProductos;
+    //     MostrarTablaObjeto("http://localhost:3000/productos/categoria/gestion");
+    // })
+    // gestionPedidos.addEventListener("click", () => {
+    //     if (UltimoContenedorClick) {
+    //         UltimoContenedorClick.style.display = "none";
+    //     }
+    //     interfazGestionPedidos.style.display = 'block'
+    //     mostrarTablaPedidos()
+    //     UltimoContenedorClick = interfazGestionPedidos
+    // })
 
     // FUNCION QUE LE DA ACCION DE CLICK A CADA ELEMENTO DEL FILTRO
     MostrarFiltradoTabla()

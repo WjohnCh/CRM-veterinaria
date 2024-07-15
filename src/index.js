@@ -8,7 +8,7 @@ const validator = require('validator');
 const port = process.env.PORT || 3000;
 
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
-    , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota,obtenerInfoUsuarioPorCorreo
+    , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo
     , editarDatosUsuario } = require('./indexUsuario.js')
 
 
@@ -383,7 +383,7 @@ app.post('/procesar-datos', async (req, res) => {
         const existeEmail = await fetch(`http://localhost:3000/email/existe/${email}`)
 
         const existenciaEmail = await existeEmail.json();
- 
+
         if (existenciaEmail.existe) {
             return res.status(400).json({ success: false, message: 'El email ya está registrado', existenciaCorreo: true });
         }
@@ -507,14 +507,67 @@ app.get('/email/existe/:email', existeEmail)
 //API MASCOTAS DEL CLIENTE
 app.get("/api/cliente/mascotas", verifyToken, ArrayMascotas);
 
-app.post('/crear-mascota',verifyToken, crearMascota);
+app.post('/crear-mascota', verifyToken, crearMascota);
 
 app.put('/editar-mascota/cliente/:idmascota', verifyToken, editarMascota);
 
-app.get('/datosCliente', verifyToken,  obtenerInfoUsuarioPorCorreo);
+app.get('/datosCliente', verifyToken, obtenerInfoUsuarioPorCorreo);
 
 app.put("/usuario/editar", verifyToken, editarDatosUsuario)
 
+app.get('/buscarcliente/barra/:nombrecompleto', async (req, res) => {
+    const { nombrecompleto } = req.params;
+    try {
+        const result = await sequelize.query(
+            'CALL buscar_nombres_cliente_barra(:nombrecompleto)',
+            { replacements: { nombrecompleto: nombrecompleto } }
+        );
+
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.post('/nuevocliente', async (req, res) => {
+    const { nombre, apellidos, telefono } = req.body;
+
+    try {
+        const result = await sequelize.query(
+            `CALL CREAR_CLIENTE(?, ?, ?)`,
+            { replacements: [nombre, apellidos, telefono] }
+        );
+        if (result){
+            res.json({ message: "Datos Subidos" });
+        } else {
+            res.status(400).json({ message: "Error al subir los datos" });
+        }
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.post('/aniadirmascota/:idcliente', async (req, res) => {
+    const idCliente = req.params.idcliente;
+    const { nombreMascota, especie, raza, sexo } = req.body;
+    
+    try {
+      const result = await sequelize.query(
+        `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
+        { replacements: [nombreMascota, especie, raza, sexo, idCliente] }
+      );
+        res.json({ message: "Datos Subidos" });
+    } catch (error) {
+      console.error('Error al procesar los datos:', error);
+      res.status(500).send('Error al procesar la solicitud');
+    }
+})
 
 app.listen(port, () => {
     console.log('Mi port ' + port);

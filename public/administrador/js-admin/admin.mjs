@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", async ()=> {
         const opcionesAdmin = document.querySelectorAll('.option-admin');
         const asideNabvarClose= document.querySelector('.bar-right-img');
         const contenedorNavbarAdmin= document.querySelector('.administrador-navbar');
+        const imgLogoCan = document.querySelector(".imgLogoCAN")
+        const textoAdministrador = document.querySelector(".texto-administrador")
 
         const equis = document.querySelectorAll(".modal-generico");
 
@@ -39,12 +41,30 @@ document.addEventListener("DOMContentLoaded", async ()=> {
             })
         })
 
-
+        const userInformation = document.querySelector(".user-information")
+        let minimizado = false // Verifica en que estado tiene que estar el navbare
         asideNabvarClose.addEventListener('click', ()=>{
-            document.body.appendChild(asideNabvarClose);
-            document.body.classList.toggle('solo-un-elemento');
-            contenedorNavbarAdmin.classList.toggle('hidden-admin-navbar');
-            asideNabvarClose.classList.toggle('mover-bar');
+            minimizado = !minimizado
+            if(minimizado){
+                contenedorNavbarAdmin.style.width = "80px"
+                asideNabvarClose.style.left = "36px"
+                opcionesAdmin.forEach(element=>{
+                    element.style.width= "50px"
+                    element.querySelector('.descripcion-btn-admin').style.display = "none";
+                })
+                imgLogoCan.style.display = "none"
+                textoAdministrador.style.color = "#191919"
+            }else if (!minimizado){
+                contenedorNavbarAdmin.style.width = "280px"
+                asideNabvarClose.style.left = "240px"
+                opcionesAdmin.forEach(element=>{
+                    element.style.width= "auto"
+                    element.querySelector('.descripcion-btn-admin').style.display = "block";
+                })
+                imgLogoCan.style.display = "block"
+                textoAdministrador.style.color = "white"
+            }
+
         })
 
 
@@ -76,5 +96,12 @@ document.addEventListener("DOMContentLoaded", async ()=> {
                 document.getElementById('respuesta').textContent = `Error: ${error.message}`;
             }
         })
+
+
+    // LOGICA QUE IRÁ ACTUALIZANDO EL MAIN DEL ADMINISTRADOR
+
+
+
+
 
 })

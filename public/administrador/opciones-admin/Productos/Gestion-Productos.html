@@ -1,0 +1,35 @@
+<div class="classeOverflow">
+    <table class="Tabla_Gestion-Productos">
+        <!-- PLANTILLA FILA -->
+        <tr class="Fila_producto" style="display: none;">
+            <td class="Valor-Tabla__id"></td>
+            <td class="Valor-Tabla__nombre"></td>
+            <td class="Valor-Tabla__categoria"></td>
+            <td class="Valor-Tabla__precioTotal">
+                <p>S/. <span class="Valor-Tabla__precio"></span></p>
+            </td>
+            <td class="Valor-Tabla__descripcion"></td>
+            <td class="Valor-Tabla__detalles">
+                <figure class="img_Mostrar-Detalle-Producto opacidad-80">
+                    <img src="../Íconos - Logos/detailsIcon.svg" alt="">
+                </figure>
+            </td>
+        </tr>
+
+        <!-- FIN PLANTILLA FILA -->
+        <thead class="Fila_Encabezado">
+            <tr>
+                <th class="Encabezado-tabla__id">ID</th>
+                <th class="Encabezado-tabla__nombre">Nombre del Producto</th>
+                <th class="Encabezado-tabla__categoria">Categoría</th>
+                <th class="Encabezado-tabla__precio">Precio</th>
+                <th class="Encabezado-tabla__descripcion">Descripción</th>
+                <th class="Encabezado-tabla__detalles">Detalle</th>
+            </tr>
+        </thead>
+        <tbody id="Cuerpo_tabla-Gestion-Producto">
+            <!-- INSERTAR PRODUCTOS -->
+        </tbody>
+    </table>
+</div>
+<script type="module" src="./logica-productos.js"></script>

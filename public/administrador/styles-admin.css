@@ -88,7 +88,10 @@ button {
     display: block !important;
 
 }
-
+.grid-generico-1fr{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
 .motrar-elemento-grid {
     display: grid !important;
 }
@@ -97,7 +100,7 @@ button {
     display: grid;
     grid-template-columns: max-content auto;
     gap: 20px;
-    background-color: var(--Negro-25);
+    background-color: var(--Negro-0);
 }
 
 .contenedor-body-divison.solo-un-elemento {
@@ -123,6 +126,7 @@ button {
     height: calc(100vh - 20px);
     background-color: #191919;
     border-radius: 12px;
+    /* position: fixed; */
 }
 
 
@@ -232,6 +236,10 @@ nav.administrador-navbar .user-information {
 
 .centrado {
     align-items: center;
+}
+.flex-start {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .flex-YX {
@@ -367,9 +375,7 @@ nav.administrador-navbar .user-information {
 .reserva-cita__textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
     border-radius: 10px;
-    font-size: var(--Text-medium);
     background-color: var(--Negro-25);
 }
 
@@ -530,7 +536,7 @@ nav.administrador-navbar .user-information {
 }
 
 .modal-generico {
-    position: absolute;
+    position: fixed;
     height: 100vh;
     z-index: 2;
     width: 100%;
@@ -743,6 +749,9 @@ nav.administrador-navbar .user-information {
 
 .bold {
     font-weight: bold;
+}
+.semibold {
+    font-weight: 600;
 }
 
 .antibold {
@@ -1061,4 +1070,227 @@ nav.administrador-navbar .user-information {
     background-color: var(--Negro-25);
     border-radius: 4px;
     font-size: var(--Text-small);
+}
+
+/* HISTORIAL MEDICO VISTA */
+.width100{
+    width: 100%;
+}
+
+#historial-medico-vista-general{
+    width: 800px;
+    margin: auto;
+}
+
+.contenedor-informacion-propietario-HM, .contenedor-informacion-mascota-HM{
+    border: 1px solid var(--Negro-75);
+    padding: 8px 14px 14px 14px;
+    width: 100%;
+}
+.Encabezado-historial-medico-informacion{
+    border-bottom: 1px solid var(--Negro-75);
+    padding-bottom: 4px;
+}
+
+.HM_table {
+    width: 420px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.HM_table-header {
+    background-color: var(--Negro-100);
+    color: white;
+    padding: 8px 4px 8px 4px;
+    text-align: center;
+}
+
+.HM_table-cell {
+    border: 1px solid var(--Negro-50);
+    padding: 6px;
+    text-align: center;
+}
+
+.HM_table-cell:nth-child(1),.HM_table-cell:nth-child(3),.HM_table-cell:nth-child(4) {
+    width: 25%;
+}
+
+.HM_table-cell:nth-child(2) {
+    width: 40%;
+}
+.HM_table-desparacitaciones{
+    width: 360px;
+}
+
+.table-cell-1-celda{
+    border: 1px solid var(--Negro-50);
+    padding: 6px;
+    text-align: center;
+}
+.historia-clinica-HM{
+    background-color: var(--Negro-25);
+    padding: 4px;
+}
+.Contenido-HistoriaClínica-HM{
+    border: 1px solid var(--Negro-50);
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.btn-HistorialMedico{
+    margin-top: 20px;
+    background-color: var(--Negro-75);
+    padding: 8px;
+    font-weight: 500;
+    width: 70%;
+}
+
+/* ACTUALIZAR DATOS DE LA MASCOTA */
+
+/* ANIADIR NUEVA MASCOTA */
+
+.contenidoModal-AniadorMascota{
+    background-color: var(--Negro-0);
+    position: relative;
+    padding: 40px;
+    border: 2px solid #E5AE00;
+    border-radius: 20px;
+}
+.form-aniadirMascota{
+    border: 1px solid var(--Negro-50);
+    padding: 20px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.input-aniadirMascota{
+    width: 200px;
+    background-color: var(--Negro-25);
+    border-radius: 8px;
+    padding: 10px;
+}
+.division-gap{
+    gap: 40px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.label-aniadirMascota{
+    gap: 10px;
+}
+#btn-AgregarMascota-form{
+    margin-top: 30px;
+}
+.Mensaje-Vacio-cliente{
+    font-size: 20px;
+    color: var(--Negro-50);
+}
+
+/* ACUTUALIZAR PROPIETARIO */
+
+.contenedor-principal-micuenta-cliente{
+    padding: 20px 20px 30px 20px;
+}
+.frm-micuenta-usuario{
+    position: relative;
+    margin: 20px 0px 20px;
+    border: 1px solid var(--Negro-50);
+    padding: 10px 30px 20px 30px;
+    border-radius: 10px;
+    gap: 50px;
+    font-size: var(--Text-long);
+}
+
+.formularioBasico label{
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 4px;
+}
+.MiCuenta_disabled_input{
+    background-color: var(--Negro-25);
+    font-size: var(--Text-medium);
+    padding: 8px 8px 8px 8px;
+    margin-bottom: 25px;
+    color: var(--Negro-75);
+    width: 300px;
+}
+.MiCuenta_NOdisabled_input{
+    background-color: var(--Negro-25);
+    border-radius: 10px;
+    padding-left: 8px;
+}
+.boton-generico-primario-Apretado{
+    background-color: var(--Negro-0);
+    border: 2px solid var(--yellow-50);
+    color: var(--yellow-50);
+}
+#btnEditarMicuenta{
+    width: 400px;
+}
+#input_miCuenta_direccion{
+    height: 60px;
+    margin-bottom: 0px;
+}
+
+
+/* ANIADIR VACUNAS */
+
+.frmAniadirnewVacuna{
+    padding: 20px;
+}
+.campo{
+    padding: 6px;
+    border-radius: 5px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+.ContenedorAniadirVacunas{
+    gap: 50px;
+    border: 1px solid var(--Negro-50);
+    padding: 10px 10px 0px 10px;
+    border-radius: 10px;
+}
+
+/* ANIADIR DESPARACITACIONES */
+#modal-AniadirDesparacitaciones-HM .ContenedorAniadirVacunas{
+    gap: 24px;
+    padding: 20px;
+}
+#modal-AniadirDesparacitaciones-HM .campo{
+    margin: 0px;
+}
+
+/* ANIADIR NUEVA HISTORIA CLINICA */
+.historiaclinica-formulario-historial {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+.historiaclinica-formulario-contenido {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.campo, .historiaclinica-campo-largo {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.campo input, .historiaclinica-campo-largo textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.historiaclinica-campo-largo textarea {
+    font-family: 'Quicksand', sans-serif;
+    height: 30px;
+}
+
+.religioso{
+    width: 160px;
 }

@@ -5,10 +5,33 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS usuario_mascotas_verdetalle;
 CREATE PROCEDURE usuario_mascotas_verdetalle(IN clienteID INT)
 BEGIN
-    SELECT idmascota, nombre_mascota, fecha_nacimiento, especie, raza, peso, color, sexo
+    SELECT idmascota, nombre_mascota, fecha_nacimiento, especie, raza, peso, color, sexo, obs
     FROM mascota m
     WHERE m.clienteid = clienteID;
 END$$
+
+-- PROCEDIMIENTO QUE DEVUELVE LOS DATOS DE LAS MASCOTAS DATO EL ID DE LA MASCOTA
+DELIMITER $$
+DROP PROCEDURE IF EXISTS usuario_mascotas_verdetalle;
+CREATE PROCEDURE usuario_mascotas_verdetalle(IN mascotaID INT)
+BEGIN
+    SELECT *
+    FROM mascota m
+    WHERE m.idmascota = mascotaID;
+END$$
+
+-- Obtener los datosd el cliente dado el id de la mascota
+DELIMITER $$
+DROP PROCEDURE IF EXISTS mascota_cliente_verdetalle;
+CREATE PROCEDURE mascota_cliente_verdetalle(IN mascotaID INT)
+BEGIN
+    SELECT c.idcliente, c.nombre_cliente, c.apellido, c.telefono, c.direccion, c.dni
+    FROM cliente c
+    JOIN mascota m ON c.idcliente = m.clienteid
+    WHERE m.idmascota = mascotaID;
+END$$
+
+
 
 -- PROCEDIMIENTO QUE DEVUELVE EL ID DEL CLIENTE DADO EL CORREO DEL USER
 DELIMITER $$
@@ -96,6 +119,7 @@ END $$
 
 -- Crear nueva mascota
 DELIMITER $$
+DROP PROCEDURE IF EXISTS CREAR_MASCOTA $$
 CREATE PROCEDURE CREAR_MASCOTA(
 		IN p_nombre VARCHAR(100),
         IN p_especie VARCHAR(100),
@@ -106,9 +130,10 @@ CREATE PROCEDURE CREAR_MASCOTA(
 BEGIN
 	INSERT INTO mascota(nombre_mascota, especie, raza, sexo, clienteid)
     VALUES(p_nombre, p_especie, p_raza, p_sexo, p_idcliente);
+    SELECT LAST_INSERT_ID() AS idmascota;
 END $$
 
--- Crear nuevo servicio dado el id
+-- Crear nuevo SESION dado el id
 DELIMITER $$
 CREATE PROCEDURE crear_sesion(
     IN p_idmascota INT,
@@ -130,6 +155,68 @@ CREATE PROCEDURE crear_servicio(
 )
 BEGIN
 	INSERT INTO servicio(NombreServicio, idsesion)values(p_nombreservicio, idsesion);
+END $$
+
+-- OBTENER ID DEL HISTORIAL MEDICO DADO EL ID DE LA MASCOTA
+DELIMITER $$
+CREATE PROCEDURE get_idmas_by_idhis(
+	IN p_idmascota INT
+)
+BEGIN
+	SELECT idHistorialMedico FROM historialmedico WHERE p_idmascota = idmascota;
+END $$
+
+-- Obtener las vacunas dadas el historial Medico
+DELIMITER $$
+CREATE PROCEDURE get_by_id_vac(
+IN p_idHistorialMedico INT
+)
+BEGIN
+	SELECT 
+		fecha, tipoVacunacion, temperatura, peso 
+    FROM 
+		vacuna 
+	WHERE 
+		idHistorialMedico = p_idHistorialMedico;
+END $$
+
+-- Obtener la revisionMedica Dada el id dEL HISTORIAL
+DELIMITER $$
+CREATE PROCEDURE get_by_id_revmed(
+	IN p3_idHistorialMedico INT
+)
+BEGIN
+	SELECT
+		fecha,
+		temperatura,
+		frecuenciaCardiaca,
+		frecuenciaRespiratoria,
+		peso,
+		mucosas ,
+		glucosa,
+		TLC,
+		anamesis,
+		diagnosticoPresuntivo,
+		tratamiento,
+		receta
+	FROM
+		revisionmedica
+    WHERE
+		idHistorialMedico = p3_idHistorialMedico;
+END $$
+
+-- OBTENER LOS DATOS DE DESAPARICITACION DADO EL HISTORIAL MEDICO
+DELIMITER $$
+CREATE DEFINER=root@localhost PROCEDURE get_by_id_despara(
+	IN p2_idHistorialMedico INT
+)
+BEGIN
+	SELECT
+		fecha, producto, peso
+	FROM
+		desparasitacion
+    WHERE
+		idHistorialMedico = p2_idHistorialMedico;
 END $$
 
 DELIMITER ;

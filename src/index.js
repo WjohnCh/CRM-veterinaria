@@ -550,12 +550,18 @@ app.post('/nuevocliente', async (req, res) => {
             `CALL CREAR_CLIENTE(?, ?, ?)`,
             { replacements: [nombresCliente, apellidosCliente, telefonoCliente] }
         );
-         await sequelize.query(
+        const [{ idmascota }] = await sequelize.query(
             `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
             { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, id_cliente] }
         );
+
+        await sequelize.query(
+            `INSERT INTO historialmedico (idmascota) VALUES (?)`,
+            { replacements: [idmascota] }
+          );
+
         if (id_cliente){
-            res.json({ message: "Datos Subidos" });
+            res.json({ message: "Datos Subidos", idmascota, nombreMascota, nombreCompleto: nombresCliente+apellidosCliente});
         } else {
             res.status(400).json({ message: "Error al subir los datos" });
         }
@@ -574,12 +580,18 @@ app.post('/aniadirmascota/:idcliente', async (req, res) => {
     }
 
     try {
-      const result = await sequelize.query(
+      const [{ idmascota }] = await sequelize.query(
         `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
         { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, idCliente] }
       );
-        res.json({ message: "Datos Subidos" });
-    } catch (error) {
+
+      await sequelize.query(
+        `INSERT INTO historialmedico (idmascota) VALUES (?)`,
+        { replacements: [idmascota] }
+      );
+
+        res.json({ idmascota: idmascota, nombreMascota: nombreMascota });
+    } catch (error){
       console.error('Error al procesar los datos:', error);
       res.status(500).send('Error al procesar la solicitud');
     }
@@ -593,9 +605,11 @@ app.get("/obtenerMascotas/cliente/:clienteid", async (req, res) => {
             `CALL usuario_mascotas_verdetalle(?)`,
             { replacements: [clienteid] }
           );
+
           res.json(results)
     } catch (error) {
-        
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
     }
 })
 
@@ -619,9 +633,226 @@ app.post('/crearsesion/:idmascota', async(req, res) => {
             );
         }
 
-        res.status(200).json({ 
-            message: 'Sesión y servicios creados con éxito'
-        });
+        res.status(200).json({ message: 'Sesión y servicios creados con éxito'});
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+
+// OBTENER DATOS PARA EL HISTORIAL MEDICO
+app.get("/vacunas/:idmascota", async(req, res) => {
+    const { idmascota } = req.params;
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+        const results_2 = await sequelize.query(
+            `CALL get_by_id_vac(?)`,
+            { replacements: [idHistorialMedico] }
+        );
+            res.json(results_2);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.get("/desparacitaciones/:idmascota", async(req, res) =>{
+    const {idmascota} = req.params;
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+        const results_2 = await sequelize.query(
+            `CALL get_by_id_despara(?)`,
+            { replacements: [idHistorialMedico] }
+        );
+            res.json(results_2);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.get("/revisionmedica/:idmascota", async(req, res) =>{
+    const {idmascota} = req.params;
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+        const results_2 = await sequelize.query(
+           `CALL get_by_id_revmed(?)`,
+            { replacements: [idHistorialMedico] }
+        );
+            res.json(results_2);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.get("/obtenerdatocliente/mascota/:idmascota", async (req, res)=>{
+    const {idmascota} = req.params;
+    try {
+        const [cliente] = await sequelize.query(
+            `CALL mascota_cliente_verdetalle(?)`,
+            { replacements: [idmascota] }
+        );
+        const [mascota] = await sequelize.query(
+            `CALL mascotas_verdetalle(?)`,
+            { replacements: [idmascota] }
+        );
+
+
+            res.json({cliente, mascota});
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+})
+
+// actualizarMascota
+app.put("/mascota/update/:idmascota", async (req, res) => {
+    const { idmascota } = req.params;
+    const { nombre_mascota, especie, raza, color, sexo, obs, fecha_nacimiento } = req.body;
+    try {
+        await sequelize.query(
+            `CALL update_mascota_histmed(?, ?, ?, ?, ?, ?, ?, ?)`,
+            { replacements: [idmascota,nombre_mascota, especie, raza, color, sexo, obs, fecha_nacimiento] }
+        );
+        res.status(200).json({ message: 'Mascota actualizada correctamente' });
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+// ActualizarCliente
+app.put("/usuario/update/:idmascota", async (req, res) => {
+    const { idmascota } = req.params; // es el id mascota
+    const { nombre_cliente , apellido, direccion = null, telefono = null} = req.body;
+    try {
+
+        const [{idcliente}] = await sequelize.query(
+            `CALL mascota_cliente_verdetalle(?)`,
+            { replacements: [idmascota] }
+        );
+        console.log(idcliente);
+        console.log(req.body);
+        await sequelize.query(
+            `CALL update_cliente_histmed(?, ?, ?, ?, ?)`,
+            { replacements: [idcliente, nombre_cliente, apellido, direccion, telefono] }
+        );
+        res.status(200).json({ message: 'Usuario actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+// ACTUALIZAR VACUNAS DESPARA HISTORIA CLINICA
+app.post("/revmed/aniadir/:idmascota", async (req, res) => {
+    const { idmascota } = req.params;
+    const {
+        fecha,
+        temperatura = null,
+        frecuenciaCardiaca = null,
+        frecuenciaRespiratoria = null ,
+        peso = null,
+        mucosas = null,
+        glucosa = null,
+        TLC = null,
+        anamesis = null,
+        diagnosticoPresuntivo = null,
+        tratamiento = null,
+        receta = null
+    } = req.body;
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+
+            await sequelize.query(
+                `CALL post_by_id_revmed(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                {replacements: [
+                    idHistorialMedico,
+                        fecha,
+                        temperatura,
+                        frecuenciaCardiaca,
+                        frecuenciaRespiratoria,
+                        peso,
+                        mucosas,
+                        glucosa,
+                        TLC,
+                        anamesis,
+                        diagnosticoPresuntivo,
+                        tratamiento,
+                        receta
+                    ]}); 
+            res.status(200).json({ 
+                message: 'Estado medico añadido con exito creados con éxito'
+            });
+    } catch (error) {
+        console.error('Error al obtener el ID de historial médico:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.post('/vacuna/aniadir/:idmascota', async (req, res) => {
+    const { idmascota } = req.params;
+    let { fecha, tipoVacunacion, temperatura = null, peso = null } = req.body;
+
+    if(temperatura == ''){
+        temperatura=null
+    }
+    if(peso == ''){
+        peso=null
+    }
+
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+        if (idHistorialMedico) {
+                 await sequelize.query(
+                    `CALL post_by_id_vac(?, ?, ?, ?, ?)`,
+                    { replacements: [idHistorialMedico, fecha, tipoVacunacion, temperatura, peso] }
+                );
+            res.status(200).json({ message: 'Vacuna creada exitosamente' });
+        } else {
+            res.status(404).json({ message: 'No se encontró el historial médico para la mascota' });
+        }
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+
+app.post('/desparasitacion/aniadir/:idmascota', async (req, res) => {
+    const { idmascota } = req.params;
+    let { fecha, producto, peso = null } = req.body;
+    if(peso == ''){
+        peso=null
+    }
+    try {
+        const [{idHistorialMedico}] = await sequelize.query(
+            `CALL get_idmas_by_idhis(?)`,
+            { replacements: [idmascota] }
+        );
+
+        const resultado = await sequelize.query(
+            `CALL post_by_id_despara(?, ?, ?, ?);`,
+            { replacements: [idHistorialMedico, fecha, producto, peso] }
+        );
+        res.status(200).json({ message: 'Desparasitacion añadida con éxito' });
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');

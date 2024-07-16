@@ -1,0 +1,367 @@
+<div class="flex-YX centrado" id="historial-medico-vista-general">
+    <br>
+    <h1>Historial Médico</h1>
+    <br>
+    <div class="width100">
+        <div class="contenedor-informacion-mascota-HM flex-YX gap-generico">
+            <h4 class="Encabezado-historial-medico-informacion flex-YX centrado">DATOS DE LA MASCOTA:</h4>
+            <div class="flex-YX" style="gap: 8px;">
+                <div class="grid-generico-1fr">
+                    <p class="semibold">Nombre: <span class="antibold" id="Nombre_Mascota_Historial_Medico"></span></p>
+                    <p class="semibold">Especie: <span class="antibold" id="Especie_Mascota_Historial_Medico"></span>
+                    </p>
+                    <p class="semibold">Raza: <span class="antibold" id="Raza_Mascota_Historial_Medico"></span>
+                    </p>
+                </div>
+                <div class="grid-generico-1fr">
+                    <p class="semibold">Color: <span class="antibold" id="Color_Mascota_Historial_Medico"></span>
+                    </p>
+                    <p class="semibold">Sexo: <span class="antibold" id="Sexo_Mascota_Historial_Medico"></span></p>
+                    <p class="semibold">Obs: <span class="antibold" id="obs_Mascota_Historial_Medico"></span></p>
+                </div>
+                <div class="grid-generico-1fr">
+                    <p class="semibold">Fecha de nacimiento: <span class="antibold"
+                            id="Nacimiento_Mascota_Historial_Medico">2022-12-12</span></p>
+                </div>
+            </div>
+        </div>
+        <button class="boton-generico-primario btn-HistorialMedico" id="actualizar_mascota-HM">Actualizar datos de la
+            mascota</button>
+        <br>
+        <div class="contenedor-informacion-propietario-HM flex-YX gap-generico">
+            <h4 class="Encabezado-historial-medico-informacion flex-YX centrado">DATOS DEL PROPIETARIO</h4>
+            <div class="flex-YX" style="gap: 8px;">
+                <p class="semibold">Nombres y apellidos: <span class="antibold"
+                        id="Nombre_Cliente_Historial_Medico"></span></p>
+                <p class="semibold">Direccion: <span class="antibold" id="Direccion_Cliente_Historial_Medico"></span>
+                </p>
+                <p class="semibold">Teléfono: <span class="antibold" id="Telefono_Cliente_Historial_Medico"></span></p>
+            </div>
+        </div>
+        <button class="boton-generico-primario btn-HistorialMedico" id="actualizar_propietario-HM">Actualizar datos del
+            propietario</button>
+    </div>
+    <div class="width100">
+        <br><br>
+        <div class="ContenidoDosTablas flex-XY width100">
+            <div>
+                <h3 class="flex-YX centrado">Vacunación</h3>
+                <br>
+                <table class="HM_table">
+                    <thead>
+                        <tr>
+                            <th class="HM_table-header">Fecha</th>
+                            <th class="HM_table-header">Tipo de vacunación</th>
+                            <th class="HM_table-header">T°</th>
+                            <th class="HM_table-header">Peso</th>
+                        </tr>
+                    </thead>
+                    <tr class="plantilla-fila-vacunacion-HM" style="display: none;">
+                        <td class="HM_table-cell celda-vacunacion_fecha"></td>
+                        <td class="HM_table-cell celda-vacunacion_Vacuna"></td>
+                        <td class="HM_table-cell celda-vacunacion_Tipo"></td>
+                        <td class="HM_table-cell celda-vacunacion_Peso"></td>
+                    </tr>
+                    <tbody id="contenedor-tablaFila-vacunacion-HM">
+
+                    </tbody>
+                </table>
+                <button class="boton-generico-primario btn-HistorialMedico" id="Aniadir_vacunacion-HM">Añadir
+                    Vacunación</button>
+            </div>
+            <div>
+                <h3 class="flex-YX centrado">Desparasitación</h3>
+                <br>
+                <table class="HM_table HM_table-desparacitaciones">
+                    <thead>
+                        <tr>
+                            <th class="HM_table-header">Fecha</th>
+                            <th class="HM_table-header HM_table-header-productos">Producto</th>
+                            <th class="HM_table-header">Peso</th>
+                        </tr>
+                    </thead>
+                    <tr class="Plantilla-desparacitacion-HM" style="display: none;">
+                        <td class="HM_table-cell celda-despacitacion_fecha"></td>
+                        <td class="HM_table-cell celda-despacitacion_Producto"></td>
+                        <td class="HM_table-cell celda-despacitacion_Peso"></td>
+                    </tr>
+                    <tbody id="Contenedor-desparacitacion-tabla-HM">
+                    </tbody>
+                </table>
+                <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
+                    Desparacitación</button>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="width100">
+        <h2 class="flex-YX centrado historia-clinica-HM"> HISTORIA CLÍNICA</h2>
+        <br>
+        <div class="flex-YX gap-generico Contenido-HistoriaClínica-HM" style="display: none;">
+            <div class="grid-generico-1fr">
+                <p class="bold">Fecha: <span class="antibold Fecha_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">T°: <span class="antibold Temperatura_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">F.C.: <span class="antibold FrecuenciaCardiaca_historiaClinica_Historial_Medico"></span>
+                </p>
+                <p class="bold">F.R.: <span
+                        class="antibold FrecuenciaRespiratoria_historiaClinica_Historial_Medico"></span></p>
+            </div>
+            <div class=" grid-generico-1fr">
+                <p class="bold">Peso: <span class="antibold Peso_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">Mucosas: <span class="antibold Mucosas_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">Glucosa: <span class="antibold Glucosa_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">TLC: <span class="antibold TLC_historiaClinica_Historial_Medico"></span></p>
+            </div>
+            <div class="flex-YX" style="gap: 14px;">
+                <p class="bold">Anamnesis: <span class="antibold Anamnesis_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">Diagnostico Presuntivo: <span
+                        class="antibold DiagnosticoPresuntivo_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">Tratamiento: <span class="antibold Tratamiento_historiaClinica_Historial_Medico"></span>
+                </p>
+                <p class="bold">Receta: <span class="antibold Receta_historiaClinica_Historial_Medico"></span></p>
+            </div>
+        </div>
+        <div id="Contenedor-historias-clinicas">
+        </div>
+        <button class="boton-generico-primario btn-HistorialMedico" id="Aniadir-historiaClinica-HM">Añadir Historia
+            Clínica</button>
+    </div>
+</div>
+
+
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ACTUALIZAR DATOS DE LA MASCOTA-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+<div class="modal-generico" id="Modal-aniadirNuevaMascota" style="display: none;">
+    <div class="contenidoModal-AniadorMascota">
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="" />
+        <h2 class="flex-YX centrado" id="h2EditarNuevaMascota" style="margin-bottom: 20px">
+            ACTUALIZAR MASCOTA
+        </h2>
+
+        <div>
+            <p class="bold">Información de la mascota</p>
+            <form action="" class="flex-YX centrado" id="Formulario_AniadirMascota">
+                <div class="form-aniadirMascota">
+                    <div class="flex-XY division-gap">
+                        <div class="flex-YX">
+                            <label for="" id="">Nombre: *</label>
+                            <input type="text" name="nombre_mascota" id="nombre_mascota-aniadorFRM"
+                                class="input-aniadirMascota" placeholder="Nombre de la mascota" maxlength="20"
+                                required />
+                        </div>
+                        <div class="flex-YX">
+                            <label for="">Fecha de Nacimiento: *</label>
+                            <input type="date" name="fecha_nacimiento" id="fechaNacimiento_mascota-aniadorFRM" min="2000-01-01"
+                                class="input-aniadirMascota" required />
+                        </div>
+                        <div class="flex-YX label-aniadirMascota">
+                            <label for="">Especie: *</label>
+                            <select name="especie" id="especie_mascota-aniadorFRM" class="input-aniadirMascota" required>
+                                <option value="" disabled>Especie</option>
+                                <option value="perro">Perro</option>
+                                <option value="gato">Gato</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex-XY label division-gap">
+                        <div class="flex-YX label-aniadirMascota">
+                            <label for="">Raza:</label>
+                            <input type="text" name="raza" id="raza_mascota-aniadorFRM" class="input-aniadirMascota"
+                                placeholder="Raza (opcional)" maxlength="20" />
+                        </div>
+                        <div class="flex-YX centrado">
+                            <div class="flex-YX label-aniadirMascota">
+                                <label for="" class="bold">Sexo: *</label>
+                                <select name="sexo" id="sexo_mascota-aniadorFRM" class="input-aniadirMascota" required>
+                                    <option value="" disabled selected>Sexo</option>
+                                    <option id="FRM-actualizar-Macho" value="M">Macho</option>
+                                    <option id="FRM-actualizar-Hembra" value="H">Hembra</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex-YX label-aniadirMascota">
+                            <label for="">Color: *</label>
+                            <input type="text" name="color" id="color_mascota-aniadorFRM" class="input-aniadirMascota"
+                                placeholder="Color de la mascota" maxlength="20" required />
+                        </div>
+                    </div>
+
+                    <div class="flex-YX">
+                        <label for="">Obs.</label>
+                        <input id="informacion_mascota-aniadorFRM" class="input-aniadirMascota" name="obs" maxlength="100"
+                            placeholder="Obs">
+                    </div>
+                </div>
+                <p style="font-size: 12px">
+                    Si no conoce la fecha exacta en la nació la mascota puede poner el
+                    año y un mes aproximado
+                </p>
+                <button type="submit" class="boton-generico-primario" id="btn-AgregarMascota-form">
+                    Actualizar Mascota
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ACTUALIZAR DATOS DEL PROPIETARIO-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+
+<div class="modal-generico" id="contenedor-principal-micuenta-cliente" style="display: none;">
+    <div class="flex-YX centrado contenedor-principal-micuenta-cliente frm-generico">
+        <h1>Actualizar datos del propietario</h1>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <form id="frm-micuenta-usuario">
+            <div class="flex-XY formularioBasico frm-micuenta-usuario">
+                <div class="flex-YX">
+                    <label for="input_miCuenta_Nombres">Nombres:</label>
+                    <input id="input_miCuenta_Nombres" type="text" name="nombre_cliente" class="MiCuenta_disabled_input"
+                        placeholder="No proporcionado" required>
+
+                    <label for="input_miCuenta_Apellidos">Apellidos:</label>
+                    <input id="input_miCuenta_Apellidos" type="text" class="MiCuenta_disabled_input"
+                    name="apellido" placeholder="No proporcionado">
+
+
+                </div>
+                <div class="flex-YX">
+                    <label for="input_miCuenta_telefono">Teléfono:</label>
+                    <input id="input_miCuenta_telefono" inputmode="numeric" name="telefono" type="number"
+                        class="MiCuenta_disabled_input" placeholder="No proporcionado">
+
+                    <label for="input_miCuenta_email">Dirección:</label>
+                    <input id="input_miCuenta_email" type="email" class="MiCuenta_disabled_input"
+                    name="direccion" placeholder="No proporcionado">
+                </div>
+            </div>
+            <button type="submit" class="boton-generico-primario" id="btnEditarMicuenta">Actualizar datos</button>
+        </form>
+    </div>
+</div>
+
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ANIADIR VACUNAS-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+<div class="modal-generico" id="modal-AniadirVacunas-HM" style="display: none;">
+    <form action="#" class="frm-generico frmAniadirnewVacuna" id="frmAniadirnewVacuna-HM1">
+        <h3 class="flex-YX centrado">AÑADIR VACUNACIÓN</h3>
+        <br>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="flex-XY ContenedorAniadirVacunas">
+            <div>
+                <label>Fecha:</label><br>
+                <input class="campo" name="fecha" type="date" required><br>
+                <label>Tipo de vacunación:</label><br>
+                <input class="campo" name="tipoVacunacion" type="text" required placeholder="Tipo de vacunacion">
+            </div>
+            <div>
+                <label>Temperatura:</label><br>
+                <input class="campo" type="number"  name="temperatura"placeholder="Temperatura"><br>
+                <label>Peso:</label><br>
+                <input class="campo" type="number" name="peso" placeholder="Peso">
+            </div>
+        </div>
+        <br>
+        <button class="boton-generico-primario">Añadir Vacunación</button>
+    </form>
+</div>
+
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ANIADIR Desparacitaciones-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+<div class="modal-generico" id="modal-AniadirDesparacitaciones-HM" style="display: none;">
+    <form action="#" class="frm-generico frmAniadirnewVacuna" id="AniadirDesparacitaciones-HM">
+        <h3 class="flex-YX centrado">AÑADIR DESPARACITACIÓN</h3>
+        <br>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="flex-YX ContenedorAniadirVacunas">
+            <div class="flex-XY centrado gap-generico">
+                <label>Fecha:</label>
+                <input class="campo" name="fecha" type="date" required>
+            </div>
+            <div class="flex-XY centrado gap-generico">
+                <label>Producto:</label>
+                <input class="campo" name="producto" type="text" required placeholder="Tipo de vacunacion" required>
+            </div>
+            <div class="flex-XY centrado gap-generico">
+                <label>Peso:</label>
+                <input class="campo" name="peso" type="number" placeholder="Peso">
+            </div>
+        </div>
+        <br>
+        <button class="boton-generico-primario">Añadir Vacunación</button>
+    </form>
+</div>
+
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ANIADIR HISTORIAL CLINICA-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+<div class="modal-generico" id="modalAniadirHistoriaClinica" style="display: none;">
+    <form class="historiaclinica-formulario-historial frm-generico" id="AniadirHistoriaClinica">
+        <h2 class="reserva-cita__titulo">Formulario del Historial:</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="historiaclinica-formulario-contenido">
+            <div class="flex-XY">
+                <div class="campo">
+                    <label for="fecha" class="reserva-cita__label">Fecha:</label>
+                    <input type="date" id="historiaclinica_fecha" name="fecha" class="reserva-cita__input" required>
+                </div>
+                <div class="campo">
+                    <label for="t" class="reserva-cita__label">T:</label>
+                    <input type="text" id="historiaclinica_t" name="temperatura" class="reserva-cita__input" placeholder="37°">
+                </div>
+                <div class="campo">
+                    <label for="fc" class="reserva-cita__label">F.C.:</label>
+                    <input type="text" id="historiaclinica_fc" name="frecuenciaCardiaca" class="reserva-cita__input" placeholder="80 lpm">
+                </div>
+                <div class="campo">
+                    <label for="fr" class="reserva-cita__label">F.R.:</label>
+                    <input type="text" id="historiaclinica_fr" name="frecuenciaRespiratoria" class="reserva-cita__input" placeholder="80 rpm">
+                </div>
+                <div class="campo">
+                    <label for="peso" class="reserva-cita__label">Peso:</label>
+                    <input type="text" id="historiaclinica_peso" name="peso" class="reserva-cita__input" placeholder="20 kg">
+                </div>
+                <div class="campo">
+                    <label for="tlc" class="reserva-cita__label">TLC:</label>
+                    <input type="text" id="historiaclinica_tlc" name="TLC" class="reserva-cita__input" placeholder="TLC">
+                </div>
+            </div>
+            <div class="flex-XY">
+                <div>
+                    <div class="flex-XY">
+                        <div class="campo religioso">
+                            <label for="glucosa" class="reserva-cita__label">Glucosa:</label>
+                            <input type="text" id="historiaclinica_glucosa" name="glucosa" class="reserva-cita__input" placeholder="100 mg/dL">
+                        </div>
+                        <div class="campo religioso">
+                            <label for="mucosas" class="reserva-cita__label">Mucosas:</label>
+                            <input type="text" id="historiaclinica_Mucosas" name="mucosas" class="reserva-cita__input" placeholder="Mucosas">
+                        </div>
+                    </div>
+                    <div class="historiaclinica-campo-largo" style="width: 330px;">
+                        <label for="diagnostico" class="reserva-cita__label">Diagnóstico presuntivo:</label>
+                        <textarea id="historiaclinica_diagnostico" name="diagnosticoPresuntivo" class="reserva-cita__textarea" placeholder="Ingresar diagnóstico presuntivo" style="height: 50px;"></textarea>
+                    </div>
+                </div>
+                <div class="historiaclinica-campo-largo" style="width: 340px; margin-top: 12px;">
+                    <label for="anamnesis" class="reserva-cita__label">Anamnesis:</label>
+                    <textarea id="historiaclinica_anamnesis" name="anamnesis" class="reserva-cita__textarea" placeholder="Ingresar anamnesis" style="height: 120px;"></textarea>
+                </div>
+            </div>
+            <div class="historiaclinica-campo-largo">
+                <label for="tratamiento" class="reserva-cita__label">Tratamiento:</label>
+                <textarea id="historiaclinica_tratamiento" name="tratamiento" class="reserva-cita__textarea" placeholder="Ingresar tratamiento"></textarea>
+            </div>
+            <div class="historiaclinica-campo-largo">
+                <label for="receta" class="reserva-cita__label">Receta:</label>
+                <textarea id="historiaclinica_receta" name="receta" class="reserva-cita__textarea" placeholder="Ingresar receta"></textarea>
+            </div>
+        </div>
+            <button type="submit" class="boton-generico-primario">Guardar</button>
+    </form>
+</div>
+
+<script type="module" src="./logica-historial.mjs"></script>

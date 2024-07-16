@@ -1,5 +1,6 @@
 import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
 import {LogicaSesion} from '../opciones-admin/Sesiones/logicaSesion.mjs';
+import{VisualizarHistorialMedico} from "../opciones-admin/Historial-Medico/logica-historial.mjs"
 
 let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
@@ -46,7 +47,7 @@ export async function AbrirCerrarInterfaz() {
     })
 
     Productos.addEventListener("click",async ()=>{
-
+        await CargarContenido("Productos/Gestion-Productos.html")
     })
 
     Pedidos.addEventListener("click",async()=>{
@@ -62,7 +63,8 @@ export async function AbrirCerrarInterfaz() {
     })
 
     HistorialMedico.addEventListener("click",async()=>{
-
+        await CargarContenido("Historial-Medico/plantilla-historial.html")
+        await VisualizarHistorialMedico();
     })
 
     Cuentas.addEventListener("click",async()=>{

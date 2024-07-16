@@ -158,7 +158,7 @@
  ---------------------------------------------------------------------------------------------------->
 
  <div class="modal-generico" id="frmCrearNuevaSesion" style="display: none;">
-    <form class="frm-agendar-cita">
+    <form class="frm-agendar-cita" id="frm-agendar-Nueva-sesion-Cliente">
         <h2 class="flex-YX centrado">Crear nueva sesión</h2>
         <div>
             <p class="NombreClienteCompleto" >Cliente: <span id="informacion-Cliente-nombre-cliente"></span></p>
@@ -168,25 +168,25 @@
         <p >Motivo de cita</p>
         <div class="motivo-cita">
             <div>
-                <label><input type="checkbox" name="motivo" value="consultas" /> Consultas</label>
-                <label><input type="checkbox" name="motivo" value="tratamientos" />
+                <label><input type="checkbox" name="servicios" value="consultas" /> Consultas</label>
+                <label><input type="checkbox" name="servicios" value="tratamientos" />
                     Tratamiento</label>
-                <label><input type="checkbox" name="motivo" value="vacunaciones" />
+                <label><input type="checkbox" name="servicios" value="vacunaciones" />
                     Vacunación</label>
-                <label><input type="checkbox" name="motivo" value="desparasitaciones" />
+                <label><input type="checkbox" name="servicios" value="desparasitaciones" />
                     Desparasitación</label>
-                <label><input type="checkbox" name="motivo" value="spa" /> Spa</label>
+                <label><input type="checkbox" name="servicios" value="spa" /> Spa</label>
             </div>
             <div>
-                <label><input type="checkbox" name="motivo" value="ecografias" />
+                <label><input type="checkbox" name="servicios" value="ecografias" />
                     Ecografía</label>
-                <label><input type="checkbox" name="motivo" value="laboratorio" /> Ex.
+                <label><input type="checkbox" name="servicios" value="Ex. laboratorio" /> Ex.
                     Laboratorio</label>
-                <label><input type="checkbox" name="motivo" value="asesoramiento" />
+                <label><input type="checkbox" name="servicios" value="asesoramiento" />
                     Asesoramiento</label>
-                <label><input type="checkbox" name="motivo" value="cirugia" /> Cirugía
+                <label><input type="checkbox" name="servicios" value="cirugia" /> Cirugía
                     General</label>
-                <label><input type="checkbox" name="motivo" value="hospedaje" />
+                <label><input type="checkbox" name="servicios" value="hospedaje" />
                     Hospedaje</label>
             </div>
         </div>
@@ -194,7 +194,7 @@
         <div class="flex-XY gap-generico seccion2FRMSESIOn">
                 <div class="input-motivocita">
                     <label for="precio">Monto total</label>
-                    <input type="number" id="precio" name="precio" step="0.01" placeholder="Precio total"  required/>
+                    <input type="number" id="precio" name="monto" step="0.01" placeholder="Precio total"  required/>
                 </div>
                 <div class="input">
                     <label for="fecha">Fecha</label>
@@ -202,11 +202,11 @@
                 </div>
             <div class="cita-motivo-textarea">
                 <label for="informacion">Más Información</label>
-                <textarea id="informacion" name="informacion" maxlength="100"
+                <textarea id="informacion" name="masinfo" maxlength="100"
                     style="width: 400px; height: 54px" placeholder="Informacion Adicional"></textarea>
             </div>
         </div>
-        <button class="boton-generico-primario">Agendar cita</button>
+        <button class="boton-generico-primario" type="submit">Agendar Sesión</button>
     </form>
 </div>
 

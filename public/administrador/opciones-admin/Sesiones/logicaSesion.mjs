@@ -1,3 +1,4 @@
+import{VisualizarHistorialMedico} from "../Historial-Medico/logica-historial.mjs"
 export async function LogicaSesion() {
     const btnAniadirClienteBtn = document.getElementById("idBtAnidir-new-Cliente-sesion")
     const modalBuscarCliente = document.getElementById("modal-buscar-sesion-cliente");
@@ -18,11 +19,14 @@ export async function LogicaSesion() {
     const NombreClienteMascota = document.getElementById("NombreClienteNuevaMascota")
 
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript van de 0 a 11
+    const day = String(today.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
     document.getElementById('fecha-sesion-realizado').value = formattedDate;
 
     let idClienteCrearMascota = 0; // Un id que servirá para actualizar un usuario 
-
+    let idMascota = 0 // Un id que guarda el ID del usuario para actualizar un usuario 
     equis.forEach(element => {
         const equisCerrar = element.querySelector(".equis-ubicacion")
         if (equisCerrar) {
@@ -38,7 +42,7 @@ export async function LogicaSesion() {
         })
     })
 
-
+    
 
     lupaBuscarCliente.addEventListener("click", async () => {
         const valorInput = inputBuscarCliente.value
@@ -158,6 +162,8 @@ export async function LogicaSesion() {
         newMascota.style.display = "grid"
 
         newMascota.addEventListener("click", () => {
+            idMascota = mascota.idmascota
+            console.log(idMascota);
             modalMascotaUsuarioSesion.style.display = "none"
             frmCrearNuevaSesion.style.display = "grid"
             infoCliente.innerText = cliente.NombreCompleto
@@ -193,8 +199,12 @@ export async function LogicaSesion() {
                 },
                 body: JSON.stringify(data)
             });
-
+            const {idmascota,nombreMascota,nombreCompleto} = await response.json();
+            idMascota = idmascota
+            console.log(idMascota);
             if (response.ok) {
+                infoCliente.innerText = nombreCompleto
+                infoMascota.innerText = nombreMascota
                 modalfrmAniadirMascotaCliente.style.display = "none"
                 frmCrearNuevaSesion.style.display = "grid"
             } else {
@@ -236,7 +246,16 @@ export async function LogicaSesion() {
                 body: JSON.stringify(data)
             });
 
+            const {idmascota, nombreMascota} = await response.json();
+            
+            idMascota = idmascota
+            console.log(idMascota);
+            
+
+
             if (response.ok) {
+                infoCliente.innerText = localStorage.getItem('nombreCliente')
+                infoMascota.innerText = nombreMascota
                 alert("Mascota añadida correctamente")
                 frmAniadirMascotaRegistrado.style.display = "none"
                 frmCrearNuevaSesion.style.display = "grid"
@@ -249,4 +268,65 @@ export async function LogicaSesion() {
             throw new Error('Error al actualizar el producto');
         }
     })
+
+    const frmCrearNewSesion = document.getElementById("frm-agendar-Nueva-sesion-Cliente")
+
+    frmCrearNewSesion.addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const formData = new FormData(frmCrearNewSesion);
+        const data = {};
+        formData.forEach((value, key) => {
+            if (key === 'servicios') {
+                if (!data[key]) {
+                    data[key] = [];
+                }
+                data[key].push(value);
+            } else {
+                data[key] = value.trim();
+            }
+        });
+
+        try {
+            const response = await fetch(`http://localhost:3000/crearsesion/${idMascota}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                console.log(idMascota);
+                localStorage.setItem('idMascota', idMascota);
+                await CargarContenido("Historial-Medico/plantilla-historial.html")
+                await VisualizarHistorialMedico();
+                alert("Sesion Creada Correctamente")
+                frmCrearNuevaSesion.style.display = "none"
+            } else {
+                alert("Hubo un error al  añadir la mascota")
+                throw new Error('Error al actualizar el producto');
+            }
+        } catch (error) {
+            alert("Hubo un error al  añadir la mascota")
+            throw new Error('Error al actualizar el producto');
+        }
+        
+    })
+
+    let contenedorDinamico = document.getElementById("contenedor-main-admin")
+
+    async function CargarContenido(url){
+        try {
+            let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
+            if (!respuesta.ok){
+                throw new Error('Error al cargar los datos');
+            }
+            let contenido = await respuesta.text();
+            contenedorDinamico.innerHTML = contenido
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
 }

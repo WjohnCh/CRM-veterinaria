@@ -1,0 +1,152 @@
+<div class="Mostrar-Opcion-Interfaz" id="Contenedor-general__Gestion-Pedidos">
+    <div class="pruebaaa">
+        <h1 style="width: 100%; text-align: center; margin-bottom: 30px;">GESTIÓN DE PEDIDOS</h1>
+        <div class="classeOverflow">
+            <table class="Tabla_Gestion-Productos" id="tabla_gestion-pedidos">
+                <!-- PLANTILLA FILA -->
+                <tr class="Fila_producto Fila-pedidos" style="display: none;">
+                    <td class="Valor-pedidos_Tabla__nombre"></td>
+                    <td class="Valor-pedidos_Tabla__telefono"></td>
+                    <td class="Valor-pedidos_Tabla__fecha"></td>
+                    <td class="Valor-pedidos_Tabla__tipoenvio"></td>
+                    <td class="Valor-pedidos_Tabla__metodopago"></td>
+                    <td class="Valor-pedidos_Tabla__ValorTotal">
+                        <p>S/. <span class="Valor-Tabla__precio-pedidos"></span></p>
+                    </td>
+                    <td class="Valor-Tabla__detalles">
+                        <figure class="img_Mostrar-Detalle-Producto opacidad-80">
+                            <img src="../Íconos - Logos/detailsIcon.svg" alt="">
+                        </figure>
+                    </td>
+                </tr>
+                <!-- FIN PLANTILLA FILA -->
+                <thead class="Fila_Encabezado">
+                    <tr>
+                        <th class="Encabezado-tabla__nombre">Nombre</th>
+                        <th class="Encabezado-tabla__telefono">Teléfono</th>
+                        <th class="Encabezado-tabla__fecha">Fecha</th>
+                        <th class="Encabezado-tabla__tipoEnvio">Tipo Envio</th>
+                        <th class="Encabezado-tabla__metodoPago">Método de pago</th>
+                        <th class="Encabezado-tabla__price">Valor Total</th>
+                        <th class="Encabezado-tabla__detalles">Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="Cuerpo_tabla-Gestion-pedidos">
+                    <!-- INSERTAR PRODUCTOS -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!--------------------------------------- INTERFAZ DETALLE DEL PEDIDO -------------------------------------
+ ------------------------------------------------------------------------------------------------------------------>
+    <div class="modal-generico" id="Modal-detalle-pedido" style="display: none;">
+        <div class="detallPedidoEnvio">
+            <header class="flex-YX centrado header-detallePedido">
+                <h2>Detalle del pedido</h2>
+            </header>
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+            <main>
+                <div class="flex-XY centrado area-padding ">
+                    <p class="bold">Id Venta: <br> <span class="antibold" id="id-detalle-pedido-modal"></span>
+                    </p>
+                    <p class="bold">Fecha: <br><span class="antibold" id="Fecha-detalle-pedido-modal"></span>
+                    </p>
+                    <p class="bold alineado">Precio Total: <br>S/. <span class="antibold"
+                            id="Total-detalle-pedido-modal"></span></p>
+                </div>
+                <div class="flex-XY centrado area-padding">
+                    <div class="flex-YX gap-generico">
+                        <p class="bold">Nombre del Cliente: <br><span class="antibold"
+                                id="nombre-detalle-pedido-modal"></span></p>
+                        <p class="bold">Correo: <br><span class="antibold"
+                                id="correo-detalle-pedido-modal"></span></p>
+                    </div>
+                    <div class="flex-YX gap-generico alineado">
+                        <p class="bold">DNI: <br><span class="antibold" id="dni-detalle-pedido-modal"></span>
+                        </p>
+                        <p class="bold">Teléfono: <br> <span class="antibold"
+                                id="telefono-detalle-pedido-modal"></span></p>
+                    </div>
+                </div>
+                <div class="flex-XY centrado area-padding">
+                    <p class="bold">Método de pago: <br> <span class="antibold"
+                            id="metodoPago-detalle-pedido-modal"></span></p>
+                    <p class="bold alineado">Tipo de Envío: <br> <span class="antibold"
+                            id="TipoEnvio-detalle-pedido-modal"></span></p>
+                </div>
+                <div style="display: none;" class="Domicilio-ocultar">
+                    <div class="flex-XY centrado area-padding">
+                        <p class="bold">Calle y Direccion: <br><span class="antibold"
+                                id="CalleDireccion-detalle-pedido-modal"></span></p>
+                        <p class="bold alineado">Distrito: <br><span class="antibold"
+                                id="Distrito-detalle-pedido-modal"></span></p>
+                    </div>
+                    <p class="bold area-padding comentario-detalle-pedido">Comentarios:
+                        <br> <span class="antibold" id="comentario-detalle-pedido-modal">Sin Comentarios</span>
+                    </p>
+                </div>
+            </main>
+            <button class="btnDetalleProducto bold opacidad-80 colorNaranja75" id="btn_detalle-masdetalles">Más
+                Detalles</button>
+            <button class="btnDetalleProducto bold opacidad-80 colorNaranja80"
+                id="btn_detalle-eliminarPedido">Eliminar Pedido</button>
+        </div>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------
+ ---------------------------------------------INTERFAZ BOLETA DE VENTA ------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------>
+    <div class="modal-generico" id="boletaDeVenta-modal" style="display: none;">
+        <div class="boleta">
+            <div class="header flex-YX centrado" id="datosvet">
+                <h2 id="veterinariaNombre">VETERINARIA MARVET</h2>
+                <label id="veterinariaRUC">RUC: 123456789012</label>
+                <label id="veterinariaDireccion">Av Bolognesi 330 23001</label>
+                <label id="veterinariaTelefono">Telef: 522-27384</label>
+            </div>
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+            <div class="header flex-YX centrado" id="boletavet">
+                <h3 id="tituloBoleta">BOLETA DE VENTA ELECTRÓNICA</h3>
+                <label id="boletaNumero">B001 - 00000001</label>
+                <label id="clienteNombre">Cliente: <span id="nombre_cliente_boleta">John Anahua</span></label>
+                <label id="clienteDNI">DNI: <span id="dni_cliente_boleta">87654321</span></label>
+            </div>
+            <table class="items" id="tablaItems">
+                <tr style="display: none;" class="Fila-producto-tabla-boleta">
+                    <td class="boleta-producto-descripcion"></td>
+                    <td class="boleta-producto-Cantidad"></td>
+                    <td class="boleta-producto-P_Unitario"></td>
+                    <td class="boleta-producto-Total"></td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>P. Unitario</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="Contenedor-central-boleta">
+                    <tr>
+                        <td>Camisa Moderna Juguete</td>
+                        <td>2</td>
+                        <td>S/.200.00</td>
+                        <td>S/.400.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="footer flex-XY centrado" id="footerBoleta">
+                <div class="fecha">
+                    <label class="bold">FECHA: <span id="fecha">06/12/2012</span></label>
+                </div>
+                <div class="total">
+                    <label class="bold">Total: <span id="signototal">S/.<span
+                                id="totalBOLETAGENERAL">0.00</span></span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

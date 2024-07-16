@@ -1,6 +1,7 @@
 import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
 import {LogicaSesion} from '../opciones-admin/Sesiones/logicaSesion.mjs';
 import{VisualizarHistorialMedico} from "../opciones-admin/Historial-Medico/logica-historial.mjs"
+import {logicaProducto} from "../opciones-admin/Productos/logica-productos.mjs"
 
 let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
@@ -48,6 +49,7 @@ export async function AbrirCerrarInterfaz() {
 
     Productos.addEventListener("click",async ()=>{
         await CargarContenido("Productos/Gestion-Productos.html")
+        await logicaProducto();
     })
 
     Pedidos.addEventListener("click",async()=>{
@@ -86,29 +88,6 @@ export async function AbrirCerrarInterfaz() {
         }
     }
 
-    // nuevaCita.addEventListener("click", () => {
-    //     if (UltimoContenedorClick) {
-    //         UltimoContenedorClick.style.display = "none";
-    //     }
-    //     interfazNuevaCita.style.display = 'block'
-    //     UltimoContenedorClick = interfazNuevaCita
-    // })
-
-    // solicitudesCita.addEventListener("click", () => {
-    //     if (UltimoContenedorClick) {
-    //         UltimoContenedorClick.style.display = "none";
-    //     }
-    //     interfazSolicitudesCita.style.display = 'block'
-    //     UltimoContenedorClick = interfazSolicitudesCita
-    // })
-
-    // GestionCitas.addEventListener("click", () => {
-    //     if (UltimoContenedorClick) {
-    //         UltimoContenedorClick.style.display = "none";
-    //     }
-    //     interfazGestionCitas.style.display = 'block'
-    //     UltimoContenedorClick = interfazGestionCitas
-    // })
 
     // gestionProductos.addEventListener("click", () => {
     //     if (UltimoContenedorClick) {
@@ -283,7 +262,6 @@ async function MostrarTablaObjeto(endopoint) {
 
 
 }
-
 
 
 const FiltroCategoriaTabla = document.getElementById("Filtro-tabla_categoria")

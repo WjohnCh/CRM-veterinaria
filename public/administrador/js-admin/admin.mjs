@@ -97,11 +97,4 @@ document.addEventListener("DOMContentLoaded", async ()=> {
             }
         })
 
-
-    // LOGICA QUE IRÁ ACTUALIZANDO EL MAIN DEL ADMINISTRADOR
-
-
-
-
-
 })

@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
         })
     })
 
+    const token = localStorage.getItem('token');
+
     // botones 
     btn_rechazo.addEventListener("click", ()=>{
         contenedorRechazo.style.display = "none";
@@ -74,7 +76,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             const response = await fetch('http://localhost:3000/productos/envios', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': token
                 },
                 body: JSON.stringify(data)
             });

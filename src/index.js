@@ -445,44 +445,38 @@ app.get('/user-info', verifyToken, async (req, res) => {
 });
 
 
-app.post('/productos/envios', verifyCorreo, async (req, res) => {
-    const { Distrito, CalleDireccion, comentarioAdicional = '-',
-        correo, nombre, apellido, telefono, dni,
+app.post('/productos/envios', verifyToken, async (req, res) => {
+    const { Distrito = null, CalleDireccion = null, comentarioAdicional = null,
+         nombre, apellido, telefono,
         MetodoPago, productosGuardados } = req.body;
 
     const totalPrecio = await calcularTotal(productosGuardados);
 
     try {
         //INSERTAMOS EN USUARIO
-        await sequelize.query(`INSERT INTO usuario (email, nombre, apellido, telefono, rol) VALUES (?,?,?,?, 'cliente')`,
+        const [results] = await sequelize.query(
+            'SELECT idusuario FROM usuario WHERE email = ?',
             {
-                replacements: [correo, nombre, apellido, telefono]
+                replacements: [req.user.email]
             }
-        )
-        // OBTENEMOS DE USUARIO SU ID PARA INSERTARLO EN CLIENTE
-        const usuarioId = await idUserByCorreo(correo);
+        );
+        console.log(results);
 
-
-        const [idCliente] = await sequelize.query(`INSERT INTO cliente (usuarioid, direccion,dni) VALUES (?,?,?)`,
-            {
-                replacements: [usuarioId, CalleDireccion, dni]
-            }
-        )
         if (Distrito && CalleDireccion) {
             const [result2] = await sequelize.query(
-                `INSERT INTO compra (fecha,  clienteid, total, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
-                 VALUES (CURDATE(),?, ?, ?, ?, ?, ?,?, 'Domicilio')`,
+                `INSERT INTO compra (fecha,  idusuario, total, nombreComprador, apellidoComprador, distrito, CalleDireccion, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                 VALUES (CURDATE(),?, ?, ?, ?, ?, ?, ?, ?, ?, 'Domicilio')`,
                 {
-                    replacements: [idCliente, totalPrecio, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
+                    replacements: [results[0].idusuario, totalPrecio, nombre, apellido, Distrito, CalleDireccion, comentarioAdicional, MetodoPago, telefono]
                 }
             )
             await anidadirDetalle(result2, productosGuardados);
         } else {
             const [result2] = await sequelize.query(
-                `INSERT INTO compra (fecha,  clienteid, total,  comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
-                 VALUES (CURDATE(), ?, ?, ?, ?, ?, 'Retiro Tienda')`,
+                `INSERT INTO compra (fecha,  idusuario, total, nombreComprador, apellidoComprador, comentarios, metododePago,  telefonoEnvio, tipoEnvio) 
+                 VALUES (CURDATE(), ?, ?, ?, ?, ?, ?, ?, 'Retiro Tienda')`,
                 {
-                    replacements: [idCliente, totalPrecio, comentarioAdicional, MetodoPago, telefono]
+                    replacements: [results[0].idusuario, totalPrecio, nombre, apellido, comentarioAdicional, MetodoPago, telefono]
                 }
             )
             await anidadirDetalle(result2, productosGuardados);
@@ -492,7 +486,6 @@ app.post('/productos/envios', verifyCorreo, async (req, res) => {
         console.error('Error al realizar la consulta:', error);
         res.status(500).json({ message: 'Error al procesar los datos' });
     }
-
 })
 
 app.get('/pedidos', DetallePedidos)

@@ -53,7 +53,8 @@ export async function AbrirCerrarInterfaz() {
     })
 
     Pedidos.addEventListener("click",async()=>{
-
+        await CargarContenido("Productos/Gestion-pedidos.html");
+        await mostrarTablaPedidos();
     })
 
     Clientes.addEventListener("click",async()=>{
@@ -88,23 +89,6 @@ export async function AbrirCerrarInterfaz() {
         }
     }
 
-
-    // gestionProductos.addEventListener("click", () => {
-    //     if (UltimoContenedorClick) {
-    //         UltimoContenedorClick.style.display = "none";
-    //     }
-    //     interfazGestionProductos.style.display = 'block';
-    //     UltimoContenedorClick = interfazGestionProductos;
-    //     MostrarTablaObjeto("http://localhost:3000/productos/categoria/gestion");
-    // })
-    // gestionPedidos.addEventListener("click", () => {
-    //     if (UltimoContenedorClick) {
-    //         UltimoContenedorClick.style.display = "none";
-    //     }
-    //     interfazGestionPedidos.style.display = 'block'
-    //     mostrarTablaPedidos()
-    //     UltimoContenedorClick = interfazGestionPedidos
-    // })
 
     // FUNCION QUE LE DA ACCION DE CLICK A CADA ELEMENTO DEL FILTRO
     MostrarFiltradoTabla()

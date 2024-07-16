@@ -35,7 +35,16 @@
     top: 0px;
     left: 0px;
 }
-
+.btn-verde{
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    background-color:#7ed321;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+}
 
 .btn-verde:hover, .btn-rojo:hover{
     opacity: 80%;

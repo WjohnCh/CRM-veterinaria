@@ -61,7 +61,7 @@
         function crearEstructuratablaPedidos(element){
             const {nombre_completo,telefonoEnvio,fecha,total,
                 metododePago,tipoEnvio,comentarios,
-                idcompra, email,distrito,dni,CalleDireccion} = element;
+                idcompra, email,distrito,dni = "XXXXXXXX",CalleDireccion} = element;
             const newFila = plantilla.cloneNode(true);
             const nombre = newFila.querySelector(".Valor-pedidos_Tabla__nombre")
             const Telefono = newFila.querySelector(".Valor-pedidos_Tabla__telefono")
@@ -75,7 +75,7 @@
             fechaDetalle.innerText = fecha
             tipoEnvioDetalle.innerText = tipoEnvio
             MetodoPago.innerText = metododePago
-            ValorTotal.innerText = total
+            ValorTotal.innerText = total.toFixed(2)
 
             Detalle.addEventListener("click", ()=>{
                 ModalDetallePedido.style.display= "grid";

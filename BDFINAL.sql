@@ -1,71 +1,108 @@
-drop database if exists crm_oficial1;
-create database crm_oficial1;
-use crm_oficial1;
+drop database if exists crm_oficial2;
+create database crm_oficial2;
+use crm_oficial2;
 CREATE TABLE IF NOT EXISTS usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) ,
-    apellido VARCHAR(100) ,
+    username VARCHAR(100) ,
     email VARCHAR(100),
-    Fecha_Nacimiento DATE,
-    telefono varchar(20),
-    genero VARCHAR(15),
     contrasena VARCHAR(255),
     rol VARCHAR(45) 
 );
-
 CREATE TABLE IF NOT EXISTS cliente (
-    idcliente INT(11) AUTO_INCREMENT,
-    usuarioid INT(11),
+     idcliente int AUTO_INCREMENT,
+    nombre_cliente VARCHAR(100) ,
+	apellido VARCHAR(100) ,
+	telefono varchar(20),
 	direccion VARCHAR(100),
     dni VARCHAR(100),
-    PRIMARY KEY (idcliente),
-    FOREIGN KEY (usuarioid) REFERENCES usuario(idusuario)
+    PRIMARY KEY (idcliente)
 );
 
-CREATE TABLE IF NOT EXISTS veterinario (
-    veterinarioid INT(11) AUTO_INCREMENT,
-    usuario_idusuario INT(11),
-    especializacion VARCHAR(45),
-    PRIMARY KEY (veterinarioid),
-    FOREIGN KEY (usuario_idusuario) REFERENCES usuario (idusuario)
+CREATE TABLE IF NOT EXISTS conexion (
+	idConexion int AUTO_INCREMENT,
+    usuarioid INT,
+	idcliente INT,
+    PRIMARY KEY (idConexion),
+    FOREIGN KEY (usuarioid) REFERENCES usuario(idusuario),
+    FOREIGN KEY (idcliente) REFERENCES cliente(idcliente)
 );
 
 CREATE TABLE IF NOT EXISTS mascota (
     idmascota INT(11) AUTO_INCREMENT,
     nombre_mascota VARCHAR(100) NOT NULL,
-    fecha_nacimiento DATE NOT NULL,
+    fecha_nacimiento DATE,
     especie VARCHAR(100) NOT NULL,
     raza VARCHAR(100),
     peso DECIMAL(5,2) NULL,
-    color VARCHAR(50) NOT NULL,
+    color VARCHAR(50) ,
     sexo VARCHAR(10) NOT NULL,
     clienteid INT,
     PRIMARY KEY (idmascota),
     FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
 );
 
-CREATE TABLE IF NOT EXISTS historial_medico (
-    idhistorial_medico INT AUTO_INCREMENT,
-    otros VARCHAR(45) NULL,
-    mascota_idmascota INT(11),
-    PRIMARY KEY (idhistorial_medico, mascota_idmascota),
-    FOREIGN KEY (mascota_idmascota) REFERENCES mascota (idmascota)
+CREATE TABLE IF NOT EXISTS HistorialMedico (
+    idHistorialMedico INT AUTO_INCREMENT PRIMARY KEY,
+    idmascota INT,
+    FOREIGN KEY (idmascota) REFERENCES mascota(idmascota)
 );
 
-CREATE TABLE IF NOT EXISTS cita (
-    idcita INT(11) AUTO_INCREMENT,
-    fecha_hora DATETIME ,
-    veterinariaid INT(11),
-    estadocita VARCHAR(45),
-    monto FLOAT,
-    clienteid INT ,
-    modalidad_pago VARCHAR(45) NULL,
-    mascota_idmascota INT(11),
-    PRIMARY KEY (idcita),
-    FOREIGN KEY (veterinariaid) REFERENCES veterinario (veterinarioid),
-    FOREIGN KEY (clienteid) REFERENCES cliente (idcliente),
-    FOREIGN KEY (mascota_idmascota) REFERENCES mascota (idmascota)
+
+CREATE TABLE IF NOT EXISTS Vacuna (
+    idVacuna INT AUTO_INCREMENT PRIMARY KEY,
+    idHistorialMedico INT,
+    fecha DATE,
+    tipoVacunacion VARCHAR(50),
+    temperatura DECIMAL(5,2),
+    peso DECIMAL(5,3),
+    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
 );
+
+CREATE TABLE IF NOT EXISTS Desparasitacion (
+    idDesparasitacion INT AUTO_INCREMENT PRIMARY KEY,
+    idHistorialMedico INT,
+    fecha DATE,
+    producto VARCHAR(100),
+    peso DECIMAL(5,3),
+    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
+);
+
+CREATE TABLE IF NOT EXISTS RevisionMedica (
+    idRevisionMedica INT AUTO_INCREMENT PRIMARY KEY,
+    idHistorialMedico INT,
+    fecha DATE,
+    temperatura DECIMAL(5,2),
+    frecuenciaCardiaca INT,
+    frecuenciaRespiratoria INT,
+    peso DECIMAL(5,2),
+    mucosas VARCHAR(50),
+    glucosa DECIMAL(5,2),
+    TLC DECIMAL(5,2),
+    anamesis TEXT,
+    diagnosticoPresuntivo TEXT,
+    tratamiento TEXT,
+    receta TEXT,
+    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
+);
+
+CREATE TABLE IF NOT EXISTS Sesion (
+    idSesion INT(11) AUTO_INCREMENT,
+    fecha DATE,
+    hora time,
+    monto FLOAT,
+    idmascota INT,
+    masInfo TEXT,
+    PRIMARY KEY (idSesion),
+    FOREIGN KEY (idmascota) REFERENCES mascota (idmascota)
+);
+
+CREATE TABLE IF NOT EXISTS servicio(
+	idServicio INT AUTO_INCREMENT PRIMARY KEY,
+    NombreServicio varchar(50),
+    idSesion int,
+	FOREIGN KEY (idSesion) REFERENCES Sesion (idSesion)
+);
+
 CREATE TABLE IF NOT EXISTS categoria (
 	idCategoria int(11) auto_increment primary key,
     nombre varchar(100)
@@ -127,23 +164,6 @@ CREATE TABLE IF NOT EXISTS registros (
     PRIMARY KEY (registrosid)
 );
 
-CREATE TABLE IF NOT EXISTS Administrador (
-    idAdministrador INT AUTO_INCREMENT,
-    usuarioid INT,
-    PRIMARY KEY (idAdministrador),
-    FOREIGN KEY (usuarioid) REFERENCES usuario (idusuario)
-);
-
-CREATE TABLE IF NOT EXISTS asunto (
-    idasunto INT AUTO_INCREMENT,
-    nombre VARCHAR(45),
-    descripcion VARCHAR(45),
-    cita_idcita INT(11),
-    PRIMARY KEY (idasunto, cita_idcita),
-    FOREIGN KEY (cita_idcita) REFERENCES cita (idcita)
-);
-
-
 INSERT INTO productos (nombre, precio, razaMascota, url, descripcion, idCategoria) VALUES
 ('Comida Purina', 15.50, 'gato', './src/uploads/comida-purina-gato.jpg', 'Nutritiva comida Purina para gatos, ideal para una dieta balanceada y saludable.', 1),
 ('Lata Tuna & Shrimp', 12.00, 'gato', './src/uploads/lata-tuna&shrimp-gato.jpg', 'Deliciosa lata de atún y camarones para gatos, rica en proteínas.', 1),
@@ -198,23 +218,29 @@ INSERT INTO productos (nombre, precio, razaMascota, url, descripcion, idCategori
 ('Bolsa Biodegradables', 5.00, 'todos', './src/uploads/bolsa-biodegradables-todos.jpeg', 'Bolsas biodegradables, ideales para recoger los desechos de tu mascota de manera ecológica.', 4),
 ('Dispensador de Bolsas', 6.50, 'todos', './src/uploads/dispensador-bolsa-todos.jpg', 'Dispensador de bolsas, práctico y fácil de usar durante los paseos.', 4);
 
-INSERT INTO usuario (idusuario, nombre, apellido, email, Fecha_Nacimiento, genero, contrasena, rol) VALUES
- (112, 'Juan', 'Perez', 'juan.perez@example.com', '1985-06-15', 'Masculino', 'contrasena123', 'cliente'),
- (111, 'Maria', 'Gonzalez', 'maria.gonzalez@example.com', '1990-08-20', 'Femenino', 'contrasena456', 'admin'),
- (113, 'John', 'Anahua', 'john.Anahua@example.com', '1985-06-15', 'Masculino', 'contrasena789', 'cliente');
-INSERT INTO cliente (usuarioid, direccion,dni) VALUES
-	(112, '789 Calle Real', '11223344C'),
-    (111, '321 Calle Ejemplo', '22334455D'),
-    (113, '321 Calle Los prados', '12345678');
-    
+
+INSERT INTO usuario (idusuario, username, email, contrasena, rol)
+VALUES
+(1, 'jdoe', 'jdoe@example.com', 'password123', 'user'),
+(2, 'asmith', 'asmith@example.com', 'password456', 'user'),
+(3, 'mjones', 'mjones@example.com', 'password789', 'user');
+
+INSERT INTO cliente (idcliente, nombre_cliente, apellido, telefono, direccion, dni)
+VALUES
+(1, 'John', 'Doe', '5551234', '123 Elm St', '12345678'),
+(2, 'Alice', 'Smith', '5555678', '456 Oak St', '23456789'),
+(3, 'Michael', 'Jones', '5559012', '789 Pine St', '34567890');
+
+INSERT INTO conexion (idConexion, usuarioid, idcliente)
+VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3);
+
 INSERT INTO mascota (clienteid, nombre_mascota, fecha_nacimiento, especie, raza, peso, color, sexo) VALUES
 	(1, 'Bobby', '2020-05-15', 'Perro', 'Labrador', 30, 'Marrón', 'M'),
 	(1, 'Whiskers', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H'),
 	(2, 'Dorado', '2020-05-15', 'Perro', 'Labrador', 30, 'Marrón', 'M'),
 	(2, 'Selfish', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H');
-    
-
-    
-    
 
 

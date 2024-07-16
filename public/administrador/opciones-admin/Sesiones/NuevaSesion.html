@@ -77,5 +77,138 @@
     </form>
 </div>
 
+<!--------------------------------------------------------------------------------------------------
+-----------------------MODAL VISUALIZAR LAS MASCOTAS REGISTRADAS DE UN CLIENTE------------------
+-----------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------->
+
+<div class="modal-generico" id="modal-vermascotas-cliente-sesionContenedor" style="display: none;">
+    <div class="frm-generico frm-verMascotas-cliente_sesion">
+        <h2 class="flex-YX centrado">Seleccionar mascotas</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <p class="NombreClienteCompleto">Cliente: <span id="Nombre-Cliente-Seleccionado"></span></p>
+            <div class="Mascota-unica-cliente-sesion" style="display: none;">
+                <div class="flex-YX gap-generico">
+                    <p>Nombre: <span class="Nombre_cliente_seleccionado_sesion">No especificado</span></p>
+                    <p>Especie: <span class="Especie_cliente_seleccionado_sesion">No especificado</span></p>
+                </div>
+                <div class="flex-YX gap-generico">
+                    <p>Raza: <span class="Raza_cliente_seleccionado_sesion">No especificado</span></p>
+                    <p>Sexo: <span class="Sexo_cliente_seleccionado_sesion">No especificado</span></p>
+                </div>
+            </div>
+        <div id="ContenedorMascotas-cliente-sesion">
+        </div>
+        <div class="flex-XY centrado gap-generico">
+            <button class="boton-generico-primario boton-generico-primario-Apretado" id="Regresar-NuevaMascotaClienteSesion">Regresar</button>
+            <button class="boton-generico-primario" id="add-NuevaMascotaClienteSesion"> Añadir nueva mascota</button>
+        </div>
+    </div>
+</div>
+
+<!--------------------------------------------------------------------------------------------------
+-----------------------FORMULARIO AÑADIR NUEVAS MASCOTAS DE UN CLIENTE REGISTRADO------------------
+-----------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------->
+ <div class="modal-generico" id="modal-AniadirNuevaMascotaSesion" style="display: none;">
+    <form action=""  class="flex-YX" id="AniadirNuevoMascotaMascotaSesion">
+        <h2 class="flex-YX centrado" style="margin-bottom: 20px;">Añadir nueva mascota</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">        
+        <p class="NombreClienteCompleto">Cliente: <span id="NombreClienteNuevaMascota"></span></p>
+        <p class="bold tittle">Datos de la mascota</p>
+        <div class="flex-XY encerrarFRMBorde Datos-newmascota-frm-sesion">
+            <div class="flex-YX gap-generico">
+                <div class="flex-YX">
+                    <label for="input_nuevaMascotaSesion_nombreMascota">Nombre:</label>
+                    <input type="text" id="input_nuevaMascotaSesion_nombreMascota" name="nombreMascota" placeholder="Nombre de la mascota" required>
+                </div>
+                
+                <div class="flex-YX">
+                    <label for="input_nuevaMascotaSesion_razaMascota">Raza:</label>
+                    <input type="text" id="input_nuevaMascotaSesion_razaMascota" name="razaMascota" placeholder="Raza de la mascota">
+                </div>
+            </div>
+            
+            <div class="flex-YX min-content">
+                <label>Especie:</label>
+                <label for="input_nuevaMascotaSesion_especiePerro">
+                    <input type="radio" id="input_nuevaMascotaSesion_especiePerro" name="especieMascota" value="perro" required> Perro
+                </label>
+                <label for="input_nuevaMascotaSesion_especieGato">
+                    <input type="radio" id="input_nuevaMascotaSesion_especieGato" name="especieMascota" value="gato" required> Gato
+                </label>
+            </div>
+            <div class="flex-YX min-content">
+                <label>Sexo:</label>
+                <label for="input_nuevaMascotaSesion_sexoHembra">
+                    <input type="radio" id="input_nuevaMascotaSesion_sexoHembra" name="sexoMascota" value="H" required> Hembra
+                </label>
+                <label for="input_nuevaMascotaSesion_sexoMacho">
+                    <input type="radio" id="input_nuevaMascotaSesion_sexoMacho" name="sexoMascota" value="M" required> Macho
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="boton-generico-primario">Añadir Mascota</button>
+    </form>
+</div>
+
+<!--------------------------------------------------------------------------------------------------
+-----------------------FORMULARIO AÑADIR UNA NUEVA SESION -------------------------------------------
+-----------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------->
+
+ <div class="modal-generico" id="frmCrearNuevaSesion" style="display: none;">
+    <form class="frm-agendar-cita">
+        <h2 class="flex-YX centrado">Crear nueva sesión</h2>
+        <div>
+            <p class="NombreClienteCompleto" >Cliente: <span id="informacion-Cliente-nombre-cliente"></span></p>
+            <p class="NombreClienteCompleto" >Mascota: <span id="informacion-Cliente-nombre-mascota"></span></p>
+        </div>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <p >Motivo de cita</p>
+        <div class="motivo-cita">
+            <div>
+                <label><input type="checkbox" name="motivo" value="consultas" /> Consultas</label>
+                <label><input type="checkbox" name="motivo" value="tratamientos" />
+                    Tratamiento</label>
+                <label><input type="checkbox" name="motivo" value="vacunaciones" />
+                    Vacunación</label>
+                <label><input type="checkbox" name="motivo" value="desparasitaciones" />
+                    Desparasitación</label>
+                <label><input type="checkbox" name="motivo" value="spa" /> Spa</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="motivo" value="ecografias" />
+                    Ecografía</label>
+                <label><input type="checkbox" name="motivo" value="laboratorio" /> Ex.
+                    Laboratorio</label>
+                <label><input type="checkbox" name="motivo" value="asesoramiento" />
+                    Asesoramiento</label>
+                <label><input type="checkbox" name="motivo" value="cirugia" /> Cirugía
+                    General</label>
+                <label><input type="checkbox" name="motivo" value="hospedaje" />
+                    Hospedaje</label>
+            </div>
+        </div>
+        <p>Datos de la sesión</p>
+        <div class="flex-XY gap-generico seccion2FRMSESIOn">
+                <div class="input-motivocita">
+                    <label for="precio">Monto total</label>
+                    <input type="number" id="precio" name="precio" step="0.01" placeholder="Precio total"  required/>
+                </div>
+                <div class="input">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha-sesion-realizado" name="fecha" required/>
+                </div>
+            <div class="cita-motivo-textarea">
+                <label for="informacion">Más Información</label>
+                <textarea id="informacion" name="informacion" maxlength="100"
+                    style="width: 400px; height: 54px" placeholder="Informacion Adicional"></textarea>
+            </div>
+        </div>
+        <button class="boton-generico-primario">Agendar cita</button>
+    </form>
+</div>
+
 
 <script type="module" src="./logicaSesion.mjs"></script>

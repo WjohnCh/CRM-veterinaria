@@ -535,14 +535,26 @@ app.get('/buscarcliente/barra/:nombrecompleto', async (req, res) => {
 });
 
 app.post('/nuevocliente', async (req, res) => {
-    const { nombre, apellidos, telefono } = req.body;
+    let { nombresCliente, apellidosCliente, telefonoCliente = null, nombreMascota, razaMascota = null, especieMascota, sexoMascota} = req.body;
+
+
+    if(telefonoCliente == ''){
+        telefonoCliente = null;
+    }
+    if(razaMascota == ''){
+        razaMascota = null;
+    }
 
     try {
-        const result = await sequelize.query(
+        const [{ id_cliente }] = await sequelize.query(
             `CALL CREAR_CLIENTE(?, ?, ?)`,
-            { replacements: [nombre, apellidos, telefono] }
+            { replacements: [nombresCliente, apellidosCliente, telefonoCliente] }
         );
-        if (result){
+         await sequelize.query(
+            `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
+            { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, id_cliente] }
+        );
+        if (id_cliente){
             res.json({ message: "Datos Subidos" });
         } else {
             res.status(400).json({ message: "Error al subir los datos" });
@@ -555,12 +567,16 @@ app.post('/nuevocliente', async (req, res) => {
 
 app.post('/aniadirmascota/:idcliente', async (req, res) => {
     const idCliente = req.params.idcliente;
-    const { nombreMascota, especie, raza, sexo } = req.body;
-    
+    let { nombreMascota, especieMascota, razaMascota = null, sexoMascota } = req.body;
+
+    if(razaMascota == ""){
+        razaMascota = null
+    }
+
     try {
       const result = await sequelize.query(
         `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
-        { replacements: [nombreMascota, especie, raza, sexo, idCliente] }
+        { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, idCliente] }
       );
         res.json({ message: "Datos Subidos" });
     } catch (error) {
@@ -568,6 +584,50 @@ app.post('/aniadirmascota/:idcliente', async (req, res) => {
       res.status(500).send('Error al procesar la solicitud');
     }
 })
+
+app.get("/obtenerMascotas/cliente/:clienteid", async (req, res) => {
+    const {clienteid} = req.params;
+
+    try {
+        const results = await sequelize.query(
+            `CALL usuario_mascotas_verdetalle(?)`,
+            { replacements: [clienteid] }
+          );
+          res.json(results)
+    } catch (error) {
+        
+    }
+})
+
+app.post('/crearsesion/:idmascota', async(req, res) => {
+    const {idmascota} = req.params;
+    let {monto, masinfo, fecha, servicios = []} = req.body;
+    try {
+        await sequelize.query(
+            `CALL crear_sesion(?, ?, ?, ?)`,
+            {replacements: [idmascota, monto, masinfo, fecha]}
+        );
+        const [result] = await sequelize.query(
+            `SELECT LAST_INSERT_ID() as id_sesion`
+        );
+        const id_sesion = result[0].id_sesion;
+
+        for(const servicio of servicios) {
+            await sequelize.query(
+                `CALL crear_servicio(?, ?)`,
+                {replacements: [id_sesion, servicio]}
+            );
+        }
+
+        res.status(200).json({ 
+            message: 'Sesión y servicios creados con éxito'
+        });
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
 
 app.listen(port, () => {
     console.log('Mi port ' + port);

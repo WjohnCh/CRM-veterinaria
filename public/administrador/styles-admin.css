@@ -46,10 +46,16 @@ body {
     cursor: pointer;
     margin: 0px auto;
 }
+.boton-generico-primario-Apretado{
+    background-color: var(--Negro-0);
+    border: 2px solid var(--yellow-50);
+    color: var(--yellow-50);
+}
 .frm-generico{
     background-color: var(--Negro-0);
     border: 1px solid var(--Negro-50);
     border-radius: 8px;
+    position: relative;
 }
 
 .boton-generico-primario:hover{
@@ -921,7 +927,7 @@ nav.administrador-navbar .user-information {
 
 /* FORMULARIO ANIADIR NUEVA MASCOTA NUEVO CLIENTE */
 
-#AniadirNuevoClienteMascota{
+#AniadirNuevoClienteMascota, #AniadirNuevoMascotaMascotaSesion{
     background-color: var(--Negro-0);
     border-radius: 10px;
     border: 1px solid var(--Negro-75);
@@ -972,4 +978,87 @@ nav.administrador-navbar .user-information {
     margin-top: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    cursor: pointer;
+}
+.Mascota-unica-cliente-sesion:hover{
+    background-color: var(--Negro-25);
+}
+/* MODAL NUEVA MASCOTA CON MASCOTA EXISTENTE */
+.Datos-newmascota-frm-sesion{
+    gap: 100px;
+}
+.NombreClienteCompleto{
+    font-size: var(--Text-small);
+    margin-bottom: 10px;
+}
+
+/* REGISTRAR SESION */
+.frm-agendar-cita {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 900px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.frm-agendar-cita > p {
+    margin: 20px 0px 4px;
+    font-weight: 600;
+    font-size: var(--Text-long);
+}
+.motivo-cita{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border: 1px solid var(--Negro-50);
+    padding: 10px;
+    border-radius: 8px;
+}
+.motivo-cita div {
+    flex: 1;
+    margin-right: 10px;
+}
+.motivo-cita label {
+    display: block;
+    margin-bottom: 10px;
+}
+.input-motivocita-group-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.input-motivocita-group {
+    flex: 1;
+    margin-right: 10px;
+}
+.input-motivocita-group:last-child {
+    margin-right: 0;
+}
+
+.input-motivocita-group label {
+    margin-bottom: 5px;
+}
+.input-motivocita-group input,
+.input-motivocita-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.input-motivocita-group textarea {
+    height: 100px;
+    resize: none;
+}
+.seccion2FRMSESIOn{
+    border: 1px solid var(--Negro-50);
+    border-radius: 8px;
+    padding: 20px 10px 10px 10px;
+    margin-bottom: 20px;
+}
+.cita-motivo-textarea textarea{
+    padding: 10px;
+    background-color: var(--Negro-25);
+    border-radius: 4px;
+    font-size: var(--Text-small);
 }

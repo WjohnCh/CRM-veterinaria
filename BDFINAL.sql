@@ -31,11 +31,15 @@ CREATE TABLE IF NOT EXISTS mascota (
     idmascota INT(11) AUTO_INCREMENT,
     nombre_mascota VARCHAR(100) NOT NULL,
     fecha_nacimiento DATE,
+    anioNacimiento int,
+    mesNacimiento int,
+    diaNacimiento int,
     especie VARCHAR(100) NOT NULL,
     raza VARCHAR(100),
     peso DECIMAL(5,2) NULL,
     color VARCHAR(50) ,
     sexo VARCHAR(10) NOT NULL,
+    obs varchar(100), 
     clienteid INT,
     PRIMARY KEY (idmascota),
     FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
@@ -54,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Vacuna (
     fecha DATE,
     tipoVacunacion VARCHAR(50),
     temperatura DECIMAL(5,2),
-    peso DECIMAL(5,3),
+    peso DECIMAL(5,2),
     FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
 );
 
@@ -63,7 +67,7 @@ CREATE TABLE IF NOT EXISTS Desparasitacion (
     idHistorialMedico INT,
     fecha DATE,
     producto VARCHAR(100),
-    peso DECIMAL(5,3),
+    peso DECIMAL(5,2),
     FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
 );
 
@@ -132,7 +136,9 @@ CREATE TABLE IF NOT EXISTS compra (
     idcompra INT(11) AUTO_INCREMENT,
     fecha DATE,
     total FLOAT ,
-    clienteid INT,
+    idusuario INT,
+    nombreComprador varchar (100),
+    apellidoComprador varchar (100),
 	distrito varchar(50),
     CalleDireccion varchar(200),
     comentarios varchar(400),
@@ -141,7 +147,7 @@ CREATE TABLE IF NOT EXISTS compra (
     telefonoEnvio varchar(20),
     isCancelled BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (idcompra),
-    FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
+    FOREIGN KEY (idusuario) REFERENCES usuario (idusuario)
 );
 
 CREATE TABLE IF NOT EXISTS detalle_compra (

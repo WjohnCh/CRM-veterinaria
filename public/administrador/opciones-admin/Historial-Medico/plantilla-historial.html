@@ -33,7 +33,7 @@
             <div class="flex-YX" style="gap: 8px;">
                 <p class="semibold">Nombres y apellidos: <span class="antibold"
                         id="Nombre_Cliente_Historial_Medico"></span></p>
-                <p class="semibold">Direccion: <span class="antibold" id="Direccion_Cliente_Historial_Medico"></span>
+                <p class="semibold">Dirección: <span class="antibold" id="Direccion_Cliente_Historial_Medico"></span>
                 </p>
                 <p class="semibold">Teléfono: <span class="antibold" id="Telefono_Cliente_Historial_Medico"></span></p>
             </div>
@@ -89,7 +89,7 @@
                     </tbody>
                 </table>
                 <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
-                    Desparacitación</button>
+                    Desparasitación</button>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="flex-YX" style="gap: 14px;">
                 <p class="bold">Anamnesis: <span class="antibold Anamnesis_historiaClinica_Historial_Medico"></span></p>
-                <p class="bold">Diagnostico Presuntivo: <span
+                <p class="bold">Diagnóstico Presuntivo: <span
                         class="antibold DiagnosticoPresuntivo_historiaClinica_Historial_Medico"></span></p>
                 <p class="bold">Tratamiento: <span class="antibold Tratamiento_historiaClinica_Historial_Medico"></span>
                 </p>
@@ -232,7 +232,7 @@
                         class="MiCuenta_disabled_input" placeholder="No proporcionado">
 
                     <label for="input_miCuenta_email">Dirección:</label>
-                    <input id="input_miCuenta_email" type="email" class="MiCuenta_disabled_input"
+                    <input id="input_miCuenta_email" type="text" class="MiCuenta_disabled_input"
                     name="direccion" placeholder="No proporcionado">
                 </div>
             </div>
@@ -260,7 +260,7 @@
                 <label>Temperatura:</label><br>
                 <input class="campo" type="number"  name="temperatura"placeholder="Temperatura"><br>
                 <label>Peso:</label><br>
-                <input class="campo" type="number" name="peso" placeholder="Peso">
+                <input class="campo" type="number" step="0.1" name="peso" placeholder="Peso">
             </div>
         </div>
         <br>
@@ -269,11 +269,11 @@
 </div>
 
 <!----------------------------------------------------------------------------------------------------- 
------------------------------------MODAL PARA ANIADIR Desparacitaciones-------------------------- 
+-----------------------------------MODAL PARA ANIADIR Desparasitaciones-------------------------- 
  ------------------------------------------------------------------------------------------------------->
 <div class="modal-generico" id="modal-AniadirDesparacitaciones-HM" style="display: none;">
     <form action="#" class="frm-generico frmAniadirnewVacuna" id="AniadirDesparacitaciones-HM">
-        <h3 class="flex-YX centrado">AÑADIR DESPARACITACIÓN</h3>
+        <h3 class="flex-YX centrado">AÑADIR DESPARASITACIÓN</h3>
         <br>
         <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
         <div class="flex-YX ContenedorAniadirVacunas">
@@ -287,7 +287,7 @@
             </div>
             <div class="flex-XY centrado gap-generico">
                 <label>Peso:</label>
-                <input class="campo" name="peso" type="number" placeholder="Peso">
+                <input class="campo" name="peso" type="number" step="0.1" placeholder="Peso">
             </div>
         </div>
         <br>

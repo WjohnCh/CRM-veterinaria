@@ -763,7 +763,7 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         mucosas = null,
         glucosa = null,
         TLC = null,
-        anamesis = null,
+        anamnesis = null,
         diagnosticoPresuntivo = null,
         tratamiento = null,
         receta = null
@@ -786,7 +786,7 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
                         mucosas,
                         glucosa,
                         TLC,
-                        anamesis,
+                        anamnesis,
                         diagnosticoPresuntivo,
                         tratamiento,
                         receta

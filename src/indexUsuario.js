@@ -326,10 +326,64 @@ const editarDatosUsuario = async (req, res) => {
     }
   }
 
+  const obtenerSesiones = async (req, res) => {
+    try {
+        const [results] = await sequelize.query("CALL obtener_sesiones()");
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener las sesiones:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+const obtenerClientes = async (req, res) => {
+    try {
+        const results = await sequelize.query("CALL obtener_clientes()");
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los clientes:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+const obtenerMascotas = async (req, res) => {
+    try {
+        const results = await sequelize.query("CALL obtener_mascotas()");
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener las mascotas:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+const obtenerHistorialMedico = async (req, res) => {
+    try {
+        const [results] = await sequelize.query("CALL obtener_historial_medico()");
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener el historial médico:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+const obtenerUsuarios = async (req, res) => {
+    try {
+        const results = await sequelize.query("CALL obtener_usuarios()");
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener los usuarios:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+};
+
+
+
+
 
 module.exports = {
     idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado,
-    existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo, editarDatosUsuario
+    existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo, editarDatosUsuario,
+    obtenerSesiones, obtenerClientes, obtenerMascotas, obtenerHistorialMedico, obtenerUsuarios,
 };
 
 

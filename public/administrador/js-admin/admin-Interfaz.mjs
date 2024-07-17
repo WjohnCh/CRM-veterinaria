@@ -2,6 +2,9 @@ import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
 import {LogicaSesion} from '../opciones-admin/Sesiones/logicaSesion.mjs';
 import{VisualizarHistorialMedico} from "../opciones-admin/Historial-Medico/logica-historial.mjs"
 import {logicaProducto} from "../opciones-admin/Productos/logica-productos.mjs"
+import {logicaCliente} from "../opciones-admin/Clientes/logica-clientes.mjs"
+import {logicaMascotas} from "../opciones-admin/Clientes/logica-mascota.mjs"
+import {logicaCuentas} from "../opciones-admin/Clientes/logica-cuentas.mjs"
 
 let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
@@ -58,11 +61,13 @@ export async function AbrirCerrarInterfaz() {
     })
 
     Clientes.addEventListener("click",async()=>{
-
+        await CargarContenido("Clientes/Gestionar-clientes.html");
+        await logicaCliente()
     })
 
     Mascotas.addEventListener("click",async()=>{
-
+        await CargarContenido("Clientes/Gestionar-mascota.html");
+        await logicaMascotas()
     })
 
     HistorialMedico.addEventListener("click",async()=>{
@@ -71,7 +76,8 @@ export async function AbrirCerrarInterfaz() {
     })
 
     Cuentas.addEventListener("click",async()=>{
-
+        await CargarContenido("Clientes/Gestionar-cuentas.html");
+        await logicaCuentas();
     })
 
 

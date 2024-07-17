@@ -514,18 +514,18 @@ nav.administrador-navbar .user-information {
 
 .Fila_Encabezado th {
     width: min-content;
-    background-color: var(--Orange-85);
-    color: #fff;
+    background-color: var(--yellow-50);
+    color: var(--Negro-100);
     font-weight: bold;
     padding: 12px 0px;
     text-align: center;
-    border: 1px solid var(--Orange-50);
+    border: 1px solid var(--yellow-50);
 }
 
 
 .Fila_producto td {
 
-    border: 1px solid var(--Orange-50);
+    border: 1px solid var(--yellow-50);
     padding: 8px 8px;
     word-wrap: break-word;
     /* Hace que el contenido se coloque abajo en vez de desbordar*/

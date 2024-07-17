@@ -9,7 +9,8 @@ const port = process.env.PORT || 3000;
 
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
     , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo
-    , editarDatosUsuario } = require('./indexUsuario.js')
+    , editarDatosUsuario, obtenerSesiones, obtenerClientes, obtenerMascotas,
+    obtenerHistorialMedico, obtenerUsuarios,} = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -413,9 +414,11 @@ app.post('/login', async (req, res) => {
             { replacements: [email, password] }
         );
         if (results.length > 0) {
+            // HAGAS UN SELECT INTO Y QUE MANDES EL CORREO LA CONTRASEÑA LA FECHA Y HORA // BOOLEANO LLAMADO ACCESS: TRUE
             const token = jwt.sign({ email: results[0].email }, SECRET_KEY);
             res.json({ token, results, success: true });
         } else {
+            // HAGAS UN SELECT INTO Y QUE MANDES EL CORREO LA CONTRASEÑA LA FECHA Y HORA // BOOLEANO LLAMADO ACCESS: FALSE
             res.json({ success: false, message: 'Invalid email or password.' });
         }
     } catch (error) {
@@ -851,6 +854,14 @@ app.post('/desparasitacion/aniadir/:idmascota', async (req, res) => {
         res.status(500).send('Error al procesar la solicitud');
     }
 });
+
+app.get('/sesiones', obtenerSesiones);
+app.get('/clientes', obtenerClientes);
+app.get('/mascotas/nombreUsuario', obtenerMascotas);
+app.get('/historialMedico', obtenerHistorialMedico);
+app.get('/usuarios', obtenerUsuarios);
+
+
 
 
 app.listen(port, () => {

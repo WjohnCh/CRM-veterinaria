@@ -296,7 +296,7 @@ export async function LogicaSesion() {
             });
 
             if (response.ok) {
-                console.log(idMascota);
+
                 localStorage.setItem('idMascota', idMascota);
                 await CargarContenido("Historial-Medico/plantilla-historial.html")
                 await VisualizarHistorialMedico();

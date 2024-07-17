@@ -1,4 +1,3 @@
- -- PROCEDIMIENTOS ALMACENADOS
 DELIMITER $$
 
 -- PROCEDIMIENTO QUE DEVUELVE LOS DATOS DE LAS MASCOTAS DATO EL ID DEL CLIENTE
@@ -48,6 +47,7 @@ END $$
 
 -- Nuevos procedimientos obtener info del usuario por correo
 DELIMITER $$
+DROP PROCEDURE IF EXISTS obtener_info_usuario_por_correo$$
 CREATE PROCEDURE obtener_info_usuario_por_correo(IN user_email VARCHAR(255))
 BEGIN
     SELECT 
@@ -68,6 +68,7 @@ BEGIN
 END $$
 
 DELIMITER $$
+DROP PROCEDURE IF EXISTS editar_usuario $$
 CREATE PROCEDURE editar_usuario(
 	IN p_email VARCHAR(100),
     IN p_nombre_usuario VARCHAR(100),
@@ -92,6 +93,7 @@ UPDATE usuario
 END $$
 
 DELIMITER $$
+DROP PROCEDURE IF EXISTS buscar_nombres_cliente_barra$$
 CREATE PROCEDURE buscar_nombres_cliente_barra(
 	in texto_input VARCHAR(100)
 )
@@ -107,6 +109,7 @@ END $$
 
 -- Crear nuevo cliente
 DELIMITER $$
+DROP PROCEDURE IF EXISTS CREAR_CLIENTE$$
 CREATE PROCEDURE CREAR_CLIENTE(
 		IN p_nombre VARCHAR(100),
         IN p_apellidos VARCHAR(100),
@@ -119,6 +122,7 @@ END $$
 
 -- Crear nueva mascota
 DELIMITER $$
+
 DROP PROCEDURE IF EXISTS CREAR_MASCOTA $$
 CREATE PROCEDURE CREAR_MASCOTA(
 		IN p_nombre VARCHAR(100),
@@ -135,6 +139,7 @@ END $$
 
 -- Crear nuevo SESION dado el id
 DELIMITER $$
+DROP PROCEDURE IF EXISTS crear_sesion$$
 CREATE PROCEDURE crear_sesion(
     IN p_idmascota INT,
 	IN p_monto FLOAT,
@@ -149,6 +154,7 @@ END $$
 
 -- Crear nuevo servicio dado el id
 DELIMITER $$
+DROP PROCEDURE IF EXISTS crear_servicio $$
 CREATE PROCEDURE crear_servicio(
 	in idsesion int,
     in p_nombreservicio varchar(50)
@@ -159,6 +165,7 @@ END $$
 
 -- OBTENER ID DEL HISTORIAL MEDICO DADO EL ID DE LA MASCOTA
 DELIMITER $$
+DROP PROCEDURE IF EXISTS get_idmas_by_idhis $$
 CREATE PROCEDURE get_idmas_by_idhis(
 	IN p_idmascota INT
 )
@@ -168,6 +175,7 @@ END $$
 
 -- Obtener las vacunas dadas el historial Medico
 DELIMITER $$
+DROP PROCEDURE IF EXISTS get_by_id_vac $$
 CREATE PROCEDURE get_by_id_vac(
 IN p_idHistorialMedico INT
 )
@@ -182,6 +190,7 @@ END $$
 
 -- Obtener la revisionMedica Dada el id dEL HISTORIAL
 DELIMITER $$
+DROP PROCEDURE IF EXISTS get_by_id_revmed $$
 CREATE PROCEDURE get_by_id_revmed(
 	IN p3_idHistorialMedico INT
 )
@@ -207,7 +216,8 @@ END $$
 
 -- OBTENER LOS DATOS DE DESAPARICITACION DADO EL HISTORIAL MEDICO
 DELIMITER $$
-CREATE DEFINER=root@localhost PROCEDURE get_by_id_despara(
+DROP PROCEDURE IF EXISTS get_by_id_despara $$
+CREATE PROCEDURE get_by_id_despara(
 	IN p2_idHistorialMedico INT
 )
 BEGIN
@@ -221,6 +231,7 @@ END $$
 
 -- ACTUALIZAR MASCOTA
 DELIMITER $$
+DROP PROCEDURE IF EXISTS update_mascota_histmed $$
 CREATE PROCEDURE update_mascota_histmed(
 	IN p_idmascota INT,
 	IN p_nombre_mascota VARCHAR(100),
@@ -247,6 +258,7 @@ END $$
 
 -- ACTUALIZAR CLIENTE
 DELIMITER $$
+DROP PROCEDURE IF EXISTS update_cliente_histmed $$
 CREATE PROCEDURE update_cliente_histmed(
 	IN p_idcliente INT,
     IN p_nombre_cliente VARCHAR(100),
@@ -268,6 +280,7 @@ END $$
 
 -- CREAR VACUNAS
 DELIMITER $$
+DROP PROCEDURE IF EXISTS post_by_id_vac $$
 CREATE  PROCEDURE post_by_id_vac(
 	IN p_idHistorialMedico INT,
     IN p_fecha DATE,
@@ -288,6 +301,7 @@ END $$
 
 -- CREAR DESPARACITACION
 DELIMITER $$
+DROP PROCEDURE IF EXISTS post_by_id_despara $$
 CREATE PROCEDURE post_by_id_despara(
 	IN p_idHistorialMedico INT,
     IN p_fecha DATE,
@@ -306,6 +320,7 @@ END $$
 
 -- Crear historia Medica
 DELIMITER $$
+DROP PROCEDURE IF EXISTS post_by_id_revmed $$
 CREATE PROCEDURE post_by_id_revmed(
     IN p_idHistorialMedico INT,
     IN p_fecha DATE,
@@ -340,6 +355,31 @@ BEGIN
     );
 END $$
 
+-- Para Cliente
+DELIMITER $$
+DROP PROCEDURE IF EXISTS obtener_clientes $$
+CREATE PROCEDURE obtener_clientes()
+BEGIN
+    SELECT * FROM cliente;
+END $$
+
+-- PARA MASCOTAS
+DELIMITER $$
+DROP PROCEDURE IF EXISTS obtener_mascotas $$
+CREATE PROCEDURE obtener_mascotas()
+BEGIN
+    SELECT m.*, c.nombre_cliente, c.apellido FROM mascota m INNER JOIN cliente c ON c.idcliente = m.clienteid;
+END $$
+
+-- PARA EL HISTORIAL MÉDICO
+
+-- PARA LAS CUENTAS
+DELIMITER $$
+DROP PROCEDURE IF EXISTS obtener_usuarios $$
+CREATE PROCEDURE obtener_usuarios()
+BEGIN
+    SELECT * FROM usuario;
+END $$
 
 DELIMITER ;
 

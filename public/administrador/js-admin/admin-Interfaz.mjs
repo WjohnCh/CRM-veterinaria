@@ -1,10 +1,11 @@
 import {mostrarTablaPedidos} from '../js-admin/admin-gestioPedidos.mjs'
 import {LogicaSesion} from '../opciones-admin/Sesiones/logicaSesion.mjs';
-import{VisualizarHistorialMedico} from "../opciones-admin/Historial-Medico/logica-historial.mjs"
+import{VisualizarTablaHistorialMedico} from "../opciones-admin/Historial-Medico/logica-historial.mjs"
 import {logicaProducto} from "../opciones-admin/Productos/logica-productos.mjs"
 import {logicaCliente} from "../opciones-admin/Clientes/logica-clientes.mjs"
 import {logicaMascotas} from "../opciones-admin/Clientes/logica-mascota.mjs"
 import {logicaCuentas} from "../opciones-admin/Clientes/logica-cuentas.mjs"
+import {logicaSesionGestion} from "../opciones-admin/Sesiones/logicaGestionar-Sesion.mjs"
 
 let idProductoParaActualizar = 0; // Este id servirá para indicarle al formulario que producto debe actualizar
 
@@ -47,7 +48,8 @@ export async function AbrirCerrarInterfaz() {
     })
 
     Sesiones.addEventListener("click",async ()=>{
-
+        await CargarContenido("Sesiones/GestionSesiones.html");
+        await logicaSesionGestion();
     })
 
     Productos.addEventListener("click",async ()=>{
@@ -71,8 +73,8 @@ export async function AbrirCerrarInterfaz() {
     })
 
     HistorialMedico.addEventListener("click",async()=>{
-        await CargarContenido("Historial-Medico/plantilla-historial.html")
-        await VisualizarHistorialMedico();
+        await CargarContenido("Historial-Medico/tabla-historial.html")
+        await VisualizarTablaHistorialMedico();
     })
 
     Cuentas.addEventListener("click",async()=>{

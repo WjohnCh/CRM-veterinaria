@@ -862,6 +862,17 @@ app.get('/historialMedico', obtenerHistorialMedico);
 app.get('/usuarios', obtenerUsuarios);
 
 
+app.get('/sesiones/servicios/:idsesion', async (req, res)=>{
+    const {idsesion} = req.params;
+    try {
+        const [results] = await sequelize.query(`SELECT * FROM servicio s WHERE s.idsesion = ?`,
+            { replacements: [idsesion]});
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener las sesiones:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
 
 
 app.listen(port, () => {

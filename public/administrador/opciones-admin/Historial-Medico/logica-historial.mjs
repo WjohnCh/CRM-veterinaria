@@ -425,3 +425,67 @@ export async function VisualizarHistorialMedico(){
         }
     })
 }
+
+
+
+
+export async function VisualizarTablaHistorialMedico(){
+    const contenedor = document.getElementById("Cuerpo_tabla-Gestion-Producto")
+    const plantilla = document.querySelector(".Fila_producto")
+
+    try {
+        const results = await fetch(`http://localhost:3000/historialMedico`)
+        const body = await results.json();
+        body.forEach(async (hmedico)=>{
+            crearHistorialMedicoFila(hmedico)
+        })
+        
+        function crearHistorialMedicoFila(hmedico){
+            const newHistorial = plantilla.cloneNode(true)
+
+            const idHistorial = newHistorial.querySelector(".Valor-Tabla__NombreSesion")
+            const nombreCliente = newHistorial.querySelector(".Valor-Tabla__nombreCliente")
+            const mascota = newHistorial.querySelector(".Valor-Tabla__Mascota")
+            const sexo = newHistorial.querySelector(".Valor-Tabla__sexo")
+            const especie = newHistorial.querySelector(".Valor-Tabla__Especie")
+            const detalle = newHistorial.querySelector(".Valor-Tabla__detalles")
+
+            idHistorial.innerText = hmedico.idHistorialMedico
+            nombreCliente.innerText = `${hmedico.nombre_cliente} ${hmedico.apellido}`
+            mascota.innerText = hmedico.nombre_mascota
+            if(hmedico.sexo == "M"){
+                sexo.innerText = "Macho"
+            }else{
+                sexo.innerText = "Hembra"
+            }
+            especie.innerText = hmedico.especie
+
+            detalle.addEventListener("click", async()=>{
+                localStorage.setItem('idMascota', hmedico.idmascota);
+                await CargarContenido("Historial-Medico/plantilla-historial.html")
+                await VisualizarHistorialMedico();
+            })
+
+            newHistorial.style.display = "table-row"
+            contenedor.appendChild(newHistorial)
+        }
+
+        let contenedorDinamico = document.getElementById("contenedor-main-admin")
+
+        async function CargarContenido(url){
+            try {
+                let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
+                if (!respuesta.ok){
+                    throw new Error('Error al cargar los datos');
+                }
+                let contenido = await respuesta.text();
+                contenedorDinamico.innerHTML = contenido
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+    } catch (error) {
+        console.error(error)
+    }
+}

@@ -328,7 +328,8 @@ const editarDatosUsuario = async (req, res) => {
 
   const obtenerSesiones = async (req, res) => {
     try {
-        const [results] = await sequelize.query("CALL obtener_sesiones()");
+        const [results] = await sequelize.query(`SELECT s.*, nombre_mascota, nombre_cliente, apellido FROM sesion s INNER JOIN mascota m ON s.idmascota = m.idmascota 
+INNER JOIN cliente c ON c.idcliente = m.clienteid;`);
         res.json(results);
     } catch (error) {
         console.error('Error al obtener las sesiones:', error.message);
@@ -358,7 +359,8 @@ const obtenerMascotas = async (req, res) => {
 
 const obtenerHistorialMedico = async (req, res) => {
     try {
-        const [results] = await sequelize.query("CALL obtener_historial_medico()");
+        const [results] = await sequelize.query(`SELECT idHistorialMedico, nombre_mascota, especie, sexo, nombre_cliente, apellido, m.idmascota FROM historialmedico hm INNER JOIN mascota m ON m.idmascota = hm.idmascota
+INNER JOIN cliente c ON c.idcliente = m.clienteid;`);
         res.json(results);
     } catch (error) {
         console.error('Error al obtener el historial médico:', error.message);

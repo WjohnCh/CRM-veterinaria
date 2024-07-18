@@ -1,9 +1,10 @@
 
+const modalDeCarga = document.getElementById("loading-screen")
 export async function VisualizarHistorialMedico(){
     let idMascota = localStorage.getItem("idMascota")
-    console.log("ID DE LA MASCOTA",idMascota);
     const tablaFilaVacuna = document.getElementById("contenedor-tablaFila-vacunacion-HM")
     const PlantillaFilaVacuna = document.querySelector(".plantilla-fila-vacunacion-HM")
+
 
     // LOGICA PARA VER LOS DATOS DEL PROPIETARIO Y MASCOTA
     const nombresApellidosCliente = document.getElementById("Nombre_Cliente_Historial_Medico");
@@ -19,9 +20,19 @@ export async function VisualizarHistorialMedico(){
     await verDatosClienteYmascota()
     async function verDatosClienteYmascota(){
         try {
-            const result = await fetch(`http://localhost:3000/obtenerdatocliente/mascota/${idMascota}`)
-            const {mascota} = await result.json();
-            
+            modalDeCarga.style.display = "flex";
+
+            const result = await fetch(`http://localhost:3000/obtenerdatocliente/mascota/${idMascota}`);
+                 
+            const { mascota } = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+
             nombreMascota.innerText = mascota.nombre_mascota
             especieMascota.innerText = mascota.especie
             razaMascota.innerText = mascota.raza
@@ -41,9 +52,18 @@ export async function VisualizarHistorialMedico(){
     await verDatosCliente()
     async function verDatosCliente(){
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/obtenerdatocliente/mascota/${idMascota}`)
             const {cliente} = await result.json();
             
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+            
+
             nombresApellidosCliente.innerText = cliente.nombre_cliente + " "+cliente.apellido
             direccionCliente.innerText = cliente.direccion
             telefonoCliente.innerText = cliente.telefono          
@@ -56,8 +76,17 @@ export async function VisualizarHistorialMedico(){
     await VerVacunas()
     async function VerVacunas(){
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/vacunas/${idMascota}`)
             const body = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+
             tablaFilaVacuna.innerText = ""
             body.forEach(vacuna=>{
                 CrearFIlaVacuna(vacuna)
@@ -96,8 +125,17 @@ export async function VisualizarHistorialMedico(){
     
     async function verDesparacitacion(){
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/desparacitaciones/${idMascota}`)
             const body = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+
             contenedorDesparacitacion.innerText = ""
             body.forEach(desparacitacion=>{
                 CrearFIlaDesparacitacion(desparacitacion)
@@ -132,8 +170,16 @@ export async function VisualizarHistorialMedico(){
 
     async function verHistoriaClinica(){
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/revisionmedica/${idMascota}`)
             const body = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
 
             ContenedorHistoriaClinica.innerText = ""
             body.forEach(historia=>{
@@ -223,8 +269,17 @@ export async function VisualizarHistorialMedico(){
     btnmascota.addEventListener("click", async()=>{
         modalActualizarMascota.style.display = "grid"
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/obtenerdatocliente/mascota/${idMascota}`)
             const {mascota} = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+
             nombreMascotaActualizar.value = mascota.nombre_mascota
             if(mascota.especie == "Perro" ||mascota.especie == "perro" ){
                 especieMascotaActualizar.value = "perro"
@@ -254,8 +309,17 @@ export async function VisualizarHistorialMedico(){
     btnpropietario.addEventListener("click", async()=>{
         modalActualizarCliente.style.display = "grid"
         try {
+            modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/obtenerdatocliente/mascota/${idMascota}`)
             const {cliente} = await result.json();
+
+            if(result.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
+
             nombrePropietarioActualizar.value = cliente.nombre_cliente
             nombreApellido.value = cliente.apellido
             TelefonopietarioActualizar.value = cliente.telefono
@@ -287,6 +351,7 @@ export async function VisualizarHistorialMedico(){
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/mascota/update/${idMascota}`, {
                 method: 'PUT',
                 headers: {
@@ -295,6 +360,7 @@ export async function VisualizarHistorialMedico(){
                 body: JSON.stringify(data)
             });
             if (response.ok){
+                modalDeCarga.style.display = "none";
                 modalActualizarMascota.style.display = "none"
                 await verDatosClienteYmascota()
             } else {
@@ -315,6 +381,7 @@ export async function VisualizarHistorialMedico(){
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/usuario/update/${idMascota}`, {
                 method: 'PUT',
                 headers: {
@@ -323,6 +390,7 @@ export async function VisualizarHistorialMedico(){
                 body: JSON.stringify(data)
             });
             if (response.ok){
+                modalDeCarga.style.display = "none";
                 modalActualizarCliente.style.display = "none"
                 await verDatosCliente()
             } else {
@@ -343,6 +411,7 @@ export async function VisualizarHistorialMedico(){
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/vacuna/aniadir/${idMascota}`, {
                 method: 'POST',
                 headers: {
@@ -351,6 +420,7 @@ export async function VisualizarHistorialMedico(){
                 body: JSON.stringify(data)
             });
             if (response.ok){
+                modalDeCarga.style.display = "none";
                 frmAniadirVacuna.reset();
                 modalVacunacion.style.display = "none"
                 await VerVacunas();
@@ -377,6 +447,7 @@ export async function VisualizarHistorialMedico(){
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/desparasitacion/aniadir/${idMascota}`, {
                 method: 'POST',
                 headers: {
@@ -385,6 +456,7 @@ export async function VisualizarHistorialMedico(){
                 body: JSON.stringify(data)
             });
             if (response.ok){
+                modalDeCarga.style.display = "none";
                 frmDesparacitaciones.reset();
                 modalDesparacitacion.style.display = "none"
                 await verDesparacitacion()
@@ -406,6 +478,7 @@ export async function VisualizarHistorialMedico(){
             data[key] = trimmedValue === '' ? null : trimmedValue;
         });
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/revmed/aniadir/${idMascota}`, {
                 method: 'POST',
                 headers: {
@@ -414,6 +487,7 @@ export async function VisualizarHistorialMedico(){
                 body: JSON.stringify(data)
             });
             if (response.ok){
+                modalDeCarga.style.display = "none";
                 frmDesparacitaciones.reset();
                 modalAniadirHistoriaClinica.style.display = "none"
                 await verHistoriaClinica()
@@ -434,8 +508,17 @@ export async function VisualizarTablaHistorialMedico(){
     const plantilla = document.querySelector(".Fila_producto")
 
     try {
+        modalDeCarga.style.display = "flex";
         const results = await fetch(`http://localhost:3000/historialMedico`)
         const body = await results.json();
+
+        if(results.ok){
+            //CARGAR MODAL DE ACEPTAR
+            modalDeCarga.style.display = "none";
+        }else{
+            //CARGAR MODAL DE ERROR
+        }
+
         body.forEach(async (hmedico)=>{
             crearHistorialMedicoFila(hmedico)
         })
@@ -474,9 +557,12 @@ export async function VisualizarTablaHistorialMedico(){
 
         async function CargarContenido(url){
             try {
+                modalDeCarga.style.display = "flex";
                 let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
                 if (!respuesta.ok){
                     throw new Error('Error al cargar los datos');
+                }else{
+                    modalDeCarga.style.display = "none";
                 }
                 let contenido = await respuesta.text();
                 contenedorDinamico.innerHTML = contenido

@@ -1,4 +1,5 @@
 import{VisualizarHistorialMedico} from "../Historial-Medico/logica-historial.mjs"
+const modalDeCarga = document.getElementById("loading-screen")
 export async function LogicaSesion() {
     const btnAniadirClienteBtn = document.getElementById("idBtAnidir-new-Cliente-sesion")
     const modalBuscarCliente = document.getElementById("modal-buscar-sesion-cliente");
@@ -48,10 +49,14 @@ export async function LogicaSesion() {
         const valorInput = inputBuscarCliente.value
 
         try {
+            modalDeCarga.style.display = "flex";
             contenedorClienteBody.innerText = ""
             const result = await fetch(`http://localhost:3000/buscarcliente/barra/${valorInput}`)
             if (!result.ok) {
+                modalDeCarga.style.display = "none";
                 throw new Error(`Error: ${result.status} ${result.statusText}`);
+            }else{
+                modalDeCarga.style.display = "none";
             }
             const body = await result.json();
 
@@ -78,11 +83,15 @@ export async function LogicaSesion() {
             const valorInput = inputBuscarCliente.value
 
             try {
+                modalDeCarga.style.display = "flex";
                 contenedorClienteBody.innerText = ""
                 const result = await fetch(`http://localhost:3000/buscarcliente/barra/${valorInput}`)
 
                 if (!result.ok) {
+                    modalDeCarga.style.display = "none";
                     throw new Error(`Error: ${result.status} ${result.statusText}`);
+                }else{
+                    modalDeCarga.style.display = "none";
                 }
                 const body = await result.json();
 
@@ -116,8 +125,18 @@ export async function LogicaSesion() {
 
         nuevoCLiente.addEventListener("click", async () => {
             try {
+                modalDeCarga.style.display = "flex";
                 const result = await fetch(`http://localhost:3000/obtenerMascotas/cliente/${cliente.idcliente}`)
                 const body = await result.json();
+
+                if(result.ok){
+                    //CARGAR MODAL DE ACEPTAR
+                    modalDeCarga.style.display = "none";
+                }else{
+                    modalDeCarga.style.display = "none";
+                    //CARGAR MODAL DE ERROR
+                }
+
                 localStorage.setItem('nombreCliente', cliente.NombreCompleto);
                 nombreClienteVerMascotas.innerText = cliente.NombreCompleto
                 idClienteCrearMascota = cliente.idcliente;
@@ -192,6 +211,7 @@ export async function LogicaSesion() {
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/nuevocliente`, {
                 method: 'POST',
                 headers: {
@@ -199,6 +219,15 @@ export async function LogicaSesion() {
                 },
                 body: JSON.stringify(data)
             });
+
+            if(response.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                modalDeCarga.style.display = "none";
+                //CARGAR MODAL DE ERROR
+            }
+
             const {idmascota,nombreMascota,nombreCompleto} = await response.json();
             idMascota = idmascota
             console.log(idMascota);
@@ -238,6 +267,7 @@ export async function LogicaSesion() {
             data[key] = value.trim();
         });
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/aniadirmascota/${idClienteCrearMascota}`, {
                 method: 'POST',
                 headers: {
@@ -245,6 +275,14 @@ export async function LogicaSesion() {
                 },
                 body: JSON.stringify(data)
             });
+
+            if(response.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                modalDeCarga.style.display = "none";
+                //CARGAR MODAL DE ERROR
+            }
 
             const {idmascota, nombreMascota} = await response.json();
             
@@ -287,6 +325,7 @@ export async function LogicaSesion() {
         });
 
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/crearsesion/${idMascota}`, {
                 method: 'POST',
                 headers: {
@@ -296,13 +335,14 @@ export async function LogicaSesion() {
             });
 
             if (response.ok) {
-
+                modalDeCarga.style.display = "none";
                 localStorage.setItem('idMascota', idMascota);
                 await CargarContenido("Historial-Medico/plantilla-historial.html")
                 await VisualizarHistorialMedico();
                 alert("Sesion Creada Correctamente")
                 frmCrearNuevaSesion.style.display = "none"
             } else {
+                modalDeCarga.style.display = "none";
                 alert("Hubo un error al  añadir la mascota")
                 throw new Error('Error al actualizar el producto');
             }
@@ -316,11 +356,15 @@ export async function LogicaSesion() {
     let contenedorDinamico = document.getElementById("contenedor-main-admin")
 
     async function CargarContenido(url){
-        try {
+        try {modalDeCarga.style.display = "flex";
             let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
             if (!respuesta.ok){
+                modalDeCarga.style.display = "none";
                 throw new Error('Error al cargar los datos');
+            }else{
+                modalDeCarga.style.display = "none";
             }
+
             let contenido = await respuesta.text();
             contenedorDinamico.innerHTML = contenido
         } catch (error) {

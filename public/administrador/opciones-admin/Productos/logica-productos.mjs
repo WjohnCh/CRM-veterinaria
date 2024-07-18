@@ -1,5 +1,6 @@
 import { LogicaSesion } from "../Sesiones/logicaSesion.mjs";
 
+const modalDeCarga = document.getElementById("loading-screen")
 export async function logicaProducto() {
     let idProductoParaActualizar = 0;
     // VARIABLES PARA DETALLES DEL PRODUCTO
@@ -65,9 +66,17 @@ export async function logicaProducto() {
     // FUNCION QUE MISTRA LAS TABLAS
     async function MostrarTablaObjeto(endopoint) {
         try {
+            modalDeCarga.style.display = "flex";
             ContenedorTabla.innerText = ""
             const body = await fetch(endopoint);
             const productos = await body.json()
+
+            if(body.ok){
+                //CARGAR MODAL DE ACEPTAR
+                modalDeCarga.style.display = "none";
+            }else{
+                //CARGAR MODAL DE ERROR
+            }
 
             productos.forEach((producto) => {
                 crearFilaColumna(producto, ContenedorTabla, plantilla)
@@ -119,15 +128,20 @@ export async function logicaProducto() {
                     try {
                         let response
                         if (producto.is_visible == true) {
+                            modalDeCarga.style.display = "flex";
                             producto.is_visible = 0
                             response = await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/0`, { method: 'PUT' });
+
                             btn_ocultarProducto.innerText = "Mostrar Producto"
                         } else if (producto.is_visible == false) {
+                            modalDeCarga.style.display = "flex";
                             producto.is_visible = 1
                             response = await fetch(`http://localhost:3000/productos/${producto.idproductos}/visibilidad/1`, { method: 'PUT' });
+
                             btn_ocultarProducto.innerText = "Ocultar Producto"
                         }
                         if (response.ok) {
+                            modalDeCarga.style.display = "none";
                             modalExito.style.display = "grid"
                         } else {
                             modalRechazo.style.display = "grid"
@@ -180,8 +194,8 @@ export async function logicaProducto() {
     const btEnviar = document.getElementById("Formulario_AñadirProductoBD");
 
     btEnviar.addEventListener("submit", async (event) => {
-        alert('Producto actualizado exitosamente');
         event.preventDefault();
+        modalDeCarga.style.display = "flex";
         const form = event.target;
         const formData = new FormData(form);
 
@@ -192,7 +206,7 @@ export async function logicaProducto() {
             });
 
             if (response.ok) {
-                const result = await response.json();
+                modalDeCarga.style.display = "none";
             } else {
                 const errorText = await response.text();
                 throw new Error(`Error al añadir producto: ${errorText}`)
@@ -254,6 +268,7 @@ async function MostrarFiltradoTabla() {
         event.preventDefault();
         const formData = new FormData(formActualizarProducto);
         try {
+            modalDeCarga.style.display = "flex";
             const response = await fetch(`http://localhost:3000/update/products/${idProductoParaActualizar}`,{
                 method: 'PUT',
                 body: formData
@@ -262,6 +277,8 @@ async function MostrarFiltradoTabla() {
             if (!response.ok) {
 
                 throw new Error('Error al actualizar el producto');
+            }else{
+                modalDeCarga.style.display = "none";
             }
 
             modalExito.style.display = "grid"

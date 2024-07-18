@@ -1,12 +1,21 @@
+const modalDeCarga = document.getElementById("loading-screen")
 export async function logicaSesionGestion(){
     const contenedor = document.getElementById("Cuerpo_tabla-Gestion-Producto")
     const plantilla = document.querySelector(".Fila_producto")
 
 
     try {
+        modalDeCarga.style.display = "flex";
         const results = await fetch(`http://localhost:3000/sesiones`)
         const body = await results.json();
-        console.log(body[0]);
+        
+        if(results.ok){
+            //CARGAR MODAL DE ACEPTAR
+            modalDeCarga.style.display = "none";
+        }else{
+            //CARGAR MODAL DE ERROR
+        }
+
         body.forEach(async (sesion)=>{
             const results = await fetch(`http://localhost:3000/sesiones/servicios/${sesion.idSesion}`)
             const body1 = await results.json();

@@ -228,7 +228,9 @@ nav.administrador-navbar .user-information {
 .opacidad-80:hover {
     opacity: 80%;
 }
-
+.flex{
+    display: flex;
+}
 .flex-XY {
     display: flex;
     justify-content: space-between;
@@ -423,7 +425,10 @@ nav.administrador-navbar .user-information {
     overflow: auto;
     max-height: calc(100vh - 220px);
 }
-
+.classeOverflow-Sesiones, .classeOverflow-historial{
+    overflow: auto;
+    max-height: calc(100vh - 240px);
+}
 /* SECCION FILTRADO DE LA TABLA  */
 .Contenedor_Filtros-Tabla-productos {
     width: 100%;
@@ -443,7 +448,7 @@ nav.administrador-navbar .user-information {
     font-weight: 600;
 }
 .btnFiltradoGestionProductos{
-    padding: 10px;
+    padding: 10px 14px 10px 14px;
     font-size: var(--Text-small);
     font-weight: 600;
     border-radius: 8px;
@@ -451,7 +456,14 @@ nav.administrador-navbar .user-information {
 }
 .seccionFiltradoProducto{
     border-radius: 20px;
-    width: 75%;
+    width: 100%;
+}
+#Anidir-Producto-BD{
+    margin-left: 40px;
+    width: 240px;
+}
+.seccionFiltradoProducto-other{
+    align-items: center;
 }
 .Contenedor_Filtros-Tabla-productos select{
     border: 1px solid var(--Negro-50);
@@ -1323,4 +1335,11 @@ nav.administrador-navbar .user-information {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* FILTROS */
+#btn-buscar-filtro-historialMedico{
+    width: 180px;
+    height: 40px;
+    margin-top: 19px;
 }

@@ -235,7 +235,6 @@ async function MostrarTablaObjeto(endopoint) {
                 preguardadodestinatario.selected = false;
             }
             preguardadoCategoria = optionCategoria.querySelector(`option[value="${producto.idCategoria}"]`)
-            console.log(preguardadoCategoria);
             preguardadodestinatario = optionDestinatario.querySelector(`option[value="${producto.razaMascota}"]`)
             preguardadoCategoria.selected = true;
             preguardadodestinatario.selected = true;

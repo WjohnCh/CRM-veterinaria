@@ -523,55 +523,93 @@ export async function VisualizarTablaHistorialMedico(){
             crearHistorialMedicoFila(hmedico)
         })
         
-        function crearHistorialMedicoFila(hmedico){
-            const newHistorial = plantilla.cloneNode(true)
-
-            const idHistorial = newHistorial.querySelector(".Valor-Tabla__NombreSesion")
-            const nombreCliente = newHistorial.querySelector(".Valor-Tabla__nombreCliente")
-            const mascota = newHistorial.querySelector(".Valor-Tabla__Mascota")
-            const sexo = newHistorial.querySelector(".Valor-Tabla__sexo")
-            const especie = newHistorial.querySelector(".Valor-Tabla__Especie")
-            const detalle = newHistorial.querySelector(".Valor-Tabla__detalles")
-
-            idHistorial.innerText = hmedico.idHistorialMedico
-            nombreCliente.innerText = `${hmedico.nombre_cliente} ${hmedico.apellido}`
-            mascota.innerText = hmedico.nombre_mascota
-            if(hmedico.sexo == "M"){
-                sexo.innerText = "Macho"
-            }else{
-                sexo.innerText = "Hembra"
-            }
-            especie.innerText = hmedico.especie
-
-            detalle.addEventListener("click", async()=>{
-                localStorage.setItem('idMascota', hmedico.idmascota);
-                await CargarContenido("Historial-Medico/plantilla-historial.html")
-                await VisualizarHistorialMedico();
-            })
-
-            newHistorial.style.display = "table-row"
-            contenedor.appendChild(newHistorial)
-        }
-
-        let contenedorDinamico = document.getElementById("contenedor-main-admin")
-
-        async function CargarContenido(url){
-            try {
-                modalDeCarga.style.display = "flex";
-                let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
-                if (!respuesta.ok){
-                    throw new Error('Error al cargar los datos');
-                }else{
-                    modalDeCarga.style.display = "none";
-                }
-                let contenido = await respuesta.text();
-                contenedorDinamico.innerHTML = contenido
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
 
     } catch (error) {
         console.error(error)
     }
+
+    function crearHistorialMedicoFila(hmedico){
+        const newHistorial = plantilla.cloneNode(true)
+
+        const idHistorial = newHistorial.querySelector(".Valor-Tabla__NombreSesion")
+        const nombreCliente = newHistorial.querySelector(".Valor-Tabla__nombreCliente")
+        const mascota = newHistorial.querySelector(".Valor-Tabla__Mascota")
+        const sexo = newHistorial.querySelector(".Valor-Tabla__sexo")
+        const especie = newHistorial.querySelector(".Valor-Tabla__Especie")
+        const detalle = newHistorial.querySelector(".Valor-Tabla__detalles")
+        const raza = newHistorial.querySelector(".Valor-Tabla__raza")
+
+        idHistorial.innerText = hmedico.idHistorialMedico
+        nombreCliente.innerText = `${hmedico.nombre_cliente} ${hmedico.apellido}`
+        mascota.innerText = hmedico.nombre_mascota
+        if(hmedico.sexo == "M"){
+            sexo.innerText = "Macho"
+        }else{
+            sexo.innerText = "Hembra"
+        }
+        especie.innerText = hmedico.especie
+        raza.innerText = hmedico.raza
+        detalle.addEventListener("click", async()=>{
+            localStorage.setItem('idMascota', hmedico.idmascota);
+            await CargarContenido("Historial-Medico/plantilla-historial.html")
+            await VisualizarHistorialMedico();
+        })
+
+        newHistorial.style.display = "table-row"
+        contenedor.appendChild(newHistorial)
+    }
+
+    let contenedorDinamico = document.getElementById("contenedor-main-admin")
+
+    async function CargarContenido(url){
+        try {
+            modalDeCarga.style.display = "flex";
+            let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
+            if (!respuesta.ok){
+                throw new Error('Error al cargar los datos');
+            }else{
+                modalDeCarga.style.display = "none";
+            }
+            let contenido = await respuesta.text();
+            contenedorDinamico.innerHTML = contenido
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
+    // ----------------------------------------------------------------------
+    // ------------------LOGICA PARA FILTRAR EL HISTORIAL MEDICO-------------
+    // ----------------------------------------------------------------------
+
+    const btnFiltro = document.getElementById("btn-buscar-filtro-historialMedico");
+    
+    const inputValorMascota = document.getElementById("Nombre_Mascota-gestionUsuario-filtro")
+    const inputValorCliente = document.getElementById("Nombre_Cliente-gestionUsuario-filtro")
+
+    btnFiltro.addEventListener("click", async ()=>{
+        let NombreCLiente = inputValorCliente.value.trim();
+        let NombreMascota = inputValorMascota.value.trim();
+
+        console.log(NombreCLiente, NombreMascota);
+        if(!NombreCLiente){
+            NombreCLiente = 'null'
+        }
+        if(!NombreMascota){
+            NombreMascota = 'null'
+        }
+        try {
+            contenedor.innerText = ""
+            const result = await fetch(`http://localhost:3000/clientes/historial/${NombreMascota}/${NombreCLiente}`)
+            const body = await result.json()
+            console.log(body);
+            body.forEach(async (coincidencias)=>{
+                crearHistorialMedicoFila(coincidencias)
+            })
+            
+        } catch (error) {
+            console.error("Hay un error: ", error)
+        }
+    })
+
 }

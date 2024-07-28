@@ -381,6 +381,35 @@ BEGIN
     SELECT * FROM usuario;
 END $$
 
+-- FILTRO PARA LA TABLA HISTORIAL MEDICO
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_historial $$
+CREATE PROCEDURE filtro_historial(
+    IN p_nomb_mascota VARCHAR(100),
+    IN p_nomb_dueno VARCHAR(100))
+BEGIN
+    SELECT
+        h.idHistorialMedico,
+        c.nombre_cliente,
+        c.apellido,
+        m.nombre_mascota,
+        m.sexo,
+        m.especie,
+        m.idmascota
+    FROM
+        historialmedico h
+    JOIN
+        mascota m ON h.idmascota = m.idmascota
+    JOIN
+        cliente c ON m.clienteid = c.idcliente
+    WHERE
+        (p_nomb_mascota IS NULL OR p_nomb_mascota = '' OR m.nombre_mascota = p_nomb_mascota)
+        AND (p_nomb_dueno IS NULL OR p_nomb_dueno = '' OR CONCAT(c.nombre_cliente, ' ', c.apellido) LIKE CONCAT('%', p_nomb_dueno, '%'));
+END $$
+
+
 DELIMITER ;
 
-
+CALL filtro_historial('Balto', 'Christopher Liam Piero Llamoca Chura');
+CALL filtro_historial('Balto', 'Christopher ');
+CALL filtro_historial('Balto', 'Christopher Liam Piero Llamoca Chura');

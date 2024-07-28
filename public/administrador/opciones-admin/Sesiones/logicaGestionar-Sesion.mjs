@@ -13,6 +13,7 @@ export async function logicaSesionGestion(){
             //CARGAR MODAL DE ACEPTAR
             modalDeCarga.style.display = "none";
         }else{
+            modalDeCarga.style.display = "none";
             //CARGAR MODAL DE ERROR
         }
 

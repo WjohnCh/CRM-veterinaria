@@ -557,7 +557,7 @@ app.post('/nuevocliente', async (req, res) => {
           );
 
         if (id_cliente){
-            res.json({ message: "Datos Subidos", idmascota, nombreMascota, nombreCompleto: nombresCliente+apellidosCliente});
+            res.json({ message: "Datos Subidos", idmascota, nombreMascota, nombreCompleto: `${nombresCliente} ${apellidosCliente}`});
         } else {
             res.status(400).json({ message: "Error al subir los datos" });
         }
@@ -873,6 +873,29 @@ app.get('/sesiones/servicios/:idsesion', async (req, res)=>{
         res.status(500).json({ message: 'Error al procesar la solicitud' });
     }
 });
+
+app.get('/clientes/historial/:nombre_masc/:nombre_clie', async(req, res)=>{
+    let {nombre_masc = null, nombre_clie = null} = req.params;
+
+    if(nombre_masc == 'null'){
+        nombre_masc = null;
+    }
+    if(nombre_clie == 'null'){
+        nombre_clie = null;
+    }
+    try {
+        const idhistorial = await sequelize.query(
+            `CALL filtro_historial(?, ?);`,
+            {replacements: [nombre_masc, nombre_clie]}
+        );
+        res.json(idhistorial);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+
 
 
 app.listen(port, () => {

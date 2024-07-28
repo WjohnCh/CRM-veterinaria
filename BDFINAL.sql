@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS cliente (
 	telefono varchar(20),
 	direccion VARCHAR(100),
     dni VARCHAR(100),
+    correo VARCHAR(100),
     PRIMARY KEY (idcliente)
 );
 
@@ -45,33 +46,40 @@ CREATE TABLE IF NOT EXISTS mascota (
     FOREIGN KEY (clienteid) REFERENCES cliente (idcliente)
 );
 
-CREATE TABLE IF NOT EXISTS HistorialMedico (
+CREATE TABLE IF NOT EXISTS historialmedico (
     idHistorialMedico INT AUTO_INCREMENT PRIMARY KEY,
     idmascota INT,
     FOREIGN KEY (idmascota) REFERENCES mascota(idmascota)
 );
 
-
-CREATE TABLE IF NOT EXISTS Vacuna (
+-- tabla modificada
+CREATE TABLE IF NOT EXISTS vacuna (
     idVacuna INT AUTO_INCREMENT PRIMARY KEY,
     idHistorialMedico INT,
     fecha DATE,
     tipoVacunacion VARCHAR(50),
     temperatura DECIMAL(5,2),
     peso DECIMAL(5,2),
-    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
+    vac_frecuenciaCardiaca INT null, -- Modificacion
+    vac_frecuenciaRespiratoria INT null, -- Modificacion
+    prox_fecha date NULL,         -- Modificacion
+    FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
 
-CREATE TABLE IF NOT EXISTS Desparasitacion (
+-- tabla modificada
+CREATE TABLE IF NOT EXISTS desparasitacion (
     idDesparasitacion INT AUTO_INCREMENT PRIMARY KEY,
     idHistorialMedico INT,
     fecha DATE,
     producto VARCHAR(100),
     peso DECIMAL(5,2),
-    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
+    des_frecuenciaCardiaca INT null, -- Modificacion
+    des_frecuenciaRespiratoria INT null, -- Modificacion
+    prox_fecha date NULL,         -- Modificacion
+    FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
 
-CREATE TABLE IF NOT EXISTS RevisionMedica (
+CREATE TABLE IF NOT EXISTS revisionmedica (
     idRevisionMedica INT AUTO_INCREMENT PRIMARY KEY,
     idHistorialMedico INT,
     fecha DATE,
@@ -86,8 +94,10 @@ CREATE TABLE IF NOT EXISTS RevisionMedica (
     diagnosticoPresuntivo TEXT,
     tratamiento TEXT,
     receta TEXT,
-    FOREIGN KEY (idHistorialMedico) REFERENCES HistorialMedico(idHistorialMedico)
+    examenes_realizados TEXT, -- modificacion
+    FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
+
 
 CREATE TABLE IF NOT EXISTS Sesion (
     idSesion INT(11) AUTO_INCREMENT,
@@ -170,6 +180,21 @@ CREATE TABLE IF NOT EXISTS registros (
     PRIMARY KEY (registrosid)
 );
 
+-- Nueva tabla
+create table telefono(
+	idcliente_fk int,
+    telefono varchar(15),	
+    foreign key(idcliente_fk) references cliente(idcliente)
+);
+
+create table login_access(
+	p_email varchar(100),
+    p_contrasena varchar(255),
+    p_access boolean,
+    p_fecha DATETIME DEFAULT CURRENT_TIMESTAMP()
+);
+
+
 INSERT INTO productos (nombre, precio, razaMascota, url, descripcion, idCategoria) VALUES
 ('Comida Purina', 15.50, 'gato', './src/uploads/comida-purina-gato.jpg', 'Nutritiva comida Purina para gatos, ideal para una dieta balanceada y saludable.', 1),
 ('Lata Tuna & Shrimp', 12.00, 'gato', './src/uploads/lata-tuna&shrimp-gato.jpg', 'Deliciosa lata de atún y camarones para gatos, rica en proteínas.', 1),
@@ -248,5 +273,7 @@ INSERT INTO mascota (clienteid, nombre_mascota, fecha_nacimiento, especie, raza,
 	(1, 'Whiskers', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H'),
 	(2, 'Dorado', '2020-05-15', 'Perro', 'Labrador', 30, 'Marrón', 'M'),
 	(2, 'Selfish', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H');
+
+
 
 

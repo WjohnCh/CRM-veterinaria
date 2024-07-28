@@ -359,7 +359,7 @@ const obtenerMascotas = async (req, res) => {
 
 const obtenerHistorialMedico = async (req, res) => {
     try {
-        const [results] = await sequelize.query(`SELECT idHistorialMedico, nombre_mascota, especie, sexo, nombre_cliente, apellido, m.idmascota FROM historialmedico hm INNER JOIN mascota m ON m.idmascota = hm.idmascota
+        const [results] = await sequelize.query(`SELECT idHistorialMedico, nombre_mascota, especie, raza, sexo, nombre_cliente, apellido, m.idmascota FROM historialmedico hm INNER JOIN mascota m ON m.idmascota = hm.idmascota
 INNER JOIN cliente c ON c.idcliente = m.clienteid;`);
         res.json(results);
     } catch (error) {

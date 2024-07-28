@@ -182,7 +182,6 @@ export async function LogicaSesion() {
 
         newMascota.addEventListener("click", () => {
             idMascota = mascota.idmascota
-            console.log(idMascota);
             modalMascotaUsuarioSesion.style.display = "none"
             frmCrearNuevaSesion.style.display = "grid"
             infoCliente.innerText = cliente.NombreCompleto
@@ -230,7 +229,6 @@ export async function LogicaSesion() {
 
             const {idmascota,nombreMascota,nombreCompleto} = await response.json();
             idMascota = idmascota
-            console.log(idMascota);
             if (response.ok) {
                 infoCliente.innerText = nombreCompleto
                 infoMascota.innerText = nombreMascota

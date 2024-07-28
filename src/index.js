@@ -895,6 +895,149 @@ app.get('/clientes/historial/:nombre_masc/:nombre_clie', async(req, res)=>{
     }
 });
 
+app.get('/sesiones/filtros/mascota/:nombreMascota', async(req, res)=>{
+    const { nombreMascota } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_buscar_by_gestion_mascota_name(?)',
+            { replacements: [ nombreMascota] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/sesiones/filtros/cliente/:nombreCliente', async(req, res)=>{
+    const { nombreCliente } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_buscar_by_gestion_cliente_name(?)',
+            { replacements: [ nombreCliente] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/usuario/filtros/nombre/:name', async(req, res)=>{
+    const { name } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_buscar_usuario_by_usuario_name(?)',
+            { replacements: [ name] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/usuario/filtros/correo/:eMail', async(req, res)=>{
+    const { eMail } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_buscar_usuario_by_usuario_email(?)',
+            { replacements: [ eMail] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/sesiones/filtroFecha/:fecha', async (req, res) => {
+    const { fecha } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_sesion_by_fecha(?)',
+            { replacements: [fecha] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/sesiones/filtroMascota/:nombreMascota', async (req, res) => {
+    const { nombreMascota } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_sesion_by_nombre_mascota(?)',
+            { replacements: [nombreMascota] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/sesiones/filtroCliente/:nombreCliente', async (req, res) => {
+    const { nombreCliente } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL filtro_sesion_by_nombre_cliente(?)',
+            { replacements: [nombreCliente] }
+        );
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles de la sesión:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+app.get('/clientes/filtroNombre/:nombreCliente', async (req, res) => {
+    const { nombreCliente } = req.params; 
+    try {
+        const result = await sequelize.query(
+            'CALL obtener_cliente_por_nombre(?)',
+            { replacements: [nombreCliente] }
+        );
+        if (result && result.length > 0) {
+            res.json(result);
+        } else {
+            res.status(404).send('No se encontraron coincidencias');
+        }
+    } catch (error) {
+        console.error('Error al obtener los detalles del cliente:', error.message);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
 
 
 

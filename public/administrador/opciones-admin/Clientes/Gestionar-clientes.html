@@ -9,12 +9,6 @@
                 style="width: 220px;" placeholder="Nombre del cliente" >
                 <button id="btn-buscar-gestionClientes-filtro" class="opacidad-80 btnFiltradoGestionProductos white-letter">Buscar</button>
             </div>
-            <div>
-                <label for="">Por Mascota:</label>
-                <input type="text" id="Nombre_Mascota-gestion-filtro"  class="input-generico input-sesiones_filtro" 
-                style="width: 140px;"placeholder="Nombre" >
-                <button id="btn-Mascota-gestionClientes-filtro" class="opacidad-80 btnFiltradoGestionProductos white-letter">Buscar</button>
-            </div>
         </div>
     </div>
 </div>
@@ -22,9 +16,10 @@
     <table class="Tabla_Gestion-Productos">
         <!-- PLANTILLA FILA -->
         <tr class="Fila_producto" style="display: none;">
-            <td class="Valor-Tabla__NombreCliente"></td>
+            <td class="Valor-Tabla__NombreCliente" ></td>
             <td class="Valor-Tabla__Telefono"></td>
             <td class="Valor-Tabla__Direccion"></td>
+            <td class="Valor-Tabla__Correo"></td>
             <td class="Valor-Tabla__detalles">
                 <figure class="img_Mostrar-Detalle-Producto opacidad-80">
                     <img src="../Íconos - Logos/detailsIcon.svg" alt="">
@@ -35,9 +30,10 @@
         <!-- FIN PLANTILLA FILA -->
         <thead class="Fila_Encabezado">
             <tr>
-                <th class="Encabezado-tabla__NombreCliente">Nombre del cliente</th>
-                <th class="Encabezado-tabla__Telefono">Telefono</th>
+                <th class="Encabezado-tabla__NombreCliente" style="width: 30%;">Nombre del cliente</th>
+                <th class="Encabezado-tabla__Telefono"style="width: 12%;">Telefono</th>
                 <th class="Encabezado-tabla__Direccion">Direccion</th>
+                <th class="Encabezado-tabla__correo"style="width: 20%;">Correo</th>
                 <th class="Encabezado-tabla__detalles">Detalles</th>
             </tr>
         </thead>

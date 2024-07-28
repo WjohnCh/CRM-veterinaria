@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS usuario (
     username VARCHAR(100) ,
     email VARCHAR(100),
     contrasena VARCHAR(255),
-    rol VARCHAR(45) 
+    rol VARCHAR(45),
+    isconexion BOOLEAN default false
 );
 CREATE TABLE IF NOT EXISTS cliente (
      idcliente int AUTO_INCREMENT,
@@ -18,7 +19,6 @@ CREATE TABLE IF NOT EXISTS cliente (
     correo VARCHAR(100),
     PRIMARY KEY (idcliente)
 );
-
 CREATE TABLE IF NOT EXISTS conexion (
 	idConexion int AUTO_INCREMENT,
     usuarioid INT,
@@ -267,12 +267,6 @@ VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 3);
-
-INSERT INTO mascota (clienteid, nombre_mascota, fecha_nacimiento, especie, raza, peso, color, sexo) VALUES
-	(1, 'Bobby', '2020-05-15', 'Perro', 'Labrador', 30, 'Marrón', 'M'),
-	(1, 'Whiskers', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H'),
-	(2, 'Dorado', '2020-05-15', 'Perro', 'Labrador', 30, 'Marrón', 'M'),
-	(2, 'Selfish', '2019-08-20', 'Gato', 'Siames', 4, 'Blanco', 'H');
 
 
 

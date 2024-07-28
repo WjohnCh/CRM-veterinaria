@@ -403,13 +403,160 @@ BEGIN
     JOIN
         cliente c ON m.clienteid = c.idcliente
     WHERE
-        (p_nomb_mascota IS NULL OR p_nomb_mascota = '' OR m.nombre_mascota = p_nomb_mascota)
+        (p_nomb_mascota IS NULL OR p_nomb_mascota = '' OR m.nombre_mascota LIKE CONCAT('%', p_nomb_mascota, '%'))
         AND (p_nomb_dueno IS NULL OR p_nomb_dueno = '' OR CONCAT(c.nombre_cliente, ' ', c.apellido) LIKE CONCAT('%', p_nomb_dueno, '%'));
 END $$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_buscar_by_gestion_mascota_name $$
+CREATE PROCEDURE filtro_buscar_by_gestion_mascota_name(
+	IN p_nombre VARCHAR(100)
+)
+BEGIN
+	SELECT 
+		c.nombre_cliente, c.apellido, m.nombre_mascota, m.fecha_nacimiento, m.especie, m.sexo, m.color FROM cliente c
+	INNER JOIN
+		mascota m ON m.clienteid = c.idcliente
+	WHERE 
+		m.nombre_mascota LIKE concat('%', p_nombre, '%');
+END $$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_buscar_by_gestion_cliente_name $$
+CREATE PROCEDURE filtro_buscar_by_gestion_cliente_name(
+	IN p_nombre VARCHAR(100)
+)
+BEGIN
+	SELECT 
+		c.nombre_cliente, c.apellido, m.nombre_mascota, m.fecha_nacimiento, m.especie, m.sexo, m.color FROM cliente c
+	INNER JOIN
+		mascota m ON m.clienteid = c.idcliente
+	WHERE 
+		concat(c.nombre_cliente, " ", c.apellido) LIKE concat('%', p_nombre, '%');
+END $$
+
+-- filtrooo
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_buscar_usuario_by_usuario_name $$
+CREATE  PROCEDURE filtro_buscar_usuario_by_usuario_name(
+	IN p_nombre VARCHAR(100)
+)
+BEGIN
+	SELECT 
+		u.username, u.email, u.contrasena, u.idusuario
+	FROM 
+		usuario u
+    WHERE 
+		u.username LIKE concat('%', p_nombre, '%');
+END $$
+
+
+
+-- filtro email
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_buscar_usuario_by_usuario_email $$
+CREATE PROCEDURE filtro_buscar_usuario_by_usuario_email(
+	IN p_email VARCHAR(100)
+)
+BEGIN
+	SELECT 
+		u.username, u.email, u.contrasena, u.idusuario
+	FROM 
+		usuario u
+    WHERE 
+		u.email LIKE concat('%', p_email, '%');
+END $$
+
+-- filtro nombre mascota - sesion
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_sesion_by_nombre_mascota $$
+CREATE DEFINER=root@localhost PROCEDURE filtro_sesion_by_nombre_mascota(
+	IN p_nombre_mascota VARCHAR(100)
+)
+BEGIN
+	SELECT
+        s.idSesion,
+        s.fecha,
+        s.monto,
+        c.nombre_cliente,  c.apellido,
+        m.nombre_mascota,
+        s.masInfo
+    FROM
+        sesion s
+    INNER JOIN
+        mascota m ON s.idmascota = m.idmascota
+    INNER JOIN
+        cliente c ON m.clienteid = c.idcliente
+    WHERE
+         m.nombre_mascota LIKE CONCAT('%', p_nombre_mascota, '%');
+END $$
+
+-- FILTRO DADO UNA FECHA - SESION
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_sesion_by_fecha $$
+CREATE PROCEDURE filtro_sesion_by_fecha(
+    IN p_fecha VARCHAR(10)
+)
+BEGIN
+    SELECT
+        s.idSesion, s.fecha, s.monto, c.nombre_cliente, 
+        c.apellido, m.nombre_mascota, s.masInfo
+    FROM
+        sesion s
+    INNER JOIN
+        mascota m ON s.idmascota = m.idmascota
+    INNER JOIN
+        cliente c ON m.clienteid = c.idcliente
+    WHERE
+        s.fecha LIKE CONCAT('%', p_fecha, '%');
+END $$
+
+-- FILTRO USANDO EL NOMBRE DEL CLIENTE / SESION
+DELIMITER $$
+DROP PROCEDURE IF EXISTS filtro_sesion_by_nombre_cliente $$
+CREATE PROCEDURE filtro_sesion_by_nombre_cliente(
+    IN p_nombre_cliente VARCHAR(100)
+)
+BEGIN
+    SELECT
+        s.idSesion,
+        s.fecha,
+        s.monto,
+        c.nombre_cliente, c.apellido,
+        m.nombre_mascota,
+        s.masInfo AS Asunto
+    FROM
+        sesion s
+    INNER JOIN
+        mascota m ON s.idmascota = m.idmascota
+    INNER JOIN
+        cliente c ON m.clienteid = c.idcliente
+    WHERE
+        CONCAT(c.nombre_cliente, ' ', c.apellido) LIKE CONCAT('%', p_nombre_cliente, '%');
+END $$
+
+-- FILTRAR POR NOMBRE DE USUARIO
+DELIMITER $$
+DROP PROCEDURE IF EXISTS obtener_cliente_por_nombre $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE obtener_cliente_por_nombre(
+    IN p_nombre_completo VARCHAR(200)
+)
+BEGIN
+    SELECT
+        idcliente,
+        nombre_cliente,
+        apellido,
+        telefono,
+        direccion,
+        dni,
+        correo
+    FROM
+        cliente
+    WHERE
+        CONCAT(nombre_cliente, ' ', apellido) LIKE CONCAT('%', p_nombre_completo, '%');
+END $$
+
+call obtener_cliente_por_nombre('Chris')
+CALL obtener_cliente_por_nombre('Christopher')
 DELIMITER ;
-
-CALL filtro_historial('Balto', 'Christopher Liam Piero Llamoca Chura');
-CALL filtro_historial('Balto', 'Christopher ');
-CALL filtro_historial('Balto', 'Christopher Liam Piero Llamoca Chura');

@@ -599,13 +599,22 @@ export async function VisualizarTablaHistorialMedico(){
             NombreMascota = 'null'
         }
         try {
+            modalDeCarga.style.display = "flex";
             contenedor.innerText = ""
             const result = await fetch(`http://localhost:3000/clientes/historial/${NombreMascota}/${NombreCLiente}`)
             const body = await result.json()
-            console.log(body);
-            body.forEach(async (coincidencias)=>{
-                crearHistorialMedicoFila(coincidencias)
-            })
+
+            if(result.ok){
+                modalDeCarga.style.display = "none";
+                body.forEach(async (coincidencias)=>{
+                    crearHistorialMedicoFila(coincidencias)
+                })
+            }else{
+                modalDeCarga.style.display = "none";
+                alert("OCURRIO UN ERROR, VUELVA A INTENTARLO")
+            }
+            
+
             
         } catch (error) {
             console.error("Hay un error: ", error)

@@ -12,36 +12,48 @@
 </head>
 
 <body>
-    <div>
-        <h3 class="flex-YX centrado">Desparasitación</h3>
-        <br>
-        <table class="HM_table HM_table-desparacitaciones">
-            <thead>
-                <tr>
-                    <th class="HM_table-header">Fecha</th>
-                    <th class="HM_table-header HM_table-header-productos">Producto</th>
-                    <th class="HM_table-header">Peso</th>
-                    <th class="HM_table-header">Tipo</th>
-                    <th class="HM_table-header">Prox Fecha</th>
-                    <th class="HM_table-header">Opciones</th>
-                </tr>
-            </thead>
-            <tr class="Plantilla-desparacitacion-HM">
-                <td class="HM_table-cell celda-despacitacion_fecha" style="width: 10%;">2021-11-11</td>
-                <td class="HM_table-cell celda-despacitacion_Producto">Una cosa poderosa</td>
-                <td class="HM_table-cell celda-despacitacion_Peso">11.11 kg</td>
-                <td class="HM_table-cell celda-despacitacion_tipo">Externa</td>
-                <td class="HM_table-cell celda-despacitacion_proxFecha">2021-11-11</td>
-                <td class="HM_table-cell celda-vacunacion_Opciones">
-                    <img class="opacidad-80 celda-vacunacion_editar" src="../../../Íconos - Logos/edit.svg" alt="">
-                    <img class="opacidad-80 celda-vacunacion_borrar" src="../../../Íconos - Logos/trash-bold.svg" alt="">
-                </td>
-            </tr>
-            <tbody id="Contenedor-desparacitacion-tabla-HM">
-            </tbody>
-        </table>
-        <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
-            Desparasitación</button>
+    <div class="modal-generico" id="modal-AniadirDesparacitaciones-HM">
+        <form action="#" class="frm-generico frmAniadirnewVacuna" id="AniadirDesparacitaciones-HM">
+            <h3 class="flex-YX centrado">AÑADIR DESPARASITACIÓN</h3>
+            <br>
+            <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+            <div class="flex-XY ContenedorAniadirVacunas ContenedorAniadirDesparacitacion" style="gap: 100px;">
+                <div class="flex-YX" style="gap: 40px;">
+                    <div class="flex-YX">
+                        <label>Fecha:</label>
+                        <input class="campo" name="fecha" type="date" required>
+                    </div>
+                    <div class="flex-YX">
+                        <label>Producto:</label>
+                        <input class="campo input" name="producto" type="text" required placeholder="Producto utilizado" required>
+                    </div>
+                    <div class="flex-YX">
+                        <label>Peso:</label>
+                        <input class="campo" name="peso" type="number" step="0.01" placeholder="Peso">
+                    </div>
+                </div>
+                <div class="flex-YX gap-generico">
+                    <div class="flex-YX">
+                        <label>Dosis:</label>
+                        <input class="campo" name="dosis" type="text" required placeholder="Producto utilizado" required>
+                    </div>
+                    <div class="flex-YX">
+                        <label>Tipo:</label>
+                        <select class="campo" name="tipo" style="width: 200px; font-size: 15px;">
+                            <option value="" disabled selected>Tipo de desparación</option>
+                            <option value="Interna">Interna</option>
+                            <option value="Externa">Externa</option>
+                        </select>
+                    </div>
+                    <div class="flex-YX">
+                        <label>Próxima Fecha:</label>
+                        <input class="campo" name="proxfecha" type="date" required>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="boton-generico-primario">Añadir Desparasitación</button>
+        </form>
     </div>
 </body>
 

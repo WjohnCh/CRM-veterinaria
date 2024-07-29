@@ -719,6 +719,25 @@ app.delete('/vacuna/eliminar/:idvacuna', async (req, res) => {
     }
 });
 
+app.delete('/desparasitacion/eliminar/:iddesparasitacion', async (req, res) => {
+    const { iddesparasitacion } = req.params;
+    try {
+        const [result] = await sequelize.query(
+            `DELETE FROM desparasitacion WHERE idDesparasitacion = ?`,
+            { replacements: [iddesparasitacion] }
+        );
+        console.log(result);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Desparasitación eliminada exitosamente' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la desparasitación' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar la desparasitación:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
 
 app.get("/desparacitaciones/:idmascota", async (req, res) => {
     const { idmascota } = req.params;
@@ -732,6 +751,51 @@ app.get("/desparacitaciones/:idmascota", async (req, res) => {
             { replacements: [idHistorialMedico] }
         );
         res.json(results_2);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+app.get('/desparasitacion/mascota/:iddesparasitacion', async (req, res) => {
+    const { iddesparasitacion } = req.params;
+    try {
+        const [results] = await sequelize.query(
+            `SELECT * FROM desparasitacion WHERE idDesparasitacion = ?`,
+            { replacements: [iddesparasitacion] }
+        );
+        if (results.length > 0) {
+            res.json(results[0]);
+        } else {
+            res.status(404).json({ message: 'No se encontró la desparasitación' });
+        }
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.put('/actualizar/desparasitacion/mascota/:iddesparasitacion', async (req, res) => {
+    const { iddesparasitacion } = req.params;
+    const { fecha, producto, peso, proxfecha, dosis, tipo } = req.body;
+
+    try {
+        const resultado = await sequelize.query(
+            `UPDATE desparasitacion SET 
+                fecha = IFNULL(?, fecha), 
+                producto = IFNULL(?, producto), 
+                peso = IFNULL(?, peso), 
+                prox_fecha = IFNULL(?, prox_fecha), 
+                dosis = IFNULL(?, dosis), 
+                tipo = IFNULL(?, tipo)
+            WHERE idDesparasitacion = ?`,
+            { replacements: [fecha, producto, peso, proxfecha, dosis, tipo, iddesparasitacion] }
+        );
+
+        if (resultado[0].affectedRows > 0) {
+            res.status(200).json({ message: 'Desparasitación actualizada con éxito' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la desparasitación' });
+        }
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
@@ -902,10 +966,21 @@ app.post('/vacuna/aniadir/:idmascota', async (req, res) => {
 
 app.post('/desparasitacion/aniadir/:idmascota', async (req, res) => {
     const { idmascota } = req.params;
-    let { fecha, producto, peso = null } = req.body;
+    let { fecha, producto, peso = null, dosis = null, tipo = null, proxfecha = null } = req.body;
+
     if (peso == '') {
-        peso = null
+        peso = null;
     }
+    if (dosis == '') {
+        dosis = null;
+    }
+    if (tipo == '') {
+        tipo = null;
+    }
+    if (proxfecha == '') {
+        proxfecha = null;
+    }
+
     try {
         const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
@@ -913,8 +988,8 @@ app.post('/desparasitacion/aniadir/:idmascota', async (req, res) => {
         );
 
         const resultado = await sequelize.query(
-            `CALL post_by_id_despara(?, ?, ?, ?);`,
-            { replacements: [idHistorialMedico, fecha, producto, peso] }
+            `CALL post_by_id_despara(?, ?, ?, ?, ?, ?, ?);`,
+            { replacements: [idHistorialMedico, fecha, producto, peso, dosis, tipo, proxfecha] }
         );
         res.status(200).json({ message: 'Desparasitacion añadida con éxito' });
     } catch (error) {

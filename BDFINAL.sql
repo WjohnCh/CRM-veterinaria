@@ -72,12 +72,11 @@ CREATE TABLE IF NOT EXISTS desparasitacion (
     fecha DATE,
     producto VARCHAR(100),
     peso DECIMAL(5,2),
-    des_frecuenciaCardiaca INT null, -- Modificacion
-    des_frecuenciaRespiratoria INT null, -- Modificacion
+    dosis VARCHAR(100) NULL,
+    tipo VARCHAR(50) NULL,
     prox_fecha date NULL,         -- Modificacion
     FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
-
 CREATE TABLE IF NOT EXISTS revisionmedica (
     idRevisionMedica INT AUTO_INCREMENT PRIMARY KEY,
     idHistorialMedico INT,

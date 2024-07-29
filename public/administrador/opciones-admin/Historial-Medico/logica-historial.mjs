@@ -214,6 +214,18 @@ export async function VisualizarHistorialMedico(){
     const plantillaDespartacitacion = document.querySelector(".Plantilla-desparacitacion-HM")
     const contenedorDesparacitacion = document.getElementById("Contenedor-desparacitacion-tabla-HM")
 
+    const modalEditarDesparacitacion = document.getElementById("modal-EditarDesparacitacion-HM") 
+    const frmEditarDesparacitacion = document.getElementById("EditarDesparacitacion-HM") 
+    const inputdesparaActufecha = document.getElementById("actualiDespara_fecha")
+    const inputdesparaActuproducto = document.getElementById("actualiDespara_producto")
+    const inputdesparaActupeso = document.getElementById("actualiDespara_peso")
+    const inputdesparaActuDosis = document.getElementById("actualiDespara_dosis")
+    const inputdesparaActutipo = document.getElementById("actualiDespara_tipo")
+    const inputdesparaActuProxFecha = document.getElementById("actualiDespara_proxfecha")
+
+    const btnActualiDesparacitacion = document.getElementById("btnActualizarDesparacitacion")
+    let idDesparasitacion;
+
     await verDesparacitacion()
     
     async function verDesparacitacion(){
@@ -238,19 +250,96 @@ export async function VisualizarHistorialMedico(){
         }
     }
 
-    function CrearFIlaDesparacitacion(desparacitacion){
+    function CrearFIlaDesparacitacion(desparasitacion){
         const newDesparacitacion = plantillaDespartacitacion.cloneNode(true)
 
-        const FechaDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_fecha")
-        const ProductoDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_Producto")
-        const PesoDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_Peso")
+        const FechaDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_fecha");
+        const ProductoDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_Producto");
+        const PesoDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_Peso");
+        const DosisDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_Dosis");
+        const TipoDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_tipo");
+        const ProxFechaDesparacitacion = newDesparacitacion.querySelector(".celda-despacitacion_proxFecha");
+        const EditarDesparacitacion = newDesparacitacion.querySelector(".celda-vacunacion_editar");
+        const BorrarDesparacitacion = newDesparacitacion.querySelector(".celda-vacunacion_borrar");
 
-        FechaDesparacitacion.innerText = desparacitacion.fecha
-        ProductoDesparacitacion.innerText = desparacitacion.producto
-        if(desparacitacion.peso){
-            PesoDesparacitacion.innerText = `${desparacitacion.peso}kg`
+
+        FechaDesparacitacion.innerText = desparasitacion.fecha
+        ProductoDesparacitacion.innerText = desparasitacion.producto
+
+        if(desparasitacion.peso){
+            PesoDesparacitacion.innerText = `${desparasitacion.peso} kg`
+        }
+        if(desparasitacion.dosis) {
+            DosisDesparacitacion.innerText = desparasitacion.dosis;
+        }
+        if(desparasitacion.tipo) {
+            TipoDesparacitacion.innerText = desparasitacion.tipo;
+        }
+        if(desparasitacion.prox_fecha) {
+            ProxFechaDesparacitacion.innerText = desparasitacion.prox_fecha;
         }
 
+        EditarDesparacitacion.addEventListener("click", async ()=>{
+            modalEditarDesparacitacion.style.display = "grid"
+            modalDeCarga.style.display = "flex";
+            try {
+                const result = await fetch(`http://localhost:3000/desparasitacion/mascota/${desparasitacion.idDesparasitacion}`)
+                const {fecha, peso, prox_fecha, producto, dosis, tipo} = await result.json();
+                
+                if (result.ok) {
+                    modalDeCarga.style.display = "none";
+                    setValueIfExists(inputdesparaActufecha, fecha);
+                    setValueIfExists(inputdesparaActuproducto, producto);
+                    setValueIfExists(inputdesparaActupeso, peso);
+                    setValueIfExists(inputdesparaActuDosis, dosis);
+                    if (tipo === "Interna") {
+                        inputdesparaActutipo.value = "Interna";
+                    } else if (tipo === "Externa") {
+                        inputdesparaActutipo.value = "Externa";
+                    } else {
+                        inputdesparaActutipo.value = "";
+                    }
+                    setValueIfExists(inputdesparaActuProxFecha, prox_fecha);
+                }else{
+                    modalDeCarga.style.display = "none"
+                }
+
+                idDesparasitacion = desparasitacion.idDesparasitacion;
+            } catch (error) {
+                modalDeCarga.style.display = "none"
+                console.error(error);
+            }
+
+        })
+
+        BorrarDesparacitacion.addEventListener("click", async ()=>{
+            console.log("hi");
+            advertenciaVacuna.style.display = "grid"
+            btnadvertenciaVacuna.onclick = borrarDesparasitacion
+        })
+
+        async function borrarDesparasitacion(){
+            try {
+                modalDeCarga.style.display = "grid";
+                const response = await fetch(`http://localhost:3000/desparasitacion/eliminar/${desparasitacion.idDesparasitacion}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (response.ok){
+                    modalDeCarga.style.display = "none";
+                    advertenciaVacuna.style.display = "none"
+                    await verDesparacitacion()
+                } else {
+                    modalDeCarga.style.display = "none";
+                    throw new Error('Error al eliminar la vacuna');
+                }
+            } catch (error) {
+                modalDeCarga.style.display = "none";
+                console.error(error);
+            }
+        }
         newDesparacitacion.style.display = "table-row";
         contenedorDesparacitacion.appendChild(newDesparacitacion)
     }
@@ -625,27 +714,36 @@ export async function VisualizarHistorialMedico(){
         }
     })
 
-    btnadvertenciaVacuna.addEventListener("click", async ()=>{
-        // try {
-        //     modalDeCarga.style.display = "grid";
-        //     const response = await fetch(`http://localhost:3000/vacuna/eliminar/${guardarIDvacuna}`, {
-        //         method: 'DELETE',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         }
-        //     });
-        //     if (response.ok){
-        //         modalDeCarga.style.display = "none";
-        //         advertenciaVacuna.style.display = "none"
-        //         await VerVacunas()
-        //     } else {
-        //         modalDeCarga.style.display = "none";
-        //         throw new Error('Error al eliminar la vacuna');
-        //     }
-        // } catch (error) {
-        //     modalDeCarga.style.display = "none";
-        //     console.error(error);
-        // }
+    frmEditarDesparacitacion.addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const formData = new FormData(frmEditarDesparacitacion);
+        const data = {};
+        formData.forEach((value, key) => {
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
+        });
+        try {
+            modalDeCarga.style.display = "flex";
+            const response = await fetch(`http://localhost:3000/actualizar/desparasitacion/mascota/${idDesparasitacion}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok){
+                modalDeCarga.style.display = "none";
+                frmEditarDesparacitacion.reset()
+                modalEditarDesparacitacion.style.display = "none"
+                await verDesparacitacion()
+            } else {
+                modalDeCarga.style.display = "none";
+                throw new Error('Error al actualizar el producto');
+            }
+        } catch (error) {
+            modalDeCarga.style.display = "none";
+            throw new Error('Error al actualizar el producto');
+        }
     })
 }
 

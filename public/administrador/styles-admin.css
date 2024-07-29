@@ -62,7 +62,7 @@ body {
     opacity: 80%;
 }
 
-input{
+input, select{
     background-color: var(--Negro-25);
     padding: 8px;
     border-radius: 8px;
@@ -1269,7 +1269,6 @@ nav.administrador-navbar .user-information {
     padding: 10px 10px 0px 10px;
     border-radius: 10px;
 }
-
 /* ANIADIR DESPARACITACIONES */
 #modal-AniadirDesparacitaciones-HM .ContenedorAniadirVacunas{
     gap: 24px;
@@ -1277,6 +1276,14 @@ nav.administrador-navbar .user-information {
 }
 #modal-AniadirDesparacitaciones-HM .campo{
     margin: 0px;
+}
+.ContenedorAniadirDesparacitacion label{
+    font-size: var(--Text-long);
+    margin-bottom: 10px;
+}
+.ContenedorAniadirDesparacitacion input{
+    font-size: 16px;
+    width: 200px;
 }
 
 /* ANIADIR NUEVA HISTORIA CLINICA */

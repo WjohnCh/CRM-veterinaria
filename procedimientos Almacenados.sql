@@ -172,7 +172,6 @@ CREATE PROCEDURE get_idmas_by_idhis(
 BEGIN
 	SELECT idHistorialMedico FROM historialmedico WHERE p_idmascota = idmascota;
 END $$
-
 -- Obtener las vacunas dadas el historial Medico
 DELIMITER $$
 DROP PROCEDURE IF EXISTS get_by_id_vac $$
@@ -222,7 +221,7 @@ CREATE PROCEDURE get_by_id_despara(
 )
 BEGIN
 	SELECT
-		fecha, producto, peso
+		*
 	FROM
 		desparasitacion
     WHERE
@@ -310,19 +309,27 @@ END $$
 DELIMITER $$
 DROP PROCEDURE IF EXISTS post_by_id_despara $$
 CREATE PROCEDURE post_by_id_despara(
-	IN p_idHistorialMedico INT,
+    IN p_idHistorialMedico INT,
     IN p_fecha DATE,
-    IN p_produto VARCHAR(100),
-    IN p_peso DECIMAL(5,3)
+    IN p_producto VARCHAR(100),
+    IN p_peso DECIMAL(5,2),
+    IN p_dosis VARCHAR(100),
+    IN p_tipo VARCHAR(50),
+    IN p_prox_fecha DATE
 )
 BEGIN
-	INSERT INTO desparasitacion(idHistorialMedico, fecha, producto, peso)
-    VALUES(
-		IFNULL(p_idHistorialMedico, NULL),
+    INSERT INTO desparasitacion(
+        idHistorialMedico, fecha, producto, 
+        peso, dosis, tipo, prox_fecha
+    ) VALUES (
+        IFNULL(p_idHistorialMedico, NULL),
         IFNULL(p_fecha, NULL),
-        IFNULL(p_produto, NULL),
-        IFNULL(p_peso, NULL)
-	);
+        IFNULL(p_producto, NULL),
+        IFNULL(p_peso, NULL),
+        IFNULL(p_dosis, NULL),
+        IFNULL(p_tipo, NULL),
+        IFNULL(p_prox_fecha, NULL)
+    );
 END $$
 
 -- Crear historia Medica

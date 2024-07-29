@@ -60,12 +60,11 @@ CREATE TABLE IF NOT EXISTS vacuna (
     tipoVacunacion VARCHAR(50),
     temperatura DECIMAL(5,2),
     peso DECIMAL(5,2),
-    vac_frecuenciaCardiaca INT null, -- Modificacion
-    vac_frecuenciaRespiratoria INT null, -- Modificacion
+    vac_frecuenciaCardiaca DECIMAL(5,2) null, -- Modificacion
+    vac_frecuenciaRespiratoria DECIMAL(5,2) null, -- Modificacion
     prox_fecha date NULL,         -- Modificacion
     FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
-
 -- tabla modificada
 CREATE TABLE IF NOT EXISTS desparasitacion (
     idDesparasitacion INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,8 +83,8 @@ CREATE TABLE IF NOT EXISTS revisionmedica (
     idHistorialMedico INT,
     fecha DATE,
     temperatura DECIMAL(5,2),
-    frecuenciaCardiaca INT,
-    frecuenciaRespiratoria INT,
+    frecuenciaCardiaca DECIMAL(5,2),
+    frecuenciaRespiratoria DECIMAL(5,2),
     peso DECIMAL(5,2),
     mucosas VARCHAR(50),
     glucosa DECIMAL(5,2),
@@ -97,8 +96,6 @@ CREATE TABLE IF NOT EXISTS revisionmedica (
     examenes_realizados TEXT, -- modificacion
     FOREIGN KEY (idHistorialMedico) REFERENCES historialmedico(idHistorialMedico)
 );
-
-
 CREATE TABLE IF NOT EXISTS Sesion (
     idSesion INT(11) AUTO_INCREMENT,
     fecha DATE,

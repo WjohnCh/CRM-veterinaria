@@ -12,27 +12,37 @@
 </head>
 
 <body>
-<!----------------------------------------------------------------------------------------- -->
-<!------------------------SECCION DE FILTRADO---------------------------------------------- -->
-<!----------------------------------------------------------------------------------------- -->
-<div class="Contenedor_Filtros-Tabla-productos flex-XY">
-    <div class="flex-YX centrado  seccionFiltradoProducto">
-        <h3>FILTROS</h3>
-        <div class="flex Filtros-Tabla-productos" style="gap: 100px;">
-            <div>
-                <label for="">Nombre del dueño:</label>
-                <input type="text" name="NombreClienteComplet" id="Nombre_Cliente-gestionUsuario-filtro" class="input-generico input-sesiones_filtro" 
-                style="width: 220px;" placeholder="Correo del usuario" >
-            </div>
-            <div>
-                <label for="">Nombre Mascota:</label>
-                <input type="text" id="Nombre_Mascota-gestionUsuario-filtro"  class="input-generico input-sesiones_filtro" 
-                style="width: 220px;"placeholder="Nombre del usuario" >
-            </div>
-            <button id="btn-buscar-gestionUsuario-filtro" class="opacidad-80 btnFiltradoGestionProductos white-letter">Aplicar Filtro</button>
-        </div>
+    <div>
+        <h3 class="flex-YX centrado">Desparasitación</h3>
+        <br>
+        <table class="HM_table HM_table-desparacitaciones">
+            <thead>
+                <tr>
+                    <th class="HM_table-header">Fecha</th>
+                    <th class="HM_table-header HM_table-header-productos">Producto</th>
+                    <th class="HM_table-header">Peso</th>
+                    <th class="HM_table-header">Tipo</th>
+                    <th class="HM_table-header">Prox Fecha</th>
+                    <th class="HM_table-header">Opciones</th>
+                </tr>
+            </thead>
+            <tr class="Plantilla-desparacitacion-HM">
+                <td class="HM_table-cell celda-despacitacion_fecha" style="width: 10%;">2021-11-11</td>
+                <td class="HM_table-cell celda-despacitacion_Producto">Una cosa poderosa</td>
+                <td class="HM_table-cell celda-despacitacion_Peso">11.11 kg</td>
+                <td class="HM_table-cell celda-despacitacion_tipo">Externa</td>
+                <td class="HM_table-cell celda-despacitacion_proxFecha">2021-11-11</td>
+                <td class="HM_table-cell celda-vacunacion_Opciones">
+                    <img class="opacidad-80 celda-vacunacion_editar" src="../../../Íconos - Logos/edit.svg" alt="">
+                    <img class="opacidad-80 celda-vacunacion_borrar" src="../../../Íconos - Logos/trash-bold.svg" alt="">
+                </td>
+            </tr>
+            <tbody id="Contenedor-desparacitacion-tabla-HM">
+            </tbody>
+        </table>
+        <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
+            Desparasitación</button>
     </div>
-</div>
 </body>
 
 </html>

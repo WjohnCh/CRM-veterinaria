@@ -17,6 +17,20 @@ export async function VisualizarHistorialMedico(){
     const sexoMascota = document.getElementById("Sexo_Mascota_Historial_Medico");
     const nacimientoMascota = document.getElementById("Nacimiento_Mascota_Historial_Medico");
     const obsMascota = document.getElementById("obs_Mascota_Historial_Medico");
+
+    const modalActualizarVacuna = document.getElementById("modal-ActualizarVacuna-HM")
+    const actualizarFecha = document.getElementById("actVacuna_fecha");
+    const actualizarTipoVacunacion = document.getElementById("actVacuna_tipoVacunacion");
+    const actualizarTemperatura = document.getElementById("actVacuna_temperatura");
+    const actualizarPeso = document.getElementById("actVacuna_peso");
+    const actualizarProxvacu = document.getElementById("actVacuna_proxvacu");
+    const actualizarFC = document.getElementById("actVacuna_FC");
+    const actualizarFR = document.getElementById("actVacuna_FR");
+
+    const advertenciaVacuna = document.getElementById("Modal-InterfazAdvertenciaVacunas")
+    const btnadvertenciaVacuna = document.getElementById("btn-InterfazAdvertenciaVacunas")
+    let guardarIDvacuna;
+
     await verDatosClienteYmascota()
     async function verDatosClienteYmascota(){
         try {
@@ -30,6 +44,7 @@ export async function VisualizarHistorialMedico(){
                 //CARGAR MODAL DE ACEPTAR
                 modalDeCarga.style.display = "none";
             }else{
+                modalDeCarga.style.display = "none";
                 //CARGAR MODAL DE ERROR
             }
 
@@ -45,6 +60,7 @@ export async function VisualizarHistorialMedico(){
             nacimientoMascota.innerText = mascota.fecha_nacimiento
             obsMascota.innerText = mascota.obs            
         } catch (error){
+            modalDeCarga.style.display = "none";
             console.error(error)
         }
     }
@@ -60,14 +76,15 @@ export async function VisualizarHistorialMedico(){
                 //CARGAR MODAL DE ACEPTAR
                 modalDeCarga.style.display = "none";
             }else{
+                modalDeCarga.style.display = "none";
                 //CARGAR MODAL DE ERROR
             }
             
-
             nombresApellidosCliente.innerText = cliente.nombre_cliente + " "+cliente.apellido
             direccionCliente.innerText = cliente.direccion
             telefonoCliente.innerText = cliente.telefono          
         } catch (error){
+            modalDeCarga.style.display = "none";
             console.error(error)
         }
     }
@@ -79,7 +96,6 @@ export async function VisualizarHistorialMedico(){
             modalDeCarga.style.display = "flex";
             const result = await fetch(`http://localhost:3000/vacunas/${idMascota}`)
             const body = await result.json();
-
             if(result.ok){
                 //CARGAR MODAL DE ACEPTAR
                 modalDeCarga.style.display = "none";
@@ -103,17 +119,94 @@ export async function VisualizarHistorialMedico(){
         const TipoVacuna = newVacuna.querySelector(".celda-vacunacion_Vacuna")
         const TemperaturaVacuna = newVacuna.querySelector(".celda-vacunacion_Tipo")
         const PesoVacuna = newVacuna.querySelector(".celda-vacunacion_Peso")
+        const FC = newVacuna.querySelector(".celda-vacunacion_FC")
+        const FR = newVacuna.querySelector(".celda-vacunacion_FR")
+        const ProxFecha = newVacuna.querySelector(".celda-vacunacion_ProxFecha")
+
+        const EditarVacuna = newVacuna.querySelector(".celda-vacunacion_editar")
+        const BorrarVacuna = newVacuna.querySelector(".celda-vacunacion_borrar")
 
         FechaVacuna.innerText = vacuna.fecha
         TipoVacuna.innerText = vacuna.tipoVacunacion
         if(vacuna.temperatura){
-            TemperaturaVacuna.innerText = `${vacuna.temperatura}`
+            TemperaturaVacuna.innerText = `${vacuna.temperatura} °C`
         }
         if(vacuna.peso){
-            PesoVacuna.innerText = `${vacuna.peso}kg`
+            PesoVacuna.innerText = `${vacuna.peso} kg`
         }
+        if(vacuna.vac_frecuenciaCardiaca){
+            FC.innerText = `${vacuna.vac_frecuenciaCardiaca} lpm`
+        }
+        if(vacuna.vac_frecuenciaRespiratoria){
+            FR.innerText = `${vacuna.vac_frecuenciaRespiratoria} rpm`
+        }
+        if(vacuna.prox_fecha){
+            ProxFecha.innerText = `${vacuna.prox_fecha}`
+        }
+        EditarVacuna.addEventListener("click", async ()=>{
+            modalActualizarVacuna.style.display = "grid"
+            modalDeCarga.style.display = "flex";
+            try {
+                const result = await fetch(`http://localhost:3000/vacuna/unasola/${vacuna.idVacuna}`)
+                const [{fecha, peso, prox_fecha, temperatura, tipoVacunacion, vac_frecuenciaCardiaca, vac_frecuenciaRespiratoria}] = await result.json();
+                
+                if (result.ok) {
+                    guardarIDvacuna = vacuna.idVacuna;
+                    modalDeCarga.style.display = "none";
+                    setValueIfExists(actualizarFecha, fecha);
+                    setValueIfExists(actualizarTipoVacunacion, tipoVacunacion);
+                    setValueIfExists(actualizarTemperatura, temperatura);
+                    setValueIfExists(actualizarPeso, peso);
+                    setValueIfExists(actualizarProxvacu, prox_fecha);
+                    setValueIfExists(actualizarFC, vac_frecuenciaCardiaca);
+                    setValueIfExists(actualizarFR, vac_frecuenciaRespiratoria);
+                }else{
+                    modalDeCarga.style.display = "none"
+                }
+
+            } catch (error) {
+                modalDeCarga.style.display = "none"
+                console.error(error);
+            }
+
+        })
+
+        BorrarVacuna.addEventListener("click", async ()=>{
+            advertenciaVacuna.style.display = "grid"
+            guardarIDvacuna = vacuna.idVacuna;
+            btnadvertenciaVacuna.onclick = borrarVacuna
+        })
+
+        async function borrarVacuna(){
+            try {
+                modalDeCarga.style.display = "grid";
+                const response = await fetch(`http://localhost:3000/vacuna/eliminar/${guardarIDvacuna}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (response.ok){
+                    modalDeCarga.style.display = "none";
+                    advertenciaVacuna.style.display = "none"
+                    await VerVacunas()
+                } else {
+                    modalDeCarga.style.display = "none";
+                    throw new Error('Error al eliminar la vacuna');
+                }
+            } catch (error) {
+                modalDeCarga.style.display = "none";
+                console.error(error);
+            }
+        }
+
         newVacuna.style.display = "table-row";
         tablaFilaVacuna.appendChild(newVacuna)
+    }
+
+    // REUTILIZAR PARA DESPARASITACIONES
+    function setValueIfExists(element, value) {
+        element.value = value !== null ? value : '';
     }
 
 // LOGICA PARA VER LAS DESPARACITACIONES
@@ -243,19 +336,20 @@ export async function VisualizarHistorialMedico(){
 
     const equis = document.querySelectorAll(".modal-generico");
     equis.forEach(element => {
-        const equisCerrar = element.querySelector(".equis-ubicacion")
+        const equisCerrar = element.querySelector(".equis-ubicacion");
         if (equisCerrar) {
             equisCerrar.addEventListener("click", () => {
                 element.style.display = "none";
-            })
+            });
         }
+        element.addEventListener("mousedown", (event) => {
 
-        element.addEventListener("click", (event) => {
             if (event.target == element) {
                 element.style.display = "none";
             }
-        })
-    })
+        });
+    
+    });
 
 
     const nombreMascotaActualizar = document.getElementById("nombre_mascota-aniadorFRM")
@@ -407,7 +501,8 @@ export async function VisualizarHistorialMedico(){
         const formData = new FormData(frmAniadirVacuna);
         const data = {};
         formData.forEach((value, key) => {
-            data[key] = value.trim();
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
         });
 
         try {
@@ -440,10 +535,8 @@ export async function VisualizarHistorialMedico(){
         const formData = new FormData(frmDesparacitaciones);
         const data = {};
         formData.forEach((value, key) => {
-            data[key] = value.trim();
-            if(value == ''){
-                value = null
-            }
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
         });
 
         try {
@@ -488,7 +581,7 @@ export async function VisualizarHistorialMedico(){
             });
             if (response.ok){
                 modalDeCarga.style.display = "none";
-                frmDesparacitaciones.reset();
+                frmHistoriaClinica.reset()
                 modalAniadirHistoriaClinica.style.display = "none"
                 await verHistoriaClinica()
             } else {
@@ -497,6 +590,62 @@ export async function VisualizarHistorialMedico(){
         } catch (error) {
             throw new Error('Error al actualizar el producto');
         }
+    })
+
+    const frmActualizarVacuna = document.getElementById("frmActualizarVacuna-HM1")
+    frmActualizarVacuna.addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const formData = new FormData(frmActualizarVacuna);
+        const data = {};
+        formData.forEach((value, key) => {
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
+        });
+        try {
+            modalDeCarga.style.display = "flex";
+            const response = await fetch(`http://localhost:3000/vacuna/actualizar/${guardarIDvacuna}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok){
+                modalDeCarga.style.display = "none";
+                frmActualizarVacuna.reset()
+                modalActualizarVacuna.style.display = "none"
+                await VerVacunas()
+            } else {
+                modalDeCarga.style.display = "none";
+                throw new Error('Error al actualizar el producto');
+            }
+        } catch (error) {
+            modalDeCarga.style.display = "none";
+            throw new Error('Error al actualizar el producto');
+        }
+    })
+
+    btnadvertenciaVacuna.addEventListener("click", async ()=>{
+        // try {
+        //     modalDeCarga.style.display = "grid";
+        //     const response = await fetch(`http://localhost:3000/vacuna/eliminar/${guardarIDvacuna}`, {
+        //         method: 'DELETE',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         }
+        //     });
+        //     if (response.ok){
+        //         modalDeCarga.style.display = "none";
+        //         advertenciaVacuna.style.display = "none"
+        //         await VerVacunas()
+        //     } else {
+        //         modalDeCarga.style.display = "none";
+        //         throw new Error('Error al eliminar la vacuna');
+        //     }
+        // } catch (error) {
+        //     modalDeCarga.style.display = "none";
+        //     console.error(error);
+        // }
     })
 }
 

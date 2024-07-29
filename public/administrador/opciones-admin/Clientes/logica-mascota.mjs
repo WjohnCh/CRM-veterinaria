@@ -1,3 +1,4 @@
+import {VisualizarHistorialMedico} from '../Historial-Medico/logica-historial.mjs'
 const modalDeCarga = document.getElementById("loading-screen")
 export async function logicaMascotas() {
     const contenedor = document.getElementById("Cuerpo_tabla-Gestion-Producto")
@@ -32,6 +33,7 @@ export async function logicaMascotas() {
         const Especie = newMascota.querySelector(".Valor-Tabla__Especie")
         const Sexo = newMascota.querySelector(".Valor-Tabla__Sexo")
         const color = newMascota.querySelector(".Valor-Tabla__Color")
+        const detalle = newMascota.querySelector(".Valor-Tabla__detalles")
 
         NombreCLiente.innerText = `${mascota.nombre_cliente} ${mascota.apellido}`
         NombreMascota.innerText = mascota.nombre_mascota
@@ -43,11 +45,37 @@ export async function logicaMascotas() {
             Sexo.innerText = "Hembra"
         }
 
-        color.innerText = mascota.color
+        color.innerText = mascota.raza
+
+        detalle.addEventListener("click", async()=>{
+            localStorage.setItem('idMascota', mascota.idmascota);
+            await CargarContenido("Historial-Medico/plantilla-historial.html")
+            await VisualizarHistorialMedico();
+        })
+
 
         newMascota.style.display = "table-row"
         contenedor.appendChild(newMascota)
 
+    }
+
+
+    let contenedorDinamico = document.getElementById("contenedor-main-admin")
+
+    async function CargarContenido(url){
+        try {
+            modalDeCarga.style.display = "flex";
+            let respuesta = await fetch(`/public/administrador/opciones-admin/${url}`);
+            if (!respuesta.ok){
+                throw new Error('Error al cargar los datos');
+            }else{
+                modalDeCarga.style.display = "none";
+            }
+            let contenido = await respuesta.text();
+            contenedorDinamico.innerHTML = contenido
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     // ----------------------------------------------------------------------

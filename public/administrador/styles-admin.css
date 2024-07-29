@@ -1090,7 +1090,7 @@ nav.administrador-navbar .user-information {
 }
 
 #historial-medico-vista-general{
-    width: 800px;
+    width: 1000px;
     margin: auto;
 }
 
@@ -1105,11 +1105,20 @@ nav.administrador-navbar .user-information {
 }
 
 .HM_table {
-    width: 420px;
+    width: 1000px;
     border-collapse: collapse;
     margin: 0 auto;
 }
-
+.celda-vacunacion_Opciones{
+    padding: 0px;
+}
+.celda-vacunacion_Opciones img{
+    cursor: pointer;
+    width: 20px;
+}
+.celda-vacunacion_Opciones img:last-child{
+    margin-left: 10px;
+}
 .HM_table-header {
     background-color: var(--Negro-100);
     color: white;
@@ -1119,7 +1128,7 @@ nav.administrador-navbar .user-information {
 
 .HM_table-cell {
     border: 1px solid var(--Negro-50);
-    padding: 6px;
+    padding: 4px;
     text-align: center;
 }
 
@@ -1131,7 +1140,7 @@ nav.administrador-navbar .user-information {
     width: 40%;
 }
 .HM_table-desparacitaciones{
-    width: 360px;
+    width: 1000px;
 }
 
 .table-cell-1-celda{

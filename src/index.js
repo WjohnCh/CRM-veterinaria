@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
     , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo
     , editarDatosUsuario, obtenerSesiones, obtenerClientes, obtenerMascotas,
-    obtenerHistorialMedico, obtenerUsuarios,} = require('./indexUsuario.js')
+    obtenerHistorialMedico, obtenerUsuarios, } = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -450,7 +450,7 @@ app.get('/user-info', verifyToken, async (req, res) => {
 
 app.post('/productos/envios', verifyToken, async (req, res) => {
     const { Distrito = null, CalleDireccion = null, comentarioAdicional = null,
-         nombre, apellido, telefono,
+        nombre, apellido, telefono,
         MetodoPago, productosGuardados } = req.body;
 
     const totalPrecio = await calcularTotal(productosGuardados);
@@ -531,13 +531,13 @@ app.get('/buscarcliente/barra/:nombrecompleto', async (req, res) => {
 });
 
 app.post('/nuevocliente', async (req, res) => {
-    let { nombresCliente, apellidosCliente, telefonoCliente = null, nombreMascota, razaMascota = null, especieMascota, sexoMascota} = req.body;
+    let { nombresCliente, apellidosCliente, telefonoCliente = null, nombreMascota, razaMascota = null, especieMascota, sexoMascota } = req.body;
 
 
-    if(telefonoCliente == ''){
+    if (telefonoCliente == '') {
         telefonoCliente = null;
     }
-    if(razaMascota == ''){
+    if (razaMascota == '') {
         razaMascota = null;
     }
 
@@ -554,10 +554,10 @@ app.post('/nuevocliente', async (req, res) => {
         await sequelize.query(
             `INSERT INTO historialmedico (idmascota) VALUES (?)`,
             { replacements: [idmascota] }
-          );
+        );
 
-        if (id_cliente){
-            res.json({ message: "Datos Subidos", idmascota, nombreMascota, nombreCompleto: `${nombresCliente} ${apellidosCliente}`});
+        if (id_cliente) {
+            res.json({ message: "Datos Subidos", idmascota, nombreMascota, nombreCompleto: `${nombresCliente} ${apellidosCliente}` });
         } else {
             res.status(400).json({ message: "Error al subir los datos" });
         }
@@ -571,65 +571,65 @@ app.post('/aniadirmascota/:idcliente', async (req, res) => {
     const idCliente = req.params.idcliente;
     let { nombreMascota, especieMascota, razaMascota = null, sexoMascota } = req.body;
 
-    if(razaMascota == ""){
+    if (razaMascota == "") {
         razaMascota = null
     }
 
     try {
-      const [{ idmascota }] = await sequelize.query(
-        `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
-        { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, idCliente] }
-      );
+        const [{ idmascota }] = await sequelize.query(
+            `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
+            { replacements: [nombreMascota, especieMascota, razaMascota, sexoMascota, idCliente] }
+        );
 
-      await sequelize.query(
-        `INSERT INTO historialmedico (idmascota) VALUES (?)`,
-        { replacements: [idmascota] }
-      );
+        await sequelize.query(
+            `INSERT INTO historialmedico (idmascota) VALUES (?)`,
+            { replacements: [idmascota] }
+        );
 
         res.json({ idmascota: idmascota, nombreMascota: nombreMascota });
-    } catch (error){
-      console.error('Error al procesar los datos:', error);
-      res.status(500).send('Error al procesar la solicitud');
-    }
-})
-
-app.get("/obtenerMascotas/cliente/:clienteid", async (req, res) => {
-    const {clienteid} = req.params;
-
-    try {
-        const results = await sequelize.query(
-            `CALL usuario_mascotas_verdetalle(?)`,
-            { replacements: [clienteid] }
-          );
-
-          res.json(results)
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
     }
 })
 
-app.post('/crearsesion/:idmascota', async(req, res) => {
-    const {idmascota} = req.params;
-    let {monto, masinfo, fecha, servicios = []} = req.body;
+app.get("/obtenerMascotas/cliente/:clienteid", async (req, res) => {
+    const { clienteid } = req.params;
+
+    try {
+        const results = await sequelize.query(
+            `CALL usuario_mascotas_verdetalle(?)`,
+            { replacements: [clienteid] }
+        );
+
+        res.json(results)
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+})
+
+app.post('/crearsesion/:idmascota', async (req, res) => {
+    const { idmascota } = req.params;
+    let { monto, masinfo, fecha, servicios = [] } = req.body;
     try {
         await sequelize.query(
             `CALL crear_sesion(?, ?, ?, ?)`,
-            {replacements: [idmascota, monto, masinfo, fecha]}
+            { replacements: [idmascota, monto, masinfo, fecha] }
         );
         const [result] = await sequelize.query(
             `SELECT LAST_INSERT_ID() as id_sesion`
         );
         const id_sesion = result[0].id_sesion;
 
-        for(const servicio of servicios) {
+        for (const servicio of servicios) {
             await sequelize.query(
                 `CALL crear_servicio(?, ?)`,
-                {replacements: [id_sesion, servicio]}
+                { replacements: [id_sesion, servicio] }
             );
         }
 
-        res.status(200).json({ message: 'Sesión y servicios creados con éxito'});
+        res.status(200).json({ message: 'Sesión y servicios creados con éxito' });
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
@@ -638,10 +638,10 @@ app.post('/crearsesion/:idmascota', async(req, res) => {
 
 
 // OBTENER DATOS PARA EL HISTORIAL MEDICO
-app.get("/vacunas/:idmascota", async(req, res) => {
+app.get("/vacunas/:idmascota", async (req, res) => {
     const { idmascota } = req.params;
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
@@ -649,17 +649,81 @@ app.get("/vacunas/:idmascota", async(req, res) => {
             `CALL get_by_id_vac(?)`,
             { replacements: [idHistorialMedico] }
         );
-            res.json(results_2);
+        res.json(results_2);
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+app.get("/vacuna/unasola/:idvacuna", async (req, res) => {
+    const { idvacuna } = req.params;
+    try {
+        const [results] = await sequelize.query(
+            `SELECT * FROM vacuna WHERE idvacuna = ?`,
+            { replacements: [idvacuna] }
+        );
+        res.json(results);
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
     }
 });
 
-app.get("/desparacitaciones/:idmascota", async(req, res) =>{
-    const {idmascota} = req.params;
+app.put('/vacuna/actualizar/:idvacuna', async (req, res) => {
+    const { idvacuna } = req.params;
+    const { fecha, tipoVacunacion, temperatura, peso, proxvacu, FC, FR } = req.body;
+
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [results] = await sequelize.query(
+            `UPDATE vacuna SET 
+                fecha = IFNULL(?, fecha), 
+                tipoVacunacion = IFNULL(?, tipoVacunacion), 
+                temperatura = IFNULL(?, temperatura), 
+                peso = IFNULL(?, peso), 
+                prox_fecha = IFNULL(?, prox_fecha), 
+                vac_frecuenciaCardiaca = IFNULL(?, vac_frecuenciaCardiaca), 
+                vac_frecuenciaRespiratoria = IFNULL(?, vac_frecuenciaRespiratoria) 
+            WHERE idvacuna = ?`,
+            {
+                replacements: [fecha, tipoVacunacion, temperatura, peso, proxvacu, FC, FR, idvacuna]
+            }
+        );
+
+        if (results.affectedRows > 0) {
+            res.status(200).json({ message: 'Vacuna actualizada exitosamente' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la vacuna' });
+        }
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.delete('/vacuna/eliminar/:idvacuna', async (req, res) => {
+    const { idvacuna } = req.params;
+    try {
+        const [result] = await sequelize.query(
+            `DELETE FROM vacuna WHERE idvacuna = ?`,
+            { replacements: [idvacuna] }
+        );
+        console.log(result);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Vacuna eliminada exitosamente' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la vacuna' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar la vacuna:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+
+app.get("/desparacitaciones/:idmascota", async (req, res) => {
+    const { idmascota } = req.params;
+    try {
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
@@ -667,33 +731,33 @@ app.get("/desparacitaciones/:idmascota", async(req, res) =>{
             `CALL get_by_id_despara(?)`,
             { replacements: [idHistorialMedico] }
         );
-            res.json(results_2);
+        res.json(results_2);
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
     }
 });
 
-app.get("/revisionmedica/:idmascota", async(req, res) =>{
-    const {idmascota} = req.params;
+app.get("/revisionmedica/:idmascota", async (req, res) => {
+    const { idmascota } = req.params;
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
         const results_2 = await sequelize.query(
-           `CALL get_by_id_revmed(?)`,
+            `CALL get_by_id_revmed(?)`,
             { replacements: [idHistorialMedico] }
         );
-            res.json(results_2);
+        res.json(results_2);
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
     }
 });
 
-app.get("/obtenerdatocliente/mascota/:idmascota", async (req, res)=>{
-    const {idmascota} = req.params;
+app.get("/obtenerdatocliente/mascota/:idmascota", async (req, res) => {
+    const { idmascota } = req.params;
     try {
         const [cliente] = await sequelize.query(
             `CALL mascota_cliente_verdetalle(?)`,
@@ -705,7 +769,7 @@ app.get("/obtenerdatocliente/mascota/:idmascota", async (req, res)=>{
         );
 
 
-            res.json({cliente, mascota});
+        res.json({ cliente, mascota });
     } catch (error) {
         console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
@@ -719,7 +783,7 @@ app.put("/mascota/update/:idmascota", async (req, res) => {
     try {
         await sequelize.query(
             `CALL update_mascota_histmed(?, ?, ?, ?, ?, ?, ?, ?)`,
-            { replacements: [idmascota,nombre_mascota, especie, raza, color, sexo, obs, fecha_nacimiento] }
+            { replacements: [idmascota, nombre_mascota, especie, raza, color, sexo, obs, fecha_nacimiento] }
         );
         res.status(200).json({ message: 'Mascota actualizada correctamente' });
     } catch (error) {
@@ -731,10 +795,10 @@ app.put("/mascota/update/:idmascota", async (req, res) => {
 // ActualizarCliente
 app.put("/usuario/update/:idmascota", async (req, res) => {
     const { idmascota } = req.params; // es el id mascota
-    const { nombre_cliente , apellido, direccion = null, telefono = null} = req.body;
+    const { nombre_cliente, apellido, direccion = null, telefono = null } = req.body;
     try {
 
-        const [{idcliente}] = await sequelize.query(
+        const [{ idcliente }] = await sequelize.query(
             `CALL mascota_cliente_verdetalle(?)`,
             { replacements: [idmascota] }
         );
@@ -758,7 +822,7 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         fecha,
         temperatura = null,
         frecuenciaCardiaca = null,
-        frecuenciaRespiratoria = null ,
+        frecuenciaRespiratoria = null,
         peso = null,
         mucosas = null,
         glucosa = null,
@@ -769,31 +833,33 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         receta = null
     } = req.body;
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
 
-            await sequelize.query(
-                `CALL post_by_id_revmed(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                {replacements: [
+        await sequelize.query(
+            `CALL post_by_id_revmed(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            {
+                replacements: [
                     idHistorialMedico,
-                        fecha,
-                        temperatura,
-                        frecuenciaCardiaca,
-                        frecuenciaRespiratoria,
-                        peso,
-                        mucosas,
-                        glucosa,
-                        TLC,
-                        anamnesis,
-                        diagnosticoPresuntivo,
-                        tratamiento,
-                        receta
-                    ]}); 
-            res.status(200).json({ 
-                message: 'Estado medico añadido con exito creados con éxito'
+                    fecha,
+                    temperatura,
+                    frecuenciaCardiaca,
+                    frecuenciaRespiratoria,
+                    peso,
+                    mucosas,
+                    glucosa,
+                    TLC,
+                    anamnesis,
+                    diagnosticoPresuntivo,
+                    tratamiento,
+                    receta
+                ]
             });
+        res.status(200).json({
+            message: 'Estado medico añadido con exito creados con éxito'
+        });
     } catch (error) {
         console.error('Error al obtener el ID de historial médico:', error);
         res.status(500).send('Error al procesar la solicitud');
@@ -802,25 +868,27 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
 
 app.post('/vacuna/aniadir/:idmascota', async (req, res) => {
     const { idmascota } = req.params;
-    let { fecha, tipoVacunacion, temperatura = null, peso = null } = req.body;
+    let { fecha, tipoVacunacion, temperatura = null, peso = null, proxvacu = null,
+        FC = null, FR = null
+    } = req.body;
 
-    if(temperatura == ''){
-        temperatura=null
+    if (temperatura == '') {
+        temperatura = null
     }
-    if(peso == ''){
-        peso=null
+    if (peso == '') {
+        peso = null
     }
 
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
         if (idHistorialMedico) {
-                 await sequelize.query(
-                    `CALL post_by_id_vac(?, ?, ?, ?, ?)`,
-                    { replacements: [idHistorialMedico, fecha, tipoVacunacion, temperatura, peso] }
-                );
+            await sequelize.query(
+                `CALL post_by_id_vac(?, ?, ?, ?, ?, ?, ?, ?)`,
+                { replacements: [idHistorialMedico, fecha, tipoVacunacion, temperatura, peso, FC, FR, proxvacu] }
+            );
             res.status(200).json({ message: 'Vacuna creada exitosamente' });
         } else {
             res.status(404).json({ message: 'No se encontró el historial médico para la mascota' });
@@ -835,11 +903,11 @@ app.post('/vacuna/aniadir/:idmascota', async (req, res) => {
 app.post('/desparasitacion/aniadir/:idmascota', async (req, res) => {
     const { idmascota } = req.params;
     let { fecha, producto, peso = null } = req.body;
-    if(peso == ''){
-        peso=null
+    if (peso == '') {
+        peso = null
     }
     try {
-        const [{idHistorialMedico}] = await sequelize.query(
+        const [{ idHistorialMedico }] = await sequelize.query(
             `CALL get_idmas_by_idhis(?)`,
             { replacements: [idmascota] }
         );
@@ -862,11 +930,11 @@ app.get('/historialMedico', obtenerHistorialMedico);
 app.get('/usuarios', obtenerUsuarios);
 
 
-app.get('/sesiones/servicios/:idsesion', async (req, res)=>{
-    const {idsesion} = req.params;
+app.get('/sesiones/servicios/:idsesion', async (req, res) => {
+    const { idsesion } = req.params;
     try {
         const [results] = await sequelize.query(`SELECT * FROM servicio s WHERE s.idsesion = ?`,
-            { replacements: [idsesion]});
+            { replacements: [idsesion] });
         res.json(results);
     } catch (error) {
         console.error('Error al obtener las sesiones:', error.message);
@@ -874,19 +942,19 @@ app.get('/sesiones/servicios/:idsesion', async (req, res)=>{
     }
 });
 
-app.get('/clientes/historial/:nombre_masc/:nombre_clie', async(req, res)=>{
-    let {nombre_masc = null, nombre_clie = null} = req.params;
+app.get('/clientes/historial/:nombre_masc/:nombre_clie', async (req, res) => {
+    let { nombre_masc = null, nombre_clie = null } = req.params;
 
-    if(nombre_masc == 'null'){
+    if (nombre_masc == 'null') {
         nombre_masc = null;
     }
-    if(nombre_clie == 'null'){
+    if (nombre_clie == 'null') {
         nombre_clie = null;
     }
     try {
         const idhistorial = await sequelize.query(
             `CALL filtro_historial(?, ?);`,
-            {replacements: [nombre_masc, nombre_clie]}
+            { replacements: [nombre_masc, nombre_clie] }
         );
         res.json(idhistorial);
     } catch (error) {
@@ -895,12 +963,12 @@ app.get('/clientes/historial/:nombre_masc/:nombre_clie', async(req, res)=>{
     }
 });
 
-app.get('/sesiones/filtros/mascota/:nombreMascota', async(req, res)=>{
-    const { nombreMascota } = req.params; 
+app.get('/sesiones/filtros/mascota/:nombreMascota', async (req, res) => {
+    const { nombreMascota } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_buscar_by_gestion_mascota_name(?)',
-            { replacements: [ nombreMascota] }
+            { replacements: [nombreMascota] }
         );
         if (result) {
             res.json(result);
@@ -913,12 +981,12 @@ app.get('/sesiones/filtros/mascota/:nombreMascota', async(req, res)=>{
     }
 });
 
-app.get('/sesiones/filtros/cliente/:nombreCliente', async(req, res)=>{
-    const { nombreCliente } = req.params; 
+app.get('/sesiones/filtros/cliente/:nombreCliente', async (req, res) => {
+    const { nombreCliente } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_buscar_by_gestion_cliente_name(?)',
-            { replacements: [ nombreCliente] }
+            { replacements: [nombreCliente] }
         );
         if (result) {
             res.json(result);
@@ -931,12 +999,12 @@ app.get('/sesiones/filtros/cliente/:nombreCliente', async(req, res)=>{
     }
 });
 
-app.get('/usuario/filtros/nombre/:name', async(req, res)=>{
-    const { name } = req.params; 
+app.get('/usuario/filtros/nombre/:name', async (req, res) => {
+    const { name } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_buscar_usuario_by_usuario_name(?)',
-            { replacements: [ name] }
+            { replacements: [name] }
         );
         if (result) {
             res.json(result);
@@ -949,12 +1017,12 @@ app.get('/usuario/filtros/nombre/:name', async(req, res)=>{
     }
 });
 
-app.get('/usuario/filtros/correo/:eMail', async(req, res)=>{
-    const { eMail } = req.params; 
+app.get('/usuario/filtros/correo/:eMail', async (req, res) => {
+    const { eMail } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_buscar_usuario_by_usuario_email(?)',
-            { replacements: [ eMail] }
+            { replacements: [eMail] }
         );
         if (result) {
             res.json(result);
@@ -968,7 +1036,7 @@ app.get('/usuario/filtros/correo/:eMail', async(req, res)=>{
 });
 
 app.get('/sesiones/filtroFecha/:fecha', async (req, res) => {
-    const { fecha } = req.params; 
+    const { fecha } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_sesion_by_fecha(?)',
@@ -986,7 +1054,7 @@ app.get('/sesiones/filtroFecha/:fecha', async (req, res) => {
 });
 
 app.get('/sesiones/filtroMascota/:nombreMascota', async (req, res) => {
-    const { nombreMascota } = req.params; 
+    const { nombreMascota } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_sesion_by_nombre_mascota(?)',
@@ -1004,7 +1072,7 @@ app.get('/sesiones/filtroMascota/:nombreMascota', async (req, res) => {
 });
 
 app.get('/sesiones/filtroCliente/:nombreCliente', async (req, res) => {
-    const { nombreCliente } = req.params; 
+    const { nombreCliente } = req.params;
     try {
         const result = await sequelize.query(
             'CALL filtro_sesion_by_nombre_cliente(?)',
@@ -1022,7 +1090,7 @@ app.get('/sesiones/filtroCliente/:nombreCliente', async (req, res) => {
 });
 
 app.get('/clientes/filtroNombre/:nombreCliente', async (req, res) => {
-    const { nombreCliente } = req.params; 
+    const { nombreCliente } = req.params;
     try {
         const result = await sequelize.query(
             'CALL obtener_cliente_por_nombre(?)',

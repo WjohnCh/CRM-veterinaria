@@ -43,24 +43,35 @@
     </div>
     <div class="width100">
         <br><br>
-        <div class="ContenidoDosTablas flex-XY width100">
+
             <div>
                 <h3 class="flex-YX centrado">Vacunación</h3>
                 <br>
                 <table class="HM_table">
                     <thead>
                         <tr>
-                            <th class="HM_table-header">Fecha</th>
+                            <th class="HM_table-header" >Fecha</th>
                             <th class="HM_table-header">Tipo de vacunación</th>
                             <th class="HM_table-header">T°</th>
                             <th class="HM_table-header">Peso</th>
+                            <th class="HM_table-header">F.C.</th>
+                            <th class="HM_table-header">F.R.</th>
+                            <th class="HM_table-header" >Próxima Fecha</th>
+                            <th class="HM_table-header">Opciones</th>
                         </tr>
                     </thead>
                     <tr class="plantilla-fila-vacunacion-HM" style="display: none;">
-                        <td class="HM_table-cell celda-vacunacion_fecha"></td>
-                        <td class="HM_table-cell celda-vacunacion_Vacuna"></td>
-                        <td class="HM_table-cell celda-vacunacion_Tipo"></td>
-                        <td class="HM_table-cell celda-vacunacion_Peso"></td>
+                        <td class="HM_table-cell celda-vacunacion_fecha" style="width: 10%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_Vacuna"style="width: 29%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_Tipo"style="width: 11%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_Peso"style="width: 11%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_FC"style="width: 13%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_FR"style="width: 12%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_ProxFecha" style="width: 15%;"></td>
+                        <td class="HM_table-cell celda-vacunacion_Opciones">
+                            <img class="opacidad-80 celda-vacunacion_editar" src="../Íconos - Logos/edit.svg" alt="">
+                            <img class="opacidad-80 celda-vacunacion_borrar" src="../Íconos - Logos/trash-bold.svg" alt="">
+                        </td>
                     </tr>
                     <tbody id="contenedor-tablaFila-vacunacion-HM">
 
@@ -69,29 +80,36 @@
                 <button class="boton-generico-primario btn-HistorialMedico" id="Aniadir_vacunacion-HM">Añadir
                     Vacunación</button>
             </div>
-            <div>
-                <h3 class="flex-YX centrado">Desparasitación</h3>
-                <br>
-                <table class="HM_table HM_table-desparacitaciones">
-                    <thead>
-                        <tr>
-                            <th class="HM_table-header">Fecha</th>
-                            <th class="HM_table-header HM_table-header-productos">Producto</th>
-                            <th class="HM_table-header">Peso</th>
-                        </tr>
-                    </thead>
-                    <tr class="Plantilla-desparacitacion-HM" style="display: none;">
-                        <td class="HM_table-cell celda-despacitacion_fecha"></td>
-                        <td class="HM_table-cell celda-despacitacion_Producto"></td>
-                        <td class="HM_table-cell celda-despacitacion_Peso"></td>
-                    </tr>
-                    <tbody id="Contenedor-desparacitacion-tabla-HM">
-                    </tbody>
-                </table>
-                <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
-                    Desparasitación</button>
-            </div>
-        </div>
+    </div>
+    <br><br>
+    <div>
+        <h3 class="flex-YX centrado">Desparasitación</h3>
+        <br>
+        <table class="HM_table HM_table-desparacitaciones">
+            <thead>
+                <tr>
+                    <th class="HM_table-header">Fecha</th>
+                    <th class="HM_table-header HM_table-header-productos">Producto</th>
+                    <th class="HM_table-header">Peso</th>
+                    <th class="HM_table-header">Tipo</th>
+                    <th class="HM_table-header">Prox Fecha</th>
+                    <th class="HM_table-header">Opciones</th>
+                </tr>
+            </thead>
+            <tr class="Plantilla-desparacitacion-HM" style="display: none;">
+                <td class="HM_table-cell celda-despacitacion_fecha"></td>
+                <td class="HM_table-cell celda-despacitacion_Producto"></td>
+                <td class="HM_table-cell celda-despacitacion_Peso"></td>
+                <td class="HM_table-cell celda-vacunacion_Opciones">
+                    <img class="opacidad-80 celda-vacunacion_editar" src="../Íconos - Logos/edit.svg" alt="">
+                    <img class="opacidad-80 celda-vacunacion_borrar" src="../Íconos - Logos/trash-bold.svg" alt="">
+                </td>
+            </tr>
+            <tbody id="Contenedor-desparacitacion-tabla-HM">
+            </tbody>
+        </table>
+        <button class="boton-generico-primario btn-HistorialMedico" id="aniadirDesparacitacion-HM">Añadir
+            Desparasitación</button>
     </div>
     <br><br>
     <div class="width100">
@@ -244,27 +262,73 @@
 <!----------------------------------------------------------------------------------------------------- 
 -----------------------------------MODAL PARA ANIADIR VACUNAS-------------------------- 
  ------------------------------------------------------------------------------------------------------->
-<div class="modal-generico" id="modal-AniadirVacunas-HM" style="display: none;">
+ <div class="modal-generico" id="modal-AniadirVacunas-HM" style="display: none;">
     <form action="#" class="frm-generico frmAniadirnewVacuna" id="frmAniadirnewVacuna-HM1">
         <h3 class="flex-YX centrado">AÑADIR VACUNACIÓN</h3>
         <br>
         <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
         <div class="flex-XY ContenedorAniadirVacunas">
             <div>
-                <label>Fecha:</label><br>
-                <input class="campo" name="fecha" type="date" required><br>
-                <label>Tipo de vacunación:</label><br>
+                <label>Fecha: *</label><br>
+                <input class="campo" name="fecha" type="date" required style="width: 180px;"><br>
+                <label>Tipo de vacunación: *</label><br>
                 <input class="campo" name="tipoVacunacion" type="text" required placeholder="Tipo de vacunacion">
             </div>
             <div>
-                <label>Temperatura:</label><br>
-                <input class="campo" type="number" step="0.1" name="temperatura"placeholder="Temperatura"><br>
-                <label>Peso:</label><br>
-                <input class="campo" type="number" step="0.1" name="peso" placeholder="Peso">
+                <label>Temperatura: </label><br>
+                <input class="campo" type="number" step="0.01" name="temperatura"placeholder="Temperatura"><br>
+                <label>Peso: </label><br>
+                <input class="campo" type="number" step="0.01" name="peso" placeholder="Peso">
+                <div>
+                    <label>Próxima Vacuna:</label><br>
+                    <input class="campo" type="date"  name="proxvacu" style="width: 180px;">
+                </div>
+            </div>
+            <div>
+                <label>F.C.:</label><br>
+                <input class="campo" type="number" step="0.01" name="FC"placeholder="Frecuencia Cardiaca"><br>
+                <label>F.R:</label><br>
+                <input class="campo" type="number" step="0.01" name="FR" placeholder="Frecuencia Respiratoria">
             </div>
         </div>
         <br>
         <button class="boton-generico-primario">Añadir Vacunación</button>
+    </form>
+</div>
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ACTUALIZAR VACUNAS-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+ <div class="modal-generico" id="modal-ActualizarVacuna-HM" style="display: none;">
+    <form action="#" class="frm-generico frmAniadirnewVacuna" id="frmActualizarVacuna-HM1">
+        <h3 class="flex-YX centrado">EDITAR VACUNACIÓN</h3>
+        <br>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="flex-XY ContenedorAniadirVacunas">
+            <div>
+                <label>Fecha: *</label><br>
+                <input class="campo" id="actVacuna_fecha" name="fecha" type="date" required style="width: 180px;"><br>
+                <label>Tipo de vacunación: *</label><br>
+                <input class="campo" id="actVacuna_tipoVacunacion" name="tipoVacunacion" type="text" required placeholder="Tipo de vacunacion">
+            </div>
+            <div>
+                <label>Temperatura: </label><br>
+                <input class="campo" id="actVacuna_temperatura" type="number" step="0.01" name="temperatura" placeholder="Temperatura"><br>
+                <label>Peso: </label><br>
+                <input class="campo" id="actVacuna_peso" type="number" step="0.01" name="peso" placeholder="Peso">
+                <div>
+                    <label>Próxima Vacuna:</label><br>
+                    <input class="campo" id="actVacuna_proxvacu" type="date" name="proxvacu" style="width: 180px;">
+                </div>
+            </div>
+            <div>
+                <label>F.C.:</label><br>
+                <input class="campo" id="actVacuna_FC" type="number" step="0.01" name="FC" placeholder="Frecuencia Cardiaca"><br>
+                <label>F.R:</label><br>
+                <input class="campo" id="actVacuna_FR" type="number" step="0.01" name="FR" placeholder="Frecuencia Respiratoria">
+            </div>
+        </div>
+        <br>
+        <button class="boton-generico-primario">Actualizar Vacunación</button>
     </form>
 </div>
 
@@ -291,7 +355,7 @@
             </div>
         </div>
         <br>
-        <button class="boton-generico-primario">Añadir Vacunación</button>
+        <button class="boton-generico-primario">Añadir Desparasitación</button>
     </form>
 </div>
 
@@ -362,6 +426,23 @@
         </div>
             <button type="submit" class="boton-generico-primario">Guardar</button>
     </form>
+</div>
+
+    <!-- /----------------------------------INTERFAZ DE ADVERTENCIA-----------------------------------
+ -------------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------
+ -->
+ <div class="modal-generico" id="Modal-InterfazAdvertenciaVacunas" style="display: none;">
+    <div class="message-container flex-XY centrado">
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="message-content">
+            <img src="../Íconos - Logos/advertencia.svg" alt="Error" class="Ayuda-image">
+            <p class="bold tittle color-text-ayuda-naranja">¿Está seguro que quiere realizar esta acción?</p>
+            <p class="Ayuda-text">Esta acción es definitiva y no podrás recuperar la información.
+            </p>
+            <button class="btn-Ayuda btn-naranja opacidad-80" id="btn-InterfazAdvertenciaVacunas">Eliminar</button>
+        </div>
+    </div>
 </div>
 
 <script type="module" src="./logica-historial.mjs"></script>

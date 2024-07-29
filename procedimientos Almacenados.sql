@@ -181,7 +181,7 @@ IN p_idHistorialMedico INT
 )
 BEGIN
 	SELECT 
-		fecha, tipoVacunacion, temperatura, peso 
+		* 
     FROM 
 		vacuna 
 	WHERE 
@@ -286,17 +286,24 @@ CREATE  PROCEDURE post_by_id_vac(
     IN p_fecha DATE,
     IN p_tipoVacunacion VARCHAR(50),
     IN p_temperatura decimal(5,2),
-    IN p_peso decimal(5,3)
+    IN p_peso decimal(5,3),
+	IN p_vac_frecuenciaCardiaca DECIMAL(5,2),
+    IN p_vac_frecuenciaRespiratoria DECIMAL(5,2),
+    IN p_prox_fecha DATE
 )
 BEGIN
-	INSERT INTO vacuna(idHistorialMedico, fecha, tipoVacunacion, temperatura, peso)
-    VALUES(
-		IFNULL(p_idHistorialMedico, NULL),
+INSERT INTO vacuna( idHistorialMedico, fecha, tipoVacunacion, temperatura, 
+        peso, vac_frecuenciaCardiaca, vac_frecuenciaRespiratoria, prox_fecha
+    ) VALUES (
+        IFNULL(p_idHistorialMedico, NULL),
         IFNULL(p_fecha, NULL),
         IFNULL(p_tipoVacunacion, NULL),
         IFNULL(p_temperatura, NULL),
-        IFNULL(p_peso, NULL)
-	);
+        IFNULL(p_peso, NULL),
+        IFNULL(p_vac_frecuenciaCardiaca, NULL),
+        IFNULL(p_vac_frecuenciaRespiratoria, NULL),
+        IFNULL(p_prox_fecha, NULL)
+    );
 END $$
 
 -- CREAR DESPARACITACION
@@ -325,8 +332,8 @@ CREATE PROCEDURE post_by_id_revmed(
     IN p_idHistorialMedico INT,
     IN p_fecha DATE,
     IN p_temperatura DECIMAL(5,2),
-    IN p_frecuenciaCardiaca INT,
-    IN p_frecuenciaRespiratoria INT,
+    IN p_frecuenciaCardiaca DECIMAL(5,2),
+    IN p_frecuenciaRespiratoria DECIMAL(5,2),
     IN p_peso DECIMAL(5,2),
     IN p_mucosas VARCHAR(50),
     IN p_glucosa DECIMAL(5,2),

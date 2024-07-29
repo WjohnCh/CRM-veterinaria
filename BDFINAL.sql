@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS revisionmedica (
     peso DECIMAL(5,2),
     mucosas VARCHAR(50),
     glucosa DECIMAL(5,2),
-    TLC DECIMAL(5,2),
+    TLC varchar(50),
     anamesis TEXT,
     diagnosticoPresuntivo TEXT,
     tratamiento TEXT,

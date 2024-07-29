@@ -952,7 +952,7 @@ nav.administrador-navbar .user-information {
     background-color: var(--Negro-0);
     border-radius: 10px;
     border: 1px solid var(--Negro-75);
-    padding: 30px;
+    padding: 10px 30px 14px 30px;
     position: relative;
 }
 .encerrarFRMBorde{
@@ -1156,6 +1156,17 @@ nav.administrador-navbar .user-information {
     border: 1px solid var(--Negro-50);
     margin-bottom: 10px;
     padding: 10px;
+    position: relative;
+}
+.conjuntoOpcionesHM{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 70px;
+}
+.conjuntoOpcionesHM img{
+    width: 24px;
+    cursor: pointer;
 }
 .btn-HistorialMedico{
     margin-top: 20px;
@@ -1297,7 +1308,7 @@ nav.administrador-navbar .user-information {
 
 .historiaclinica-formulario-contenido {
     background-color: white;
-    padding: 20px;
+    padding: 0px 20px 10px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
 }

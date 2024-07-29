@@ -26,10 +26,14 @@ export async function logicaCliente(){
         const NombreCompletoCliente = newCLiente.querySelector(".Valor-Tabla__NombreCliente")
         const Telefono = newCLiente.querySelector(".Valor-Tabla__Telefono")
         const Direccion = newCLiente.querySelector(".Valor-Tabla__Direccion")
+        const correo = newCLiente.querySelector(".Valor-Tabla__Correo")
+
+
 
         NombreCompletoCliente.innerText = `${cliente.nombre_cliente} ${cliente.apellido}`
         Telefono.innerText = cliente.telefono
         Direccion.innerText = cliente.direccion
+        correo.innerText = cliente.correo
 
         newCLiente.style.display ="table-row"
         contenedor.appendChild(newCLiente)

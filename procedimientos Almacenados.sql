@@ -24,7 +24,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS mascota_cliente_verdetalle;
 CREATE PROCEDURE mascota_cliente_verdetalle(IN mascotaID INT)
 BEGIN
-    SELECT c.idcliente, c.nombre_cliente, c.apellido, c.telefono, c.direccion, c.dni
+    SELECT *
     FROM cliente c
     JOIN mascota m ON c.idcliente = m.clienteid
     WHERE m.idmascota = mascotaID;
@@ -111,12 +111,15 @@ END $$
 DELIMITER $$
 DROP PROCEDURE IF EXISTS CREAR_CLIENTE$$
 CREATE PROCEDURE CREAR_CLIENTE(
-		IN p_nombre VARCHAR(100),
-        IN p_apellidos VARCHAR(100),
-        IN p_telefono VARCHAR(100)
+    IN p_nombre VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_telefono VARCHAR(100),
+    IN p_correo VARCHAR(100) -- Nuevo parámetro añadido
 )
 BEGIN
-	INSERT INTO cliente(nombre_cliente, apellido, telefono) VALUES(p_nombre, p_apellidos, p_telefono);
+    INSERT INTO cliente(nombre_cliente, apellido, telefono, correo) -- Incluir correo en la inserción
+    VALUES(p_nombre, p_apellidos, p_telefono, p_correo);
+    
     SELECT LAST_INSERT_ID() AS id_cliente;
 END $$
 
@@ -195,18 +198,7 @@ CREATE PROCEDURE get_by_id_revmed(
 )
 BEGIN
 	SELECT
-		fecha,
-		temperatura,
-		frecuenciaCardiaca,
-		frecuenciaRespiratoria,
-		peso,
-		mucosas ,
-		glucosa,
-		TLC,
-		anamesis,
-		diagnosticoPresuntivo,
-		tratamiento,
-		receta
+	*
 	FROM
 		revisionmedica
     WHERE
@@ -259,19 +251,21 @@ END $$
 DELIMITER $$
 DROP PROCEDURE IF EXISTS update_cliente_histmed $$
 CREATE PROCEDURE update_cliente_histmed(
-	IN p_idcliente INT,
+    IN p_idcliente INT,
     IN p_nombre_cliente VARCHAR(100),
     IN p_apellido VARCHAR(100),
     IN p_direccion VARCHAR(100),
-    IN p_telefono VARCHAR(20)
+    IN p_telefono VARCHAR(20),
+    IN p_correo VARCHAR(100) -- Nuevo parámetro añadido
 )
 BEGIN
-	UPDATE cliente
+    UPDATE cliente
     SET 
-		nombre_cliente = IF(p_nombre_cliente = '', nombre_cliente, p_nombre_cliente),
+        nombre_cliente = IF(p_nombre_cliente = '', nombre_cliente, p_nombre_cliente),
         apellido = IF(p_apellido = '', apellido, p_apellido),
         direccion = IF(p_direccion = '', direccion, p_direccion),
-        telefono = IF(p_telefono = '', telefono, p_telefono)
+        telefono = IF(p_telefono = '', telefono, p_telefono),
+        correo = IF(p_correo = '', correo, p_correo) -- Incluir correo en la actualización
     WHERE
         idcliente = p_idcliente;
 END $$
@@ -344,14 +338,15 @@ CREATE PROCEDURE post_by_id_revmed(
     IN p_peso DECIMAL(5,2),
     IN p_mucosas VARCHAR(50),
     IN p_glucosa DECIMAL(5,2),
-    IN p_TLC DECIMAL(5,2),
+    IN p_TLC VARCHAR(50),
     IN p_anamesis TEXT,
     IN p_diagnosticoPresuntivo TEXT,
     IN p_tratamiento TEXT,
-    IN p_receta TEXT
+    IN p_receta TEXT,
+    IN p_examenes_realizados TEXT
 )
 BEGIN
-    INSERT INTO revisionmedica (idHistorialMedico, fecha, temperatura, frecuenciaCardiaca, frecuenciaRespiratoria, peso, mucosas, glucosa, TLC, anamesis, diagnosticoPresuntivo, tratamiento, receta)
+    INSERT INTO revisionmedica (idHistorialMedico, fecha, temperatura, frecuenciaCardiaca, frecuenciaRespiratoria, peso, mucosas, glucosa, TLC, anamesis, diagnosticoPresuntivo, tratamiento, receta, examenes_realizados)
     VALUES (
         IFNULL(p_idHistorialMedico, NULL),
         IFNULL(p_fecha, NULL),
@@ -365,7 +360,8 @@ BEGIN
         IFNULL(p_anamesis, NULL),
         IFNULL(p_diagnosticoPresuntivo, NULL),
         IFNULL(p_tratamiento, NULL),
-        IFNULL(p_receta, NULL)
+        IFNULL(p_receta, NULL),
+        IFNULL(p_examenes_realizados, NULL)
     );
 END $$
 

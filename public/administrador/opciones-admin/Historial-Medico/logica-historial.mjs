@@ -10,6 +10,7 @@ export async function VisualizarHistorialMedico(){
     const nombresApellidosCliente = document.getElementById("Nombre_Cliente_Historial_Medico");
     const direccionCliente = document.getElementById("Direccion_Cliente_Historial_Medico");
     const telefonoCliente = document.getElementById("Telefono_Cliente_Historial_Medico");
+    const correoCliente = document.getElementById("correo_Cliente_Historial_Medico");
     const nombreMascota = document.getElementById("Nombre_Mascota_Historial_Medico");
     const especieMascota = document.getElementById("Especie_Mascota_Historial_Medico");
     const razaMascota = document.getElementById("Raza_Mascota_Historial_Medico");
@@ -83,6 +84,7 @@ export async function VisualizarHistorialMedico(){
             nombresApellidosCliente.innerText = cliente.nombre_cliente + " "+cliente.apellido
             direccionCliente.innerText = cliente.direccion
             telefonoCliente.innerText = cliente.telefono          
+            correoCliente.innerText = cliente.correo          
         } catch (error){
             modalDeCarga.style.display = "none";
             console.error(error)
@@ -313,7 +315,6 @@ export async function VisualizarHistorialMedico(){
         })
 
         BorrarDesparacitacion.addEventListener("click", async ()=>{
-            console.log("hi");
             advertenciaVacuna.style.display = "grid"
             btnadvertenciaVacuna.onclick = borrarDesparasitacion
         })
@@ -348,6 +349,20 @@ export async function VisualizarHistorialMedico(){
     const ContenedorHistoriaClinica = document.getElementById("Contenedor-historias-clinicas")
     const PlantillaHistoriaClinica = document.querySelector(".Contenido-HistoriaClínica-HM")
 
+    const inputActuHMFecha = document.getElementById("Actualihistoriaclinica_fecha");
+    const inputActuHMTemperatura = document.getElementById("Actualihistoriaclinica_t");
+    const inputActuHMFrecuenciaCardiaca = document.getElementById("Actualihistoriaclinica_fc");
+    const inputActuHMFrecuenciaRespiratoria = document.getElementById("Actualihistoriaclinica_fr");
+    const inputActuHMPeso = document.getElementById("Actualihistoriaclinica_peso");
+    const inputActuHMTLC = document.getElementById("Actualihistoriaclinica_tlc");
+    const inputActuHMGlucosa = document.getElementById("Actualihistoriaclinica_glucosa");
+    const inputActuHMMucosas = document.getElementById("Actualihistoriaclinica_Mucosas");
+    const inputActuHMDiagnosticoPresuntivo = document.getElementById("Actualihistoriaclinica_diagnostico");
+    const inputActuHMAnamnesis = document.getElementById("Actualihistoriaclinica_anamnesis");
+    const inputActuHMExamRealizados = document.getElementById("Actualihistoriaclinica_examanes"); // Corregido el name
+    const inputActuHMTratamiento = document.getElementById("Actualihistoriaclinica_tratamiento");
+    const inputActuHMReceta = document.getElementById("Actualihistoriaclinica_receta");
+
     await verHistoriaClinica()
 
     async function verHistoriaClinica(){
@@ -360,6 +375,7 @@ export async function VisualizarHistorialMedico(){
                 //CARGAR MODAL DE ACEPTAR
                 modalDeCarga.style.display = "none";
             }else{
+                modalDeCarga.style.display = "none";
                 //CARGAR MODAL DE ERROR
             }
 
@@ -369,9 +385,15 @@ export async function VisualizarHistorialMedico(){
             })
             
         } catch (error) {
+            modalDeCarga.style.display = "none";
             console.error(error)
         }
     }
+
+    const modalActualizarHistorial = document.getElementById("modalActualizarHistoriaClinica")
+    const frmActualizarHistorial = document.getElementById("ActualizarHistoriaClinica")
+    let revisionMedica;
+
 
     function CrearFilaHistoriaClinica(historia){
         const newHistoria = PlantillaHistoriaClinica.cloneNode(true);
@@ -388,6 +410,11 @@ export async function VisualizarHistorialMedico(){
         const diagnosticoPresuntivo = newHistoria.querySelector(".DiagnosticoPresuntivo_historiaClinica_Historial_Medico")
         const tratamiento = newHistoria.querySelector(".Tratamiento_historiaClinica_Historial_Medico")
         const receta = newHistoria.querySelector(".Receta_historiaClinica_Historial_Medico")
+        const ExamenRealizado = newHistoria.querySelector(".ExamenRealizado_historiaClinica_Historial_Medico")
+        
+        const btnEditar = newHistoria.querySelector(".btnEditar_HM")
+        const btnBorrar = newHistoria.querySelector(".btnBorrar_HM")
+    
 
         fecha.innerText = historia.fecha
         temperatura.innerText = historia.temperatura
@@ -401,6 +428,70 @@ export async function VisualizarHistorialMedico(){
         diagnosticoPresuntivo.innerText = historia.diagnosticoPresuntivo
         tratamiento.innerText = historia.tratamiento
         receta.innerText = historia.receta
+        ExamenRealizado.innerText = historia.examenes_realizados || null
+
+        btnEditar.addEventListener("click", async ()=>{
+            modalActualizarHistorial.style.display = "grid"
+            modalDeCarga.style.display = "flex";
+            try {
+                const result = await fetch(`http://localhost:3000/revisionmedica/unica/${historia.idRevisionMedica}`)
+                const {fecha, temperatura, frecuenciaCardiaca, frecuenciaRespiratoria, peso, mucosas, glucosa, TLC,
+                    anamesis, diagnosticoPresuntivo, tratamiento, receta, examenes_realizados,
+                } = await result.json();
+
+                if (result.ok) {
+                    modalDeCarga.style.display = "none";
+                    setValueIfExists(inputActuHMFecha, fecha);
+                    setValueIfExists(inputActuHMTemperatura, temperatura);
+                    setValueIfExists(inputActuHMFrecuenciaCardiaca, frecuenciaCardiaca);
+                    setValueIfExists(inputActuHMFrecuenciaRespiratoria, frecuenciaRespiratoria);
+                    setValueIfExists(inputActuHMPeso, peso);
+                    setValueIfExists(inputActuHMMucosas, mucosas);
+                    setValueIfExists(inputActuHMGlucosa, glucosa);
+                    setValueIfExists(inputActuHMTLC, TLC);
+                    setValueIfExists(inputActuHMAnamnesis, anamesis);
+                    setValueIfExists(inputActuHMDiagnosticoPresuntivo, diagnosticoPresuntivo);
+                    setValueIfExists(inputActuHMTratamiento, tratamiento);
+                    setValueIfExists(inputActuHMReceta, receta);
+                    setValueIfExists(inputActuHMExamRealizados, examenes_realizados);
+                }else{
+                    modalDeCarga.style.display = "none"
+                }
+                revisionMedica = historia.idRevisionMedica;
+            } catch (error) {
+                modalDeCarga.style.display = "none"
+                console.error(error);
+            }
+
+        })
+
+        btnBorrar.addEventListener("click", async ()=>{
+            advertenciaVacuna.style.display = "grid"
+            btnadvertenciaVacuna.onclick = borrarDesparasitacion
+        })
+
+        async function borrarDesparasitacion(){
+            try {
+                modalDeCarga.style.display = "grid";
+                const response = await fetch(`http://localhost:3000/revisionmedica/eliminar/${historia.idRevisionMedica}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (response.ok){
+                    modalDeCarga.style.display = "none";
+                    advertenciaVacuna.style.display = "none"
+                    await verHistoriaClinica()
+                } else {
+                    modalDeCarga.style.display = "none";
+                    throw new Error('Error al eliminar la vacuna');
+                }
+            } catch (error) {
+                modalDeCarga.style.display = "none";
+                console.error(error);
+            }
+        }
 
         newHistoria.style.display ="flex"
         ContenedorHistoriaClinica.appendChild(newHistoria)
@@ -488,6 +579,7 @@ export async function VisualizarHistorialMedico(){
     const nombreApellido = document.getElementById("input_miCuenta_Apellidos")
     const TelefonopietarioActualizar = document.getElementById("input_miCuenta_telefono")
     const DireccionPropietarioActualizar = document.getElementById("input_miCuenta_email")
+    const correoPropietarioActualizar = document.getElementById("input_miCuenta_correo")
 
     btnpropietario.addEventListener("click", async()=>{
         modalActualizarCliente.style.display = "grid"
@@ -507,6 +599,7 @@ export async function VisualizarHistorialMedico(){
             nombreApellido.value = cliente.apellido
             TelefonopietarioActualizar.value = cliente.telefono
             DireccionPropietarioActualizar.value = cliente.direccion
+            correoPropietarioActualizar.value = cliente.correo
         } catch (error) {
             console.error(error);
         }
@@ -560,7 +653,8 @@ export async function VisualizarHistorialMedico(){
         const formData = new FormData(frmActualizarCliente);
         const data = {};
         formData.forEach((value, key) => {
-            data[key] = value.trim();
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
         });
 
         try {
@@ -736,6 +830,38 @@ export async function VisualizarHistorialMedico(){
                 frmEditarDesparacitacion.reset()
                 modalEditarDesparacitacion.style.display = "none"
                 await verDesparacitacion()
+            } else {
+                modalDeCarga.style.display = "none";
+                throw new Error('Error al actualizar el producto');
+            }
+        } catch (error) {
+            modalDeCarga.style.display = "none";
+            throw new Error('Error al actualizar el producto');
+        }
+    })
+
+    frmActualizarHistorial.addEventListener("submit", async (event)=>{
+        event.preventDefault();
+        const formData = new FormData(frmActualizarHistorial);
+        const data = {};
+        formData.forEach((value, key) => {
+            const trimmedValue = value.trim();
+            data[key] = trimmedValue === '' ? null : trimmedValue;
+        });
+        try {
+            modalDeCarga.style.display = "flex";
+            const response = await fetch(`http://localhost:3000/revmed/actualizar/${revisionMedica}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok){
+                modalDeCarga.style.display = "none";
+                frmActualizarHistorial.reset()
+                modalActualizarHistorial.style.display = "none"
+                await verHistoriaClinica()
             } else {
                 modalDeCarga.style.display = "none";
                 throw new Error('Error al actualizar el producto');

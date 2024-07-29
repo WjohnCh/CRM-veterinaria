@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
     , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo
     , editarDatosUsuario, obtenerSesiones, obtenerClientes, obtenerMascotas,
-    obtenerHistorialMedico, obtenerUsuarios, } = require('./indexUsuario.js')
+    obtenerHistorialMedico, obtenerUsuarios, actualizahistorialMedico} = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
@@ -531,7 +531,7 @@ app.get('/buscarcliente/barra/:nombrecompleto', async (req, res) => {
 });
 
 app.post('/nuevocliente', async (req, res) => {
-    let { nombresCliente, apellidosCliente, telefonoCliente = null, nombreMascota, razaMascota = null, especieMascota, sexoMascota } = req.body;
+    let { nombresCliente, apellidosCliente, telefonoCliente = null, nombreMascota, razaMascota = null, especieMascota, sexoMascota, correo = null } = req.body;
 
 
     if (telefonoCliente == '') {
@@ -540,11 +540,14 @@ app.post('/nuevocliente', async (req, res) => {
     if (razaMascota == '') {
         razaMascota = null;
     }
+    if (correo == '') {
+        correo = null;
+    }
 
     try {
         const [{ id_cliente }] = await sequelize.query(
-            `CALL CREAR_CLIENTE(?, ?, ?)`,
-            { replacements: [nombresCliente, apellidosCliente, telefonoCliente] }
+            `CALL CREAR_CLIENTE(?, ?, ?, ?)`, // Añadir el cuarto parámetro para el correo
+            { replacements: [nombresCliente, apellidosCliente, telefonoCliente, correo] } // Incluir el correo en los replacements
         );
         const [{ idmascota }] = await sequelize.query(
             `CALL CREAR_MASCOTA(?, ?, ?, ?, ?)`,
@@ -820,6 +823,24 @@ app.get("/revisionmedica/:idmascota", async (req, res) => {
     }
 });
 
+app.delete('/revisionmedica/eliminar/:idrevisionmedica', async (req, res) => {
+    const { idrevisionmedica } = req.params;
+    try {
+        const [result] = await sequelize.query(
+            `DELETE FROM revisionmedica WHERE idRevisionMedica = ?`,
+            { replacements: [idrevisionmedica] }
+        );
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Revisión médica eliminada exitosamente' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la revisión médica' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar la revisión médica:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
 app.get("/obtenerdatocliente/mascota/:idmascota", async (req, res) => {
     const { idmascota } = req.params;
     try {
@@ -859,18 +880,16 @@ app.put("/mascota/update/:idmascota", async (req, res) => {
 // ActualizarCliente
 app.put("/usuario/update/:idmascota", async (req, res) => {
     const { idmascota } = req.params; // es el id mascota
-    const { nombre_cliente, apellido, direccion = null, telefono = null } = req.body;
+    const { nombre_cliente, apellido, direccion = null, telefono = null , correo } = req.body;
     try {
 
         const [{ idcliente }] = await sequelize.query(
             `CALL mascota_cliente_verdetalle(?)`,
             { replacements: [idmascota] }
         );
-        console.log(idcliente);
-        console.log(req.body);
         await sequelize.query(
-            `CALL update_cliente_histmed(?, ?, ?, ?, ?)`,
-            { replacements: [idcliente, nombre_cliente, apellido, direccion, telefono] }
+            `CALL update_cliente_histmed(?, ?, ?, ?, ?, ?)`,
+            { replacements: [idcliente, nombre_cliente, apellido, direccion, telefono, correo] }
         );
         res.status(200).json({ message: 'Usuario actualizado correctamente' });
     } catch (error) {
@@ -892,6 +911,7 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         glucosa = null,
         TLC = null,
         anamnesis = null,
+        examRealizados = null,
         diagnosticoPresuntivo = null,
         tratamiento = null,
         receta = null
@@ -903,7 +923,7 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         );
 
         await sequelize.query(
-            `CALL post_by_id_revmed(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `CALL post_by_id_revmed(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             {
                 replacements: [
                     idHistorialMedico,
@@ -918,7 +938,8 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
                     anamnesis,
                     diagnosticoPresuntivo,
                     tratamiento,
-                    receta
+                    receta,
+                    examRealizados
                 ]
             });
         res.status(200).json({
@@ -926,6 +947,27 @@ app.post("/revmed/aniadir/:idmascota", async (req, res) => {
         });
     } catch (error) {
         console.error('Error al obtener el ID de historial médico:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+});
+
+app.put("/revmed/actualizar/:idrevmed",actualizahistorialMedico);
+
+app.get('/revisionmedica/unica/:idrevisionmedica', async (req, res) => {
+    const { idrevisionmedica } = req.params;
+    try {
+        const [results] = await sequelize.query(
+            `SELECT * FROM revisionmedica WHERE idRevisionMedica = ?`,
+            { replacements: [idrevisionmedica] }
+        );
+
+        if (results.length > 0) {
+            res.json(results[0]);
+        } else {
+            res.status(404).json({ message: 'No se encontró la revisión médica' });
+        }
+    } catch (error) {
+        console.error('Error al procesar los datos:', error);
         res.status(500).send('Error al procesar la solicitud');
     }
 });

@@ -12,47 +12,69 @@
 </head>
 
 <body>
-    <div class="modal-generico" id="modal-AniadirDesparacitaciones-HM">
-        <form action="#" class="frm-generico frmAniadirnewVacuna" id="AniadirDesparacitaciones-HM">
-            <h3 class="flex-YX centrado">AÑADIR DESPARASITACIÓN</h3>
-            <br>
+    <div class="modal-generico" id="modal-AniadirNuevoCliente&&Mascota">
+        <form action=""  class="flex-YX" id="AniadirNuevoClienteMascota">
+            <h2 class="flex-YX centrado" style="margin-bottom: 20px;">Añadir nuevo cliente</h2>
             <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
-            <div class="flex-XY ContenedorAniadirVacunas ContenedorAniadirDesparacitacion" style="gap: 100px;">
-                <div class="flex-YX" style="gap: 40px;">
+            <p class="bold tittle">Datos del cliente</p>
+            <div class="flex-YX encerrarFRMBorde "style="gap: 10px;">
+                <div class="flex-XY" style="gap: 30px;">
                     <div class="flex-YX">
-                        <label>Fecha:</label>
-                        <input class="campo" name="fecha" type="date" required>
+                        <label for="input_nuevoclienteMascota_nombresCliente">Nombres:</label>
+                        <input type="text" id="input_nuevoclienteMascota_nombresCliente"   name="nombresCliente" placeholder="Nombre del cliente" required>
                     </div>
                     <div class="flex-YX">
-                        <label>Producto:</label>
-                        <input class="campo input" name="producto" type="text" required placeholder="Producto utilizado" required>
+                        <label for="input_nuevoclienteMascota_apellidosCliente">Apellidos:</label>
+                        <input type="text" id="input_nuevoclienteMascota_apellidosCliente" name="apellidosCliente" placeholder="Apellido del cliente" required>
                     </div>
                     <div class="flex-YX">
-                        <label>Peso:</label>
-                        <input class="campo" name="peso" type="number" step="0.01" placeholder="Peso">
+                        <label for="input_nuevoclienteMascota_telefonoCliente">Teléfono:</label>
+                        <input type="number" id="input_nuevoclienteMascota_telefonoCliente" name="telefonoCliente" placeholder="Número de teléfono" required>
                     </div>
                 </div>
-                <div class="flex-YX gap-generico">
-                    <div class="flex-YX">
-                        <label>Dosis:</label>
-                        <input class="campo" name="dosis" type="text" required placeholder="Producto utilizado" required>
-                    </div>
-                    <div class="flex-YX">
-                        <label>Tipo:</label>
-                        <select class="campo" name="tipo" style="width: 200px; font-size: 15px;">
-                            <option value="" disabled selected>Tipo de desparación</option>
-                            <option value="Interna">Interna</option>
-                            <option value="Externa">Externa</option>
-                        </select>
-                    </div>
-                    <div class="flex-YX">
-                        <label>Próxima Fecha:</label>
-                        <input class="campo" name="proxfecha" type="date" required>
+                <div>
+                    <div class="flex-YX" style="width: 210px;">
+                        <label for="input_nuevoclienteMascota_telefonoCliente">Correo:</label>
+                        <input type="email" id="input_nuevoclienteMascota_telefonoCliente" name="telefonoCliente" placeholder="Número de teléfono">
                     </div>
                 </div>
             </div>
-            <br>
-            <button class="boton-generico-primario">Añadir Desparasitación</button>
+        
+            <p class="bold tittle">Datos de la mascota</p>
+            <div class="flex-XY encerrarFRMBorde">
+                <div>
+                    <div class="flex-YX">
+                        <label for="input_nuevoclienteMascota_nombreMascota">Nombre:</label>
+                        <input type="text" id="input_nuevoclienteMascota_nombreMascota" name="nombreMascota" placeholder="Nombre de la mascota" required>
+                    </div>
+                    
+                    <div class="flex-YX">
+                        <br>
+                        <label for="input_nuevoclienteMascota_razaMascota">Raza:</label>
+                        <input type="text" id="input_nuevoclienteMascota_razaMascota" name="razaMascota" placeholder="Raza de la mascota">
+                    </div>
+                </div>
+                
+                <div class="flex-YX min-content">
+                    <label>Especie:</label>
+                        <label for="input_nuevoclienteMascota_especiePerro">
+                            <input type="radio" id="input_nuevoclienteMascota_especiePerro" name="especieMascota" value="perro" required> Perro
+                        </label>
+                        <label for="input_nuevoclienteMascota_especieGato">
+                            <input type="radio" id="input_nuevoclienteMascota_especieGato" name="especieMascota" value="gato" required> Gato
+                        </label>
+                </div>
+                <div class="flex-YX min-content">
+                    <label>Sexo:</label>
+                            <label for="input_nuevoclienteMascota_sexoHembra">
+                                <input type="radio" id="input_nuevoclienteMascota_sexoHembra" name="sexoMascota" value="H" required> Hembra
+                            </label>
+                            <label for="input_nuevoclienteMascota_sexoMacho">
+                                <input type="radio" id="input_nuevoclienteMascota_sexoMacho" name="sexoMascota" value="M" required> Macho
+                            </label>
+                </div>
+            </div>
+            <button type="submit" class="boton-generico-primario">Añadir Cliente</button>
         </form>
     </div>
 </body>

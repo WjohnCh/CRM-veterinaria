@@ -36,6 +36,7 @@
                 <p class="semibold">Dirección: <span class="antibold" id="Direccion_Cliente_Historial_Medico"></span>
                 </p>
                 <p class="semibold">Teléfono: <span class="antibold" id="Telefono_Cliente_Historial_Medico"></span></p>
+                <p class="semibold">Correo: <span class="antibold" id="correo_Cliente_Historial_Medico"></span></p>
             </div>
         </div>
         <button class="boton-generico-primario btn-HistorialMedico" id="actualizar_propietario-HM">Actualizar datos del
@@ -138,9 +139,14 @@
                 <p class="bold">Anamnesis: <span class="antibold Anamnesis_historiaClinica_Historial_Medico"></span></p>
                 <p class="bold">Diagnóstico Presuntivo: <span
                         class="antibold DiagnosticoPresuntivo_historiaClinica_Historial_Medico"></span></p>
+                <p class="bold">Examen Realizado: <span class="antibold ExamenRealizado_historiaClinica_Historial_Medico"></span>
                 <p class="bold">Tratamiento: <span class="antibold Tratamiento_historiaClinica_Historial_Medico"></span>
                 </p>
                 <p class="bold">Receta: <span class="antibold Receta_historiaClinica_Historial_Medico"></span></p>
+            </div>
+            <div class="conjuntoOpcionesHM flex-XY">
+                <img class="btnEditar_HM" src="../Íconos - Logos/edit.svg" alt="">
+                <img class="btnBorrar_HM" src="../Íconos - Logos/trash-bold.svg" alt="">
             </div>
         </div>
         <div id="Contenedor-historias-clinicas">
@@ -245,10 +251,11 @@
                     <label for="input_miCuenta_Apellidos">Apellidos:</label>
                     <input id="input_miCuenta_Apellidos" type="text" class="MiCuenta_disabled_input"
                     name="apellido" placeholder="No proporcionado">
-
-
+                        <label for="input_miCuenta_correo">Correo:</label>
+                        <input id="input_miCuenta_correo" name="correo" type="email"
+                            class="MiCuenta_disabled_input" placeholder="No proporcionado">
                 </div>
-                <div class="flex-YX">
+                <div class="flex-YX" style="height: min-content;">
                     <label for="input_miCuenta_telefono">Teléfono:</label>
                     <input id="input_miCuenta_telefono" inputmode="numeric" name="telefono" type="number"
                         class="MiCuenta_disabled_input" placeholder="No proporcionado">
@@ -486,6 +493,10 @@
                 </div>
             </div>
             <div class="historiaclinica-campo-largo">
+                <label for="tratamiento" class="reserva-cita__label">Examenes Realizados:</label>
+                <textarea id="historiaclinica_tratamiento" name="examRealizados" class="reserva-cita__textarea" placeholder="Ingresar Examen realizado"></textarea>
+            </div>
+            <div class="historiaclinica-campo-largo">
                 <label for="tratamiento" class="reserva-cita__label">Tratamiento:</label>
                 <textarea id="historiaclinica_tratamiento" name="tratamiento" class="reserva-cita__textarea" placeholder="Ingresar tratamiento"></textarea>
             </div>
@@ -495,6 +506,78 @@
             </div>
         </div>
             <button type="submit" class="boton-generico-primario">Guardar</button>
+    </form>
+</div>
+<!----------------------------------------------------------------------------------------------------- 
+-----------------------------------MODAL PARA ACTUALIZAR HISTORIAL CLINICA-------------------------- 
+ ------------------------------------------------------------------------------------------------------->
+ <div class="modal-generico" id="modalActualizarHistoriaClinica" style="display: none;">
+    <form class="historiaclinica-formulario-historial frm-generico" id="ActualizarHistoriaClinica">
+        <h2 class="reserva-cita__titulo">Editar del Historial:</h2>
+        <img src="../Íconos - Logos/Equis.svg" class="equis-ubicacion" alt="">
+        <div class="historiaclinica-formulario-contenido">
+            <div class="flex-XY">
+                <div class="campo">
+                    <label for="fecha" class="reserva-cita__label">Fecha:</label>
+                    <input type="date" id="Actualihistoriaclinica_fecha" name="fecha" class="reserva-cita__input" required>
+                </div>
+                <div class="campo">
+                    <label for="t" class="reserva-cita__label">T:</label>
+                    <input type="text" id="Actualihistoriaclinica_t" name="temperatura" class="reserva-cita__input" placeholder="37°">
+                </div>
+                <div class="campo">
+                    <label for="fc" class="reserva-cita__label">F.C.:</label>
+                    <input type="text" id="Actualihistoriaclinica_fc" name="frecuenciaCardiaca" class="reserva-cita__input" placeholder="80 lpm">
+                </div>
+                <div class="campo">
+                    <label for="fr" class="reserva-cita__label">F.R.:</label>
+                    <input type="text" id="Actualihistoriaclinica_fr" name="frecuenciaRespiratoria" class="reserva-cita__input" placeholder="80 rpm">
+                </div>
+                <div class="campo">
+                    <label for="peso" class="reserva-cita__label">Peso:</label>
+                    <input type="text" id="Actualihistoriaclinica_peso" name="peso" class="reserva-cita__input" placeholder="20 kg">
+                </div>
+                <div class="campo">
+                    <label for="tlc" class="reserva-cita__label">TLC:</label>
+                    <input type="text" id="Actualihistoriaclinica_tlc" name="TLC" class="reserva-cita__input" placeholder="TLC">
+                </div>
+            </div>
+            <div class="flex-XY">
+                <div>
+                    <div class="flex-XY">
+                        <div class="campo religioso">
+                            <label for="glucosa" class="reserva-cita__label">Glucosa:</label>
+                            <input type="text" id="Actualihistoriaclinica_glucosa" name="glucosa" class="reserva-cita__input" placeholder="100 mg/dL">
+                        </div>
+                        <div class="campo religioso">
+                            <label for="mucosas" class="reserva-cita__label">Mucosas:</label>
+                            <input type="text" id="Actualihistoriaclinica_Mucosas" name="mucosas" class="reserva-cita__input" placeholder="Mucosas">
+                        </div>
+                    </div>
+                    <div class="historiaclinica-campo-largo" style="width: 330px;">
+                        <label for="diagnostico" class="reserva-cita__label">Diagnóstico presuntivo:</label>
+                        <textarea id="Actualihistoriaclinica_diagnostico" name="diagnosticoPresuntivo" class="reserva-cita__textarea" placeholder="Ingresar diagnóstico presuntivo" style="height: 50px;"></textarea>
+                    </div>
+                </div>
+                <div class="historiaclinica-campo-largo" style="width: 340px; margin-top: 12px;">
+                    <label for="anamnesis" class="reserva-cita__label">Anamnesis:</label>
+                    <textarea id="Actualihistoriaclinica_anamnesis" name="anamnesis" class="reserva-cita__textarea" placeholder="Ingresar anamnesis" style="height: 120px;"></textarea>
+                </div>
+            </div>
+            <div class="historiaclinica-campo-largo">
+                <label for="tratamiento" class="reserva-cita__label">Examenes Realizados:</label>
+                <textarea id="Actualihistoriaclinica_examanes" name="examRealizados" class="reserva-cita__textarea" placeholder="Ingresar Examen realizado"></textarea>
+            </div>
+            <div class="historiaclinica-campo-largo">
+                <label for="tratamiento" class="reserva-cita__label">Tratamiento:</label>
+                <textarea id="Actualihistoriaclinica_tratamiento" name="tratamiento" class="reserva-cita__textarea" placeholder="Ingresar tratamiento"></textarea>
+            </div>
+            <div class="historiaclinica-campo-largo">
+                <label for="receta" class="reserva-cita__label">Receta:</label>
+                <textarea id="Actualihistoriaclinica_receta" name="receta" class="reserva-cita__textarea" placeholder="Ingresar receta"></textarea>
+            </div>
+        </div>
+            <button type="submit" class="boton-generico-primario">Actualizar datos</button>
     </form>
 </div>
 

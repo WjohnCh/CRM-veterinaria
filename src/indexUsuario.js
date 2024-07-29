@@ -378,7 +378,71 @@ const obtenerUsuarios = async (req, res) => {
     }
 };
 
+const actualizahistorialMedico =  async (req, res) => {
+    const { idrevmed } = req.params;
+    const {
+        fecha,
+        temperatura = null,
+        frecuenciaCardiaca = null,
+        frecuenciaRespiratoria = null,
+        peso = null,
+        mucosas = null,
+        glucosa = null,
+        TLC = null,
+        anamnesis = null,
+        diagnosticoPresuntivo = null,
+        tratamiento = null,
+        receta = null,
+        examRealizados = null
+    } = req.body;
 
+    try {
+        const [result] = await sequelize.query(
+            `UPDATE revisionmedica SET 
+                fecha = IFNULL(?, fecha), 
+                temperatura = IFNULL(?, temperatura), 
+                frecuenciaCardiaca = IFNULL(?, frecuenciaCardiaca), 
+                frecuenciaRespiratoria = IFNULL(?, frecuenciaRespiratoria), 
+                peso = IFNULL(?, peso), 
+                mucosas = IFNULL(?, mucosas), 
+                glucosa = IFNULL(?, glucosa), 
+                TLC = IFNULL(?, TLC), 
+                anamesis = IFNULL(?, anamesis), 
+                diagnosticoPresuntivo = IFNULL(?, diagnosticoPresuntivo), 
+                tratamiento = IFNULL(?, tratamiento), 
+                receta = IFNULL(?, receta), 
+                examenes_realizados = IFNULL(?, examenes_realizados)
+            WHERE idRevisionMedica = ?`,
+            {
+                replacements: [
+                    fecha,
+                    temperatura,
+                    frecuenciaCardiaca,
+                    frecuenciaRespiratoria,
+                    peso,
+                    mucosas,
+                    glucosa,
+                    TLC,
+                    anamnesis,
+                    diagnosticoPresuntivo,
+                    tratamiento,
+                    receta,
+                    examRealizados,
+                    idrevmed
+                ]
+            }
+        );
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Revisión médica actualizada con éxito' });
+        } else {
+            res.status(404).json({ message: 'No se encontró la revisión médica' });
+        }
+    } catch (error) {
+        console.error('Error al actualizar la revisión médica:', error);
+        res.status(500).send('Error al procesar la solicitud');
+    }
+}
 
 
 
@@ -386,6 +450,7 @@ module.exports = {
     idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado,
     existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo, editarDatosUsuario,
     obtenerSesiones, obtenerClientes, obtenerMascotas, obtenerHistorialMedico, obtenerUsuarios,
+    actualizahistorialMedico
 };
 
 

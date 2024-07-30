@@ -10,12 +10,15 @@ const port = process.env.PORT || 3000;
 const { idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto
     , detallPedidoCancelado, existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo
     , editarDatosUsuario, obtenerSesiones, obtenerClientes, obtenerMascotas,
-    obtenerHistorialMedico, obtenerUsuarios, actualizahistorialMedico} = require('./indexUsuario.js')
+    obtenerHistorialMedico, obtenerUsuarios, actualizahistorialMedico
+    , VacunasMascota, DesparacitacionMascota
+} = require('./indexUsuario.js')
 
 
 const fs = require('node:fs');
 
 const multer = require('multer');
+const { log } = require('console');
 const upload = multer({ dest: './src/uploads/' });
 
 const SECRET_KEY = 'crm_vet_2024'; // CLAVE SECRETA SE CAMBIARÁ CUANDO SE LANZE A PRODUCCIÓN
@@ -388,12 +391,33 @@ app.post('/procesar-datos', async (req, res) => {
         if (existenciaEmail.existe) {
             return res.status(400).json({ success: false, message: 'El email ya está registrado', existenciaCorreo: true });
         }
-        await sequelize.query(
+        const [results] = await sequelize.query(
             'INSERT INTO usuario (username, email, contrasena, rol) VALUES (?, ?, ?, ?)',
             { replacements: [name, email, password, "cliente"] }
         );
-
+        console.log(results);
         if (name && email && password) {
+
+            const [[conexionResults]] = await sequelize.query(
+                'SELECT * FROM conexion WHERE usuarioid = ?',
+                { replacements: [results] }
+            );
+            if(conexionResults){ // YA HAY UNA CONEXION 
+                console.log("TIENE CONEXION");
+            }else{// EL USUARIO NO TIENE UNA CONEXION
+                const [[idcliente]] = await sequelize.query(
+                    'SELECT idcliente FROM cliente WHERE correo = ?',
+                    { replacements: [email] }
+                );
+                if(idcliente){// EL CORREO EXISTE EN USUARIO Y EN CLIENTE
+                    await sequelize.query(
+                        'INSERT INTO conexion (usuarioid, idcliente) VALUES (?, ?)',
+                        { replacements: [results, idcliente.idcliente] }
+                    );
+                    console.log("salio bien papu");
+                }
+            }
+
             const token = jwt.sign({ email }, SECRET_KEY);
             res.json({ success: true, token, message: 'Datos recibidos correctamente', existenciaCorreo: false });
         } else {
@@ -414,9 +438,28 @@ app.post('/login', async (req, res) => {
             { replacements: [email, password] }
         );
         if (results.length > 0) {
+            // PREGUNTA SI ES QUE ESTE ID YA ESTA CON UNA CONEXION
+            const [[conexionResults]] = await sequelize.query(
+                'SELECT * FROM conexion WHERE usuarioid = ?',
+                { replacements: [results[0].idusuario] }
+            );
+            if(conexionResults){ // YA HAY UNA CONEXION 
+                console.log("TIENE CONEXION");
+            }else{// EL USUARIO NO TIENE UNA CONEXION
+                const [[idcliente]] = await sequelize.query(
+                    'SELECT idcliente FROM cliente WHERE correo = ?',
+                    { replacements: [results[0].email] }
+                );
+                if(idcliente){// EL CORREO EXISTE EN USUARIO Y EN CLIENTE
+                    await sequelize.query(
+                        'INSERT INTO conexion (usuarioid, idcliente) VALUES (?, ?)',
+                        { replacements: [results[0].idusuario, idcliente.idcliente] }
+                    );
+                }
+            }
             // HAGAS UN SELECT INTO Y QUE MANDES EL CORREO LA CONTRASEÑA LA FECHA Y HORA // BOOLEANO LLAMADO ACCESS: TRUE
             const token = jwt.sign({ email: results[0].email }, SECRET_KEY);
-            res.json({ token, results, success: true });
+            res.json({ token, results, success: true,  });
         } else {
             // HAGAS UN SELECT INTO Y QUE MANDES EL CORREO LA CONTRASEÑA LA FECHA Y HORA // BOOLEANO LLAMADO ACCESS: FALSE
             res.json({ success: false, message: 'Invalid email or password.' });
@@ -490,6 +533,10 @@ app.post('/productos/envios', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Error al procesar los datos' });
     }
 })
+
+app.get('/cliente/vacuna/mascota/:idmascota', verifyToken, VacunasMascota)
+app.get('/cliente/desparasitacion/mascota/:idmascota', verifyToken, DesparacitacionMascota)
+
 
 app.get('/pedidos', DetallePedidos)
 

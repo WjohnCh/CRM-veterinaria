@@ -167,26 +167,19 @@ async function existeEmail(req, res) {
 // FUNCION QUE DEVUELVE LAS MASCOTAS DE UN CLIENTE
 async function ArrayMascotas(req, res) {
     try {
-        const [results] = await sequelize.query(
-            "CALL obtener_idUsuarioXCorreo(?)",
+        const results = await sequelize.query(
+            "CALL GetMascotasByEmail(?)",
             {
                 replacements: [req.user.email],
             }
         );
-        if (results) {
-            const resultado = await sequelize.query(
-                "CALL usuario_mascotas_verdetalle(?)",
-                {
-                    replacements: [results.idcliente],
-                }
-            );
-
-            if (resultado.length == 0) {
+        if (results){
+            if (results.length == 0) {
                 res.json({ pets: false, message: "Sin Mascotas" });
             } else {
-                res.json(resultado);
+                res.json(results);
             }
-        } else {
+        }else{
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
@@ -444,13 +437,56 @@ const actualizahistorialMedico =  async (req, res) => {
     }
 }
 
+const VacunasMascota = async (req, res) => {
+    const { idmascota } = req.params;
+    const email = req.user.email;
+    try {
+        const results = await sequelize.query(
+            'CALL get_vacuna_by_idmascota_useremail(:idmascota, :email)',
+            {
+                replacements: {
+                    idmascota: idmascota,
+                    email: email
+                }
+            }
+        );
+
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener las vacunas:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }
+};
+
+const DesparacitacionMascota = async (req, res) => {
+    const { idmascota } = req.params;
+    const email = req.user.email;
+
+    try {
+        const results = await sequelize.query(
+            'CALL get_desparasitacion_by_idmascota_useremail(:idmascota, :email)',
+            {
+                replacements: {
+                    idmascota: idmascota,
+                    email: email
+                }
+            }
+        );
+
+        res.json(results);
+    } catch (error) {
+        console.error('Error al obtener la desparasitación:', error);
+        res.status(500).json({ message: 'Error al procesar los datos' });
+    }
+};
+
 
 
 module.exports = {
     idUserByCorreo, calcularTotal, anidadirDetalle, DetallePedidos, detallPedidoProducto, detallPedidoCancelado,
     existeEmail, ArrayMascotas, crearMascota, editarMascota, obtenerInfoUsuarioPorCorreo, editarDatosUsuario,
     obtenerSesiones, obtenerClientes, obtenerMascotas, obtenerHistorialMedico, obtenerUsuarios,
-    actualizahistorialMedico
+    actualizahistorialMedico, VacunasMascota, DesparacitacionMascota
 };
 
 

@@ -63,6 +63,9 @@ input[type=number]::-webkit-inner-spin-button{
 .bold{
     font-weight: bold;
 }
+.antibold{
+    font-weight: 500;
+}
 .font-long{
     font-size: var(--Text-long);
 }
@@ -165,8 +168,6 @@ input[type=number]::-webkit-inner-spin-button{
     background-color: transparent;
     font-size: 15px;
     color: #E5AE00;
-    margin-top: 30px;
-    height: 40px;
     text-decoration: underline;
 }
 #btnAniadir-new-pet{
@@ -277,4 +278,84 @@ input[type=number]::-webkit-inner-spin-button{
 #input_miCuenta_direccion{
     height: 60px;
     margin-bottom: 0px;
+}
+
+/* VACUNAS CLIENTE */
+
+.contenedorVacunasCliente{
+    position: relative;
+    padding: 20px;
+    width: 800px;
+    height: 500px;
+    background-color: #FFF455;
+    border-radius: 10px;
+}
+
+.FechasVacunacionCliente{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.contenedorVacunasDetalles_cliente{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.contenedorVacunasDetalles_cliente > :last-child {
+    justify-self: center; /* Alinea cada celda horizontalmente al final */
+    align-self: start;   /* Alinea cada celda verticalmente al final */
+    display: grid;
+    gap: 4px;
+}
+.VacunaCantidad_cliente{
+    display: grid;
+    gap: 4px;
+    padding-left: 20px;
+    font-weight: 500;
+}
+.titulovacunacion_cliente{
+    background-color: #E72929;
+    padding: 4px;
+    border-radius: 20px;
+    width: 80%;
+    margin: auto;
+    color: var(--Negro-0);
+}
+.ContenedorDeVacunas_Cliente{
+    margin-top: 20px;
+    overflow: auto;
+    height: 400px;
+    display: grid;
+    gap: 20px;
+    padding-right: 10px;
+}
+.ContenedidoVacunaIndividual{
+    border-radius: 10px;
+    background-color: #FFFED3;
+    padding: 14px;
+    height: min-content;
+}
+.vacuna_tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+.overflow_vacuna{
+    margin-top: 20px;
+    overflow: auto;
+    height: 400px;
+    position: relative;
+}
+.vacuna_tabla th, .vacuna_tabla td {
+    padding: 8px;
+    text-align: center;
+}
+.vacuna_tabla td{
+    border: 1px solid #ddd;
+}
+.vacuna_header{
+    background-color: #f2a516;
+    position: sticky;
+    top: 0;
+}
+.vacuna_fila {
+    background-color: #f9f9f9;
 }
